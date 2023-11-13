@@ -1,8 +1,8 @@
 <template>
   <div class="tabs">
-    <ul class="inline-flex pt-2 px-1 w-full border-b">
+    <ul class="inline-flex px-1 w-full border-b">
       <li v-for="(file, i) in openFiles" :key="i" @click="selectedPath = file.path"
-        :class="{ 'border-b': selectedPath != file.name}" 
+        :class="{ 'border-b': selectedPath != file.path}" 
         class="cursor-pointer bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
         {{file.name}}
       </li>

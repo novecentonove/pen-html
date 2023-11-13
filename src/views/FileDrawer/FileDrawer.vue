@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-800 h-screen w-64">
+  <div>
     <button @click="readFileContents">choose dir</button>
     <FileList :files="filesAndDir"/>
   </div>
@@ -40,6 +40,3 @@ const readFileContents = async () => {
 }
 </script>
 
-<style>
-
-</style>

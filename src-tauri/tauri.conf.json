@@ -30,6 +30,16 @@
         "renameFile": true,
         "exists": true,
         "scope": ["*/**"]
+      },
+      "window": {
+        "startDragging": true,
+        "maximize": true,
+        "unmaximize": true,
+        "minimize": true,
+        "unminimize": true,
+        "show": true,
+        "hide": true,
+        "close": true
       }
     },
     "bundle": {
@@ -73,11 +83,12 @@
     },
     "windows": [
       {
+        "decorations": false,
         "fullscreen": false,
-        "height": 600,
+        "height": 800,
         "resizable": true,
         "title": "tauri",
-        "width": 800
+        "width": 1000
       }
     ]
   }

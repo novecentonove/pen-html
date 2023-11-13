@@ -16,12 +16,11 @@ export const usePages = defineStore('pages', {
 
   actions: {
     addPage(file: FileType) {
-      let exists = false
-      this.openFiles.forEach(page => {
-        if(page.name === file.name) exists = true
+      this.openFiles.forEach((page, i) => {
+        if(page.name === file.name) this.openFiles.splice(i, i+1)
       });
 
-      if(!exists) this.openFiles.push(file)
+     this.openFiles.push(file)
       
     },
   },
