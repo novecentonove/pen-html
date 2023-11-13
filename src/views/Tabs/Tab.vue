@@ -1,24 +1,26 @@
 <template>
-  <!-- <div v-show="title == selectedTitle"> -->
-    <div class="tab-content">{{ content }}</div>
-  <!-- </div> -->
+  <div v-show="props.path == selectedPath">
+    <div>
+      {{ content }}
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { inject } from '@vue/runtime-core'
-import { onMounted, ref } from 'vue'
-import { readTextFile } from '@tauri-apps/api/fs';
-import FileType from '../../types/FileType';
+import { inject, onMounted, ref } from 'vue'
+import { readTextFile } from '@tauri-apps/api/fs'
 
 const props = defineProps<{
-  file?: FileType
+  title: string
+  path: string
 }>()
 
-// const selectedTitle = inject('selectedTitle')
+const selectedPath = inject('selectedPath')
+
 const content = ref('')
 
 onMounted( async () => {
-  content.value = await readTextFile(props.file.path as string)
+  content.value = await readTextFile(props.path as string)
 })
 
 </script>

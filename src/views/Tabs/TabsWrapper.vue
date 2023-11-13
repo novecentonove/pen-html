@@ -1,7 +1,7 @@
 <template>
   <div class="tabs">
     <ul class="flex">
-      <!-- <li v-for="(name, i) in tabTitles" :key="i" @click="selectedTitle = name" :class="{ 'bg-black text-white': selectedTitle == name}" class="cursor-pointer p-2 m-0.5 bg-purple-200 rounded">
+      <!-- <li v-for="(name, i) in tabTitles" :key="i" @click="selectedPath = name" :class="{ 'bg-black text-white': selectedPath == name}" class="cursor-pointer p-2 m-0.5 bg-purple-200 rounded">
         {{name}}
       </li> -->
       <!-- <li v-for="(name, i) in tabTitles" :key="i">
@@ -21,9 +21,9 @@ import { onMounted, useSlots } from 'vue';
 
 const slots = useSlots();
 // const tabTitles = ref(slots.default().map( file => file.props.name)) //array of nodes
-// const selectedTitle = ref(tabTitles.value[0])
+// const selectedPath = ref(tabTitles.value[0])
 
-// provide('selectedTitle', selectedTitle)
+// provide('selectedPath', selectedPath)
 
 onMounted( () => {
   slots.default().map( file => {
