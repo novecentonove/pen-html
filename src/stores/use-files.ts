@@ -6,7 +6,7 @@ export type RootState = {
   clickDrawerFile: FileType[]
 };
 
-export const usePages = defineStore('pages', {
+export const useFiles = defineStore('files', {
   state: () => ({ 
     openFiles: [],
     clickDrawerFile: []

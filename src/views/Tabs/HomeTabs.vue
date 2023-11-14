@@ -16,12 +16,12 @@
 </template>
 
 <script setup lang="ts">
-  import { usePages } from '@/stores/use-pages.ts'
+  import { useFiles } from '@/stores/use-files.ts'
   import { computed, provide, ref, watch } from 'vue';
   import TabsWrapper from './TabsWrapper.vue'
   import Tab from './Tab.vue'
 
-  const store = usePages()
+  const store = useFiles()
   const openFiles = computed(() => store.getOpenFiles)
   const clickedFromDrawer = computed(() => store.getClickDrawerFile)
 

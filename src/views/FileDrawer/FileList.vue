@@ -9,10 +9,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { readTextFile, readDir } from '@tauri-apps/api/fs';
-import { usePages } from '@/stores/use-pages.ts'
+import { useFiles } from '@/stores/use-files.ts'
 import FileType from '@/types/FileType.ts'
 
-const store = usePages()
+const store = useFiles()
 
 
 const props = defineProps<{
