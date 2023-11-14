@@ -1,9 +1,9 @@
 <template>
   <div class="main">
     <div class="flex">
-      <FileDrawer class="fileDrawer h-screen w-64"/>
+      <FileDrawer class="fileDrawer w-64"/>
       <!-- <RouterView /> -->
-      <div class="editorView w-full h-screen">
+      <div class="editorView w-full">
 
       <div>
         <div data-tauri-drag-region class="titlebar">
@@ -62,6 +62,8 @@ document
   color: #9d9fa1;
 }
 .editorView{
+  height: 100vh;
+  max-height: 100vh;
   background-color: #282c34;
   color: #9d9fa1;
 }

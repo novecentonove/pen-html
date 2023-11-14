@@ -1,7 +1,7 @@
 <template>
   <div v-show="props.path == selectedPath">
     <div>
-      {{ content }}
+      <Editor v-model="content" />
     </div>
   </div>
 </template>
@@ -9,6 +9,7 @@
 <script setup lang="ts">
 import { inject, onMounted, ref } from 'vue'
 import { readTextFile } from '@tauri-apps/api/fs'
+import Editor from '@/components/Editor/Editor.vue'
 
 const props = defineProps<{
   title: string
