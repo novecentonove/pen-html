@@ -74,28 +74,25 @@ export default {
 
 <style>
 
-.prose {
-  max-width: 100%;
-  margin-right: 200px;
-
-}
-/* remove outline */
 .ProseMirror:focus {
   outline: none;
 }
-/* set */
-.ProseMirror {        
-  height: 100%;
-  width: 100%;
-  margin: 20px;
-  max-height: 82vh;
+.ProseMirror {
+  max-height: 85vh;
   overflow: scroll;
+  margin-left: 10%;
+  max-width: 750px;
+  /* width: 100%; */
 }
 
-.editor_frame {
+.tiptap {
+  padding-right: 15px;
+}
+
+/* .editor_frame {
   max-width: 800px;
   margin-left: 5%;
   margin-right: 50px;
-}
+}  */
 
 </style>
