@@ -23,6 +23,7 @@
 
   const store = usePages()
   const openFiles = computed(() => store.getOpenFiles)
+  const clickedFromDrawer = computed(() => store.getClickDrawerFile)
 
   const selectedPath = ref(store.openFiles[0] ? store.openFiles[0].path : null)
 
@@ -30,6 +31,10 @@
 
   watch(store.getOpenFiles, (file) => {
     selectedPath.value = file[file.length-1].path
+  })
+
+  watch(clickedFromDrawer, (file) => {
+    selectedPath.value = file.path
   })
 
 </script>

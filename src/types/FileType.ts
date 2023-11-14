@@ -1,5 +1,5 @@
 type FileType = {
-  children: Array<string>,
+  children?: Array<string>,
   name: string,
   path: string,
 }
