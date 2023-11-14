@@ -20,6 +20,7 @@
         "save": true
       },
       "fs": {
+        "all": true,
         "readFile": true,
         "writeFile": true,
         "readDir": true,
@@ -40,6 +41,9 @@
         "show": true,
         "hide": true,
         "close": true
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {

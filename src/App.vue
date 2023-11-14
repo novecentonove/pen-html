@@ -2,9 +2,7 @@
   <div class="main">
     <div class="flex">
       <FileDrawer class="fileDrawer w-64"/>
-      <!-- <RouterView /> -->
       <div class="editorView w-full">
-
       <div>
         <div data-tauri-drag-region class="titlebar">
           <div class="titlebar-button" id="titlebar-minimize">
@@ -23,7 +21,7 @@
             <img src="https://api.iconify.design/mdi:close.svg" alt="close" />
           </div>
         </div>
-        <HomeTabs />
+        <RouterView />
         </div>
     </div>
     </div>
@@ -37,7 +35,6 @@
 <script setup lang="ts">
   import { RouterLink, RouterView } from 'vue-router'
   import FileDrawer from '@/views/FileDrawer/FileDrawer.vue';
-  import HomeTabs from '@/views/Tabs/HomeTabs.vue';
   import { appWindow } from '@tauri-apps/api/window'
   import { onMounted } from 'vue'
 
