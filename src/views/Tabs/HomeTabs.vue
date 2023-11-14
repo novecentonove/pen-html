@@ -9,7 +9,7 @@
     </ul> 
     <!-- <transition-group tag="ul" mode="out-in" name="list" appear> -->
       <span v-for="file in openFiles" :key="file.path">
-        <Tab :title="file.name" :path="file.path">{{ file.content }}</Tab>
+        <Tab :name="file.name" :path="file.path">{{ file.content }}</Tab>
       </span>
     <!-- </transition-group> -->
   </div>

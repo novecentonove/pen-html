@@ -1,8 +1,5 @@
 <template>
-<button @click="getText">
-click
-</button>
-  <div class="editor_frame">
+  <div class="editor_frame" @keyup.ctrl.s="saveFile" @click="doFocus">
     <editor-content :editor="editor" />
   </div>
 </template>
@@ -10,32 +7,60 @@ click
 <script setup lang="ts">
 import StarterKit from '@tiptap/starter-kit'
 import { Editor, EditorContent } from '@tiptap/vue-3'
-import { onMounted, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import showdown from 'showdown'
+import { writeFile } from '@tauri-apps/api/fs';
 
-type Props = { modelValue: '' }
+type Props = { 
+  modelValue: '',
+  name: '',
+  path: ''
+}
+
 const props = defineProps<Props>()
 
 const emit = defineEmits(['update:modelValue'])
+
+const isSame = ref(false)
 
 let editor = null
 const converter = new showdown.Converter();
 
 const getText = () => {
-
   const htmlContent = editor.getHTML();
-  const markdownContent = converter.makeMarkdown(htmlContent);
-  console.log(markdownContent);
+  return converter.makeMarkdown(htmlContent);
+}
+
+const saveFile = async () => {
+  const content = getText()
+  try {
+    await writeFile(
+      {
+        contents: content,
+        path: props.path,
+      }
+    )
+    console.log('saved!')
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+const doFocus = () => {
+  if(!editor.isFocused){
+    editor.commands.focus('start')
+  }
+  console.log('focus')
 }
 
 watch(() => props.modelValue, (value) => {
   // HTML
-  const isSame = editor.getHTML() === value
+  isSame.value = editor.getHTML() === value
 
   // JSON
   // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
 
-  if (isSame) {
+  if (isSame.value) {
     return
   }
 
@@ -63,7 +88,7 @@ onMounted( () => {
         // this.$emit('update:modelValue', this.editor.getJSON())
       },
     })
-    editor.commands.focus('start')
+    doFocus()
 })
 
 //   beforeUnmount() {
