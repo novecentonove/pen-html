@@ -1,51 +1,51 @@
 <template>
+<button @click="getText">
+click
+</button>
   <div class="editor_frame">
     <editor-content :editor="editor" />
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import StarterKit from '@tiptap/starter-kit'
 import { Editor, EditorContent } from '@tiptap/vue-3'
+import { onMounted, watch } from 'vue';
+import showdown from 'showdown'
 
-export default {
-  components: {
-    EditorContent,
-  },
+type Props = { modelValue: '' }
+const props = defineProps<Props>()
 
-  props: {
-    modelValue: {
-      type: String,
-      default: '',
-    },
-  },
+const emit = defineEmits(['update:modelValue'])
 
-  emits: ['update:modelValue'],
+let editor = null
+const converter = new showdown.Converter();
 
-  data() {
-    return {
-      editor: null,
-    }
-  },
+const getText = () => {
 
-  watch: {
-    modelValue(value) {
-      // HTML
-      const isSame = this.editor.getHTML() === value
+  const htmlContent = editor.getHTML();
+  const markdownContent = converter.makeMarkdown(htmlContent);
+  console.log(markdownContent);
+}
 
-      // JSON
-      // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
+watch(() => props.modelValue, (value) => {
+  // HTML
+  const isSame = editor.getHTML() === value
 
-      if (isSame) {
-        return
-      }
+  // JSON
+  // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
 
-      this.editor.commands.setContent(value, false)
-    },
-  },
+  if (isSame) {
+    return
+  }
 
-  mounted() {
-    this.editor = new Editor({
+  const htmlText = converter.makeHtml(value);
+  editor.commands.setContent(htmlText, false)
+})
+
+
+onMounted( () => {
+  editor = new Editor({
       extensions: [
         StarterKit,
       ],
@@ -54,22 +54,22 @@ export default {
           class: 'prose dark:prose-invert prose-sm sm:prose-base m-5 focus:outline-none',
         },
       },
-      content: this.modelValue,
+      content: props.modelValue,
       onUpdate: () => {
         // HTML
-        this.$emit('update:modelValue', this.editor.getHTML())
+        emit('update:modelValue', editor.getHTML())
 
         // JSON
         // this.$emit('update:modelValue', this.editor.getJSON())
       },
     })
-    this.editor.commands.focus('start')
-  },
+    editor.commands.focus('start')
+})
 
-  beforeUnmount() {
-    this.editor.destroy()
-  },
-}
+//   beforeUnmount() {
+//     this.editor.destroy()
+//   },
+// }
 </script>
 
 <style>

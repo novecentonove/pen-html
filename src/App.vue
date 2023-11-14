@@ -39,7 +39,7 @@
   import FileDrawer from '@/views/FileDrawer/FileDrawer.vue';
   import HomeTabs from '@/views/Tabs/HomeTabs.vue';
   import { appWindow } from '@tauri-apps/api/window'
-import { onMounted } from 'vue';
+  import { onMounted } from 'vue'
 
   onMounted( () => {
     document
