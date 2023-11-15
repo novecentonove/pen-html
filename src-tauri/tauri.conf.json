@@ -91,7 +91,7 @@
         "fullscreen": false,
         "height": 800,
         "resizable": true,
-        "title": "tauri",
+        "title": "ThunderDown",
         "width": 1000
       }
     ]

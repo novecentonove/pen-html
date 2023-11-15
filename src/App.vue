@@ -26,34 +26,33 @@
     </div>
     </div>
   </div>
-<!-- <nav>
-  <RouterLink to="/">Home</RouterLink>
-  <RouterLink to="/about">About</RouterLink>
-</nav> -->
 </template>
 
 <script setup lang="ts">
-  import { RouterLink, RouterView } from 'vue-router'
+  import { RouterView } from 'vue-router'
   import FileDrawer from '@/views/FileDrawer/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
   import { onMounted } from 'vue'
 
   onMounted( () => {
     document
-  .getElementById('titlebar-minimize')
-  .addEventListener('click', () => appWindow.minimize())
-document
-  .getElementById('titlebar-maximize')
-  .addEventListener('click', () => appWindow.toggleMaximize())
-document
-  .getElementById('titlebar-close')
-  .addEventListener('click', () => appWindow.close())
-  })
-
-  
+      .getElementById('titlebar-minimize')
+      .addEventListener('click', () => appWindow.minimize())
+    document
+      .getElementById('titlebar-maximize')
+      .addEventListener('click', () => appWindow.toggleMaximize())
+    document
+      .getElementById('titlebar-close')
+      .addEventListener('click', () => appWindow.close())
+    })
 </script>
 
 <style>
+
+:root{
+  --app-font: "Arial";
+}
+
 .fileDrawer{
   background-color: #21252b;
   color: #9d9fa1;
