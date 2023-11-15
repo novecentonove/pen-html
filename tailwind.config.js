@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      // fontFamily: {
+      //   'sans': ['var(--app-font)', 'system-ui']
+      // }
+    },
   },
   plugins: [require('@tailwindcss/typography')],
 }

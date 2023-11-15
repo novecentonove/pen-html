@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" :class="`font-['${font}']`">
     <div class="flex">
       <FileDrawer class="fileDrawer w-64"/>
       <div class="editorView w-full">
@@ -23,7 +23,7 @@
         </div>
         <RouterView />
         </div>
-    </div>
+      </div>
     </div>
   </div>
 </template>
@@ -32,7 +32,11 @@
   import { RouterView } from 'vue-router'
   import FileDrawer from '@/views/FileDrawer/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
-  import { onMounted } from 'vue'
+  import { computed, onMounted } from 'vue'
+  import { useSettings } from '@/stores/use-settings'
+
+  const settings = useSettings()
+  const font = settings.getFont
 
   onMounted( () => {
     document
@@ -45,13 +49,14 @@
       .getElementById('titlebar-close')
       .addEventListener('click', () => appWindow.close())
     })
+    document.querySelector("html").style.fontFamily = font;
 </script>
 
 <style>
 
-:root{
-  --app-font: "Arial";
-}
+/* html{
+  font-family: v-bind(font);
+} */
 
 .fileDrawer{
   background-color: #21252b;
