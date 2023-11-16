@@ -1,11 +1,11 @@
 <template>
   <div class="text-xs">
-    <ul class="inline-flex px-1 w-full">
+    <ul class="inline-flex px-1 w-full list-none">
       <li v-for="(file, i) in openFiles" :key="i" @click="selectedPath = file.path"
         :class="{ 'border-b shadow-lg': selectedPath != file.path, 'border-t border-r border-l' :selectedPath == file.path}" 
-        class="flex align-middle cursor-pointe pl-4 pr-2 font-semibold py-1 rounded-t border-gray-600 ">
+        class="flex align-middle cursor-pointe pl-4 pr-2 font-semibold py-1 rounded-t border-gray-600 cursor-pointer">
         {{file.name}} 
-        <XMarkIcon @click="closeTab(selectedPath)" class="ml-1 h-auto w-3 text-gray-500" />
+        <XMarkIcon @click="closeTab(selectedPath)" class="ml-2 h-auto w-3 text-gray-500" />
       </li>
       <li class="border-b border-gray-600 shadow-lg w-full"></li>
     </ul> 

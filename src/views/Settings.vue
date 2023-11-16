@@ -73,7 +73,9 @@ const textColors = ref(
   { name: 'Fog', value: '#F0F0F0' },
   { name: 'Linen', value: '#F5F5F5' },
   { name: 'Whisper', value: '#F8F8F8' },
-  { name: 'Whiteout', value: '#FFFFFF' }
+  { name: 'Whiteout', value: '#FFFFFF' },
+  { name: 'Cold', value: '#9fa7b6' }
+
 ])
 
 const settings = useSettings()

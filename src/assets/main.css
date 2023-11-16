@@ -19,3 +19,8 @@
 .text_color {
   color: var(--text_color)
 }
+
+/* overwrite css*/
+ol, ul, menu{
+  list-style-type: inherit;
+}

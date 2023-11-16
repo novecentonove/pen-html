@@ -1,19 +1,16 @@
 <template>
-  <div data-tauri-drag-region class="titlebar">
+  <div data-tauri-drag-region class="titlebar text_color">
+    <div class="mx-auto pt-1">
+      <p>pen</p>
+    </div>
     <div class="titlebar-button" id="titlebar-minimize">
-      <img
-        src="https://api.iconify.design/mdi:window-minimize.svg"
-        alt="minimize"
-      />
+      <WindowMinimize :size="15" />
     </div>
     <div class="titlebar-button" id="titlebar-maximize">
-      <img
-        src="https://api.iconify.design/mdi:window-maximize.svg"
-        alt="maximize"
-      />
+      <WindowMaximize :size="15" />
     </div>
     <div class="titlebar-button" id="titlebar-close">
-      <img src="https://api.iconify.design/mdi:close.svg" alt="close" />
+      <WindowClose :size="15" />
     </div>
   </div>
   <div class="main text_color overflow-x-hidden">
@@ -41,6 +38,9 @@ font-family: ADELIA
   import { appWindow } from '@tauri-apps/api/window'
   import { computed, onMounted } from 'vue'
   import { useSettings } from '@/stores/use-settings'
+  import WindowMinimize from 'vue-material-design-icons/WindowMinimize.vue';
+  import WindowMaximize from 'vue-material-design-icons/WindowMaximize.vue';
+  import WindowClose from 'vue-material-design-icons/WindowClose.vue';
 
   const settings = useSettings()
 
@@ -77,6 +77,7 @@ font-family: ADELIA
   left: 0;
   right: 0;
 }
+
 .titlebar-button {
   display: inline-flex;
   justify-content: center;
@@ -84,15 +85,22 @@ font-family: ADELIA
   width: 30px;
   height: 30px;
 }
+
 .titlebar-button:hover {
   background: #5bbec3;
 }
-.fileDrawer{
+
+.fileDrawer, .main{
+  height: 100vh;
+  max-height: calc(100vh - 32px);
+}
+
+.fileDrawer {
   background-color: #21252b;
 }
+
 .main{
-  height: 100vh;
-  max-height: calc(100vh - 30px);
   background-color: #282c34;
 }
+
 </style>
