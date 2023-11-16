@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col app_font">
     <button @click="readFileContents">choose dir</button>
     <FileList :files="filesAndDir"/>
     <router-link class="mt-auto" :to="settignsLink.to">{{ settignsLink.name }}</router-link>
@@ -32,7 +32,6 @@ const readFileContents = async () => {
       });
       console.log(selecteDir)
       const files = await readDir(selecteDir as string)
-      content.value = files
   } catch(e){
       console.error(e)
   }

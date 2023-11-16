@@ -2,18 +2,23 @@ import { defineStore } from 'pinia'
 
 export const useSettings = defineStore('settings', {
   state: () => ({ 
-    fontFamily: 'Consolas',
+    appFont: 'Arial',
+    editorFont: 'Consolas',
   }),
 
   persist: true,
 
   getters: {
-    getFont: (state) => state.fontFamily
+    getAppFont: (state) => state.appFont,
+    getEditorFont: (state) => state.editorFont
   },
 
   actions: {
-    setFont(font: string){
-      this.fontFamily = font
+    setAppFont(font: string){
+      this.appFont = font
+    },
+    setEditorFont(font: string){
+      this.editorFont = font
     }
   }
   

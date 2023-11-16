@@ -1,6 +1,6 @@
 <template>
   <div v-show="props.path == selectedPath">
-    <div>
+    <div class="editor_font">
       <Editor v-model="content" :name="name" :path="path" />
     </div>
   </div>

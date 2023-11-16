@@ -1,5 +1,5 @@
 <template>
-  <div class="main" :class="`font-['${font}']`">
+  <div class="main">
     <div class="flex">
       <FileDrawer class="fileDrawer w-64"/>
       <div class="editorView w-full">
@@ -29,6 +29,15 @@
 </template>
 
 <script setup lang="ts">
+/**
+USARE STYLE binding per i font?
+veder anche per locale:
+@font-face {
+  font-family: "ADELIA";
+  src: url("../public/fonts/ADELIA.otf");
+}
+font-family: ADELIA
+*/
   import { RouterView } from 'vue-router'
   import FileDrawer from '@/views/FileDrawer/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
@@ -36,7 +45,9 @@
   import { useSettings } from '@/stores/use-settings'
 
   const settings = useSettings()
-  const font = settings.getFont
+
+  const app_font = computed( ()=> settings.getAppFont)
+  const editor_font = computed( ()=> settings.getEditorFont)
 
   onMounted( () => {
     document
@@ -49,14 +60,14 @@
       .getElementById('titlebar-close')
       .addEventListener('click', () => appWindow.close())
     })
-    document.querySelector("html").style.fontFamily = font;
+    // set fonts
+    document.documentElement.style.setProperty('--app_font', app_font.value)
+    document.documentElement.style.setProperty('--editor_font', editor_font.value)
+
+    console.log('changed')
 </script>
 
 <style>
-
-/* html{
-  font-family: v-bind(font);
-} */
 
 .fileDrawer{
   background-color: #21252b;
