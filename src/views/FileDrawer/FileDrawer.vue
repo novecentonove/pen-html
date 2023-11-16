@@ -30,7 +30,6 @@ const readFileContents = async () => {
           title: 'Open Dir',
           directory: true
       });
-      console.log(selecteDir)
       const files = await readDir(selecteDir as string)
   } catch(e){
       console.error(e)

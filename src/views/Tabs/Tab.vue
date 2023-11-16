@@ -16,7 +16,6 @@ const props = defineProps<{
   path: string
 }>()
 
-console.log(props)
 const selectedPath = inject('selectedPath')
 
 const content = ref('')

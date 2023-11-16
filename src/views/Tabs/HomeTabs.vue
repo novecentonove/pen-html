@@ -1,11 +1,13 @@
 <template>
-  <div class="home_tab_list">
-    <ul class="inline-flex px-1 w-full border-b">
+  <div class="home_tab_list text-xs">
+    <ul class="inline-flex px-1 w-full">
       <li v-for="(file, i) in openFiles" :key="i" @click="selectedPath = file.path"
-        :class="{ 'border-b': selectedPath != file.path}" 
-        class="cursor-pointer bg-white px-4 text-gray-800 font-semibold py-2 rounded-t border-t border-r border-l -mb-px">
-        {{file.name}}
+        :class="{ 'border-b shadow-lg': selectedPath != file.path, 'border-t border-r border-l' :selectedPath == file.path}" 
+        class="flex align-middle cursor-pointe pl-4 pr-2 font-semibold py-1 rounded-t border-gray-600 ">
+        {{file.name}} 
+        <XMarkIcon @click="closeTab(selectedPath)" class="ml-1 h-auto w-3 text-gray-500" />
       </li>
+      <li class="border-b border-gray-600 shadow-lg w-full"></li>
     </ul> 
     <!-- <transition-group tag="ul" mode="out-in" name="list" appear> -->
       <span v-for="file in openFiles" :key="file.path">
@@ -17,25 +19,32 @@
 
 <script setup lang="ts">
   import { useFiles } from '@/stores/use-files.ts'
-  import { computed, provide, ref, watch } from 'vue';
+  import { computed, provide, ref, watch } from 'vue'
   import TabsWrapper from './TabsWrapper.vue'
   import Tab from './Tab.vue'
+  import  XMarkIcon from "@/components/Icons/XMarkIcon.vue";
 
   const store = useFiles()
   const openFiles = computed(() => store.getOpenFiles)
   const clickedFromDrawer = computed(() => store.getClickDrawerFile)
 
-  const selectedPath = ref(store.openFiles[0] ? store.openFiles[0].path : null)
+  const selectedPath = ref(store.openFiles?.[0] ? store.openFiles[0].path : null)
 
   provide('selectedPath', selectedPath)
 
   watch(store.getOpenFiles, (file) => {
-    selectedPath.value = file[file.length-1].path
+    if(file.length){
+      selectedPath.value = file[file.length-1].path
+    }
   })
 
   watch(clickedFromDrawer, (file) => {
     selectedPath.value = file.path
   })
+
+  const closeTab = (selectedPath: string) => {
+    store.closeTab(selectedPath)
+  }
 
 </script>
 

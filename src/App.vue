@@ -63,8 +63,6 @@ font-family: ADELIA
     // set fonts
     document.documentElement.style.setProperty('--app_font', app_font.value)
     document.documentElement.style.setProperty('--editor_font', editor_font.value)
-
-    console.log('changed')
 </script>
 
 <style>

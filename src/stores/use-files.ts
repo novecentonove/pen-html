@@ -20,15 +20,22 @@ export const useFiles = defineStore('files', {
   actions: {
     addPage(file: FileType) {
       let exists = false
-      this.openFiles.forEach(page => {
-        if(page.name === file.name){
+      this.openFiles.forEach(tab => {
+        if(tab.path === file.path){
           exists = true
           this.clickDrawerFile = file
         }
-      });
+      })
 
       if(!exists) this.openFiles.push(file)
-      
     },
+
+    closeTab(path: string){
+      this.openFiles.forEach((tab, i) => {
+        if(tab.path === path){
+          this.openFiles.splice(i, i+1);
+        }
+      })
+    }
   },
 })
