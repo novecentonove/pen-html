@@ -1,3 +1,4 @@
+import './assets/github-markdown-dark.css'
 import './assets/main.css'
 
 import { createApp } from 'vue'

@@ -1,5 +1,6 @@
 <template>
-  <div class="editor_frame" @keyup.ctrl.s="saveFile" @click="doFocus">
+  <div v-if="editor" class="markdown-body" @keyup.ctrl.s="saveFile">
+    <EditorButtons :editor="editor" />
     <editor-content :editor="editor" />
   </div>
 </template>
@@ -8,8 +9,8 @@
 import StarterKit from '@tiptap/starter-kit'
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import { onMounted, ref, watch } from 'vue';
-import showdown from 'showdown'
 import { writeFile } from '@tauri-apps/api/fs';
+import EditorButtons from './EditorButtons.vue';
 
 type Props = { 
   modelValue: '',
@@ -24,11 +25,12 @@ const emit = defineEmits(['update:modelValue'])
 const isSame = ref(false)
 
 let editor = null
-const converter = new showdown.Converter();
+// const converter = new showdown.Converter();
 
 const getText = () => {
   const htmlContent = editor.getHTML();
-  return converter.makeMarkdown(htmlContent);
+  return htmlContent
+  // return converter.makeMarkdown(htmlContent);
 }
 
 const saveFile = async () => {
@@ -64,8 +66,8 @@ watch(() => props.modelValue, (value) => {
     return
   }
 
-  const htmlText = converter.makeHtml(value);
-  editor.commands.setContent(htmlText, false)
+  // const htmlText = converter.makeHtml(value);
+  editor.commands.setContent(value, false)
 })
 
 
@@ -112,6 +114,11 @@ onMounted( () => {
 
 .tiptap {
   padding-right: 15px;
+}
+
+.is-active{
+  background-color: gray;
+  border-radius: .2rem;
 }
 
 /* .editor_frame {
