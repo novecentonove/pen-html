@@ -2,7 +2,7 @@
   <div class="px-4">
     <router-link class="mt-auto" to="/">back to files</router-link>
   </div>
-  <div>
+  <div class="flex flex-col [&>select]:mb-2 [&>select]:w-64">
     <label>App Font</label>
     <select v-model="selectedAppFont" @change="selectFont($event, 'app')">
       <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
@@ -12,14 +12,23 @@
     <select v-model="selectedEditorFont" @change="selectFont($event, 'editor')">
       <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
     </select>
+
+    <label>Text color</label>
+    <select v-model="selectedTextColors" @change="selectTextColors($event)">
+      <option v-for="(color, i) in textColors" :key="i" :value="color.value">
+        <!-- <div class="w-2 h-2" :style="`background-color:${color.value}`"></div> -->
+        {{color.name}}
+      </option>
+    </select>
   </div>
 
   <div>
-    <button @click="reload">Reload</button>
+    <!-- <button @click="reload">Reload</button> -->
   </div>
 <div>
-  app_font: {{ app_font }} <br>
-  editor_font: {{ editor_font }}
+  app_font: {{ selectedAppFont }} <br>
+  editor_font: {{ selectedEditorFont }} <br>
+  color_font: {{ selectedTextColors }}
 </div>
 </template>
 
@@ -37,12 +46,40 @@ const fontFamilies = ref([
     name: 'Arial',
   },
   {
-    name: 'Segoe UI',
+    name: 'DejaVu Sans',
   },
 ])
+
+const textColors = ref(
+  [
+  { name: 'Thundercloud', value: '#808080' },
+  { name: 'Slate', value: '#888888' },
+  { name: 'Stormy Sky', value: '#909090' },
+  { name: 'Pewter', value: '#989898' },
+  { name: 'Silver Bullet', value: '#A0A0A0' },
+  { name: 'Mist', value: '#A8A8A8' },
+  { name: 'Steel', value: '#A9A9A9' },
+  { name: 'Silverado', value: '#B0B0B0' },
+  { name: 'Moonstone', value: '#B8B8B8' },
+  { name: 'Cobblestone', value: '#BEBEBE' },
+  { name: 'Quicksilver', value: '#C0C0C0' },
+  { name: 'Cloudy', value: '#C8C8C8' },
+  { name: 'Silver Lining', value: '#D0D0D0' },
+  { name: 'Platinum', value: '#D3D3D3' },
+  { name: 'Lunar', value: '#D8D8D8' },
+  { name: 'Dove', value: '#DCDCDC' },
+  { name: 'Alabaster', value: '#E0E0E0' },
+  { name: 'Pearl', value: '#E8E8E8' },
+  { name: 'Fog', value: '#F0F0F0' },
+  { name: 'Linen', value: '#F5F5F5' },
+  { name: 'Whisper', value: '#F8F8F8' },
+  { name: 'Whiteout', value: '#FFFFFF' }
+])
+
 const settings = useSettings()
-const selectedAppFont = ref(settings.getAppFont)
-const selectedEditorFont = ref(settings.getEditorFont)
+const selectedAppFont = toRef(settings.getAppFont)
+const selectedEditorFont = toRef(settings.getEditorFont)
+const selectedTextColors = toRef(settings.getFontColor)
 
 // const extractFontFromDir = async (dir) => {
 //   const res = await readDir(dir as string)
@@ -59,24 +96,26 @@ const selectedEditorFont = ref(settings.getEditorFont)
 //     }
 //   });
 // }
-const app_font = computed( ()=> settings.getAppFont)
-const editor_font = computed( ()=> settings.getEditorFont)
-
 
 const reload = async () => await relaunch()
 
 const selectFont = async (e, type) => {
-
   switch (type) {
     case 'app':
       settings.setAppFont(e.target.value)
-      document.documentElement.style.setProperty('--app_font', app_font.value)
+      document.documentElement.style.setProperty('--app_font', e.target.value)
       break;
     case 'editor':
       settings.setEditorFont(e.target.value)
-      document.documentElement.style.setProperty('--editor_font', editor_font.value)
+      document.documentElement.style.setProperty('--editor_font', e.target.value)
       break;
   }
+}
+
+const selectTextColors = async (e) => {
+  settings.setFontColor(e.target.value)
+  document.documentElement.style.setProperty('--text_color', e.target.value)
+  console.log(selectedTextColors.value)
 }
 
 </script>

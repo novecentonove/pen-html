@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main text_color">
     <div class="flex">
       <FileDrawer class="fileDrawer w-64"/>
       <div class="editorView w-full">
@@ -48,6 +48,7 @@ font-family: ADELIA
 
   const app_font = computed( ()=> settings.getAppFont)
   const editor_font = computed( ()=> settings.getEditorFont)
+  const text_color = computed( ()=> settings.getFontColor)
 
   onMounted( () => {
     document
@@ -63,18 +64,17 @@ font-family: ADELIA
     // set fonts
     document.documentElement.style.setProperty('--app_font', app_font.value)
     document.documentElement.style.setProperty('--editor_font', editor_font.value)
+    document.documentElement.style.setProperty('--text_color', text_color.value)
 </script>
 
 <style>
 
 .fileDrawer{
   background-color: #21252b;
-  color: #9d9fa1;
 }
 .editorView{
   height: 100vh;
   max-height: 100vh;
   background-color: #282c34;
-  color: #9d9fa1;
 }
 </style>

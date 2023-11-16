@@ -5,6 +5,7 @@
 :root{
   --app_font: 'Arial'
   --editor_font: 'Arial'
+  --text_color: '#fff'
 }
 
 .app_font {
@@ -13,4 +14,8 @@
 
 .editor_font {
   font-family: var(--editor_font);
+}
+
+.text_color {
+  color: var(--text_color)
 }

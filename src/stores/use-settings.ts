@@ -4,13 +4,15 @@ export const useSettings = defineStore('settings', {
   state: () => ({ 
     appFont: 'Arial',
     editorFont: 'Consolas',
+    fontColor: '#fff',
   }),
 
   persist: true,
 
   getters: {
     getAppFont: (state) => state.appFont,
-    getEditorFont: (state) => state.editorFont
+    getEditorFont: (state) => state.editorFont,
+    getFontColor: (state) => state.fontColor
   },
 
   actions: {
@@ -19,6 +21,9 @@ export const useSettings = defineStore('settings', {
     },
     setEditorFont(font: string){
       this.editorFont = font
+    },
+    setFontColor(color: string){
+      this.fontColor = color
     }
   }
   

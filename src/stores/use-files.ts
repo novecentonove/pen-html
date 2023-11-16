@@ -12,6 +12,8 @@ export const useFiles = defineStore('files', {
     clickDrawerFile: []
   } as RootState),
 
+  persist: true,
+
   getters: {
     getOpenFiles: (state) => state.openFiles,
     getClickDrawerFile: (state) => state.clickDrawerFile,
