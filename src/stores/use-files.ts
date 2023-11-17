@@ -2,14 +2,16 @@ import { defineStore } from 'pinia'
 import FileType from '@/types/FileType.ts'
 
 export type RootState = {
-  openFiles: FileType[];
+  openFiles: FileType[]
   clickDrawerFile: FileType[]
+  savedFile: 0
 };
 
 export const useFiles = defineStore('files', {
   state: () => ({ 
     openFiles: [],
-    clickDrawerFile: []
+    clickDrawerFile: [],
+    savedFile: 0
   } as RootState),
 
   persist: true,
@@ -17,6 +19,7 @@ export const useFiles = defineStore('files', {
   getters: {
     getOpenFiles: (state) => state.openFiles,
     getClickDrawerFile: (state) => state.clickDrawerFile,
+    getSavedFile: (state) => state.savedFile,
   },
 
   actions: {
@@ -38,6 +41,10 @@ export const useFiles = defineStore('files', {
           this.openFiles.splice(i, i+1);
         }
       })
+    },
+
+    savedFileTrigger(){
+      this.savedFile++
     }
   },
 })

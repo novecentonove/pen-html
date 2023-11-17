@@ -12,15 +12,19 @@
 <script setup lang="ts">
 import StarterKit from '@tiptap/starter-kit'
 import { Editor, EditorContent } from '@tiptap/vue-3'
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { writeFile } from '@tauri-apps/api/fs';
-import EditorButtons from './EditorButtons.vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { writeFile } from '@tauri-apps/api/fs'
+import EditorButtons from './EditorButtons.vue'
+import { useFiles } from '@/stores/use-files'
+
 
 type Props = {
   modelValue: '',
   name: '',
   path: ''
 }
+
+const files = useFiles()
 
 const props = defineProps<Props>()
 
@@ -48,9 +52,12 @@ const saveFile = async () => {
         path: props.path,
       }
     )
-    console.log('saved!')
+    // console.log('saved!')
+    files.savedFileTrigger()
+
   } catch (e) {
     console.log(e);
+
   }
 }
 
@@ -115,21 +122,21 @@ onBeforeUnmount( () => {
 }
 .tiptap  {
   overflow-y: scroll;
-  margin: 30px auto;
-  max-width: 750px;
-  padding-right: 5%;
+  margin: 30px 30px;
+  width: 750px;
+  padding-right: 30px;
 }
 
 @media screen and (min-width: 901px) and (max-width: 1000px) {
  .tiptap  {
-    max-width: 75%;
+    width: 75%;
     margin-left: 7%;
   }
 }
 
 @media screen and (min-width: 701px) and (max-width: 900px) {
  .tiptap  {
-    max-width: 71%;
+    width: 71%;
     margin-left: 30px;
   }
 }

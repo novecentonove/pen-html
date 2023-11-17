@@ -36,18 +36,22 @@ font-family: ADELIA
   import { RouterView } from 'vue-router'
   import FileDrawer from '@/views/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
-  import { computed, onMounted } from 'vue'
+  import { computed, onMounted, watch } from 'vue'
   import { useSettings } from '@/stores/use-settings'
+  import { useFiles } from '@/stores/use-files'
   import WindowMinimize from 'vue-material-design-icons/WindowMinimize.vue';
   import WindowMaximize from 'vue-material-design-icons/WindowMaximize.vue';
   import WindowClose from 'vue-material-design-icons/WindowClose.vue';
 
   const settings = useSettings()
+  const files = useFiles()
 
   const app_font = computed( ()=> settings.getAppFont)
   const editor_font = computed( ()=> settings.getEditorFont)
   const text_color = computed( ()=> settings.getFontColor)
   const editor_font_size = computed( ()=> settings.getEditorFontSize)
+
+  const saved_file = computed(() => files.getSavedFile)
 
   onMounted( () => {
     document
@@ -59,12 +63,18 @@ font-family: ADELIA
     document
       .getElementById('titlebar-close')
       .addEventListener('click', () => appWindow.close())
+
+      // set fonts
+      document.documentElement.style.setProperty('--app_font', app_font.value)
+      document.documentElement.style.setProperty('--editor_font', editor_font.value)
+      document.documentElement.style.setProperty('--text_color', text_color.value)
+      document.documentElement.style.setProperty('--editor_font_size', `${editor_font_size.value}px`)
     })
-    // set fonts
-    document.documentElement.style.setProperty('--app_font', app_font.value)
-    document.documentElement.style.setProperty('--editor_font', editor_font.value)
-    document.documentElement.style.setProperty('--text_color', text_color.value)
-    document.documentElement.style.setProperty('--editor_font_size', `${editor_font_size.value}px`)
+
+watch(saved_file, (value) => {
+  console.log('saved', value)
+})
+
 </script>
 
 <style>
