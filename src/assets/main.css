@@ -6,6 +6,7 @@
   --app_font: 'Arial'
   --editor_font: 'Arial'
   --text_color: '#fff'
+  --editor_font_size: '16px'
 }
 
 .app_font {
@@ -20,6 +21,9 @@
   color: var(--text_color)
 }
 
+.editor_font_size{
+  font-size: var(--editor_font_size);
+}
 /* overwrite css*/
 ol, ul, menu{
   list-style-type: inherit;

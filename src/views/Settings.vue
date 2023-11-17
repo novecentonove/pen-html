@@ -22,7 +22,7 @@
     </select>
 
     <label>Font size</label>
-    <input type="number" v-model="selectedFontSize">
+    <input type="number" v-model="selectedFontSize" @change="selectFontSize($event)">
   </div>
 
   <div>
@@ -32,6 +32,7 @@
   app_font: {{ selectedAppFont }} <br>
   editor_font: {{ selectedEditorFont }} <br>
   color_font: {{ selectedTextColors }}
+  
 </div>
 </template>
 
@@ -40,6 +41,28 @@ import { readDir } from '@tauri-apps/api/fs';
 import { onMounted, ref, nextTick, toRef, computed} from 'vue';
 import { useSettings } from '@/stores/use-settings.ts'
 import { relaunch } from '@tauri-apps/api/process';
+
+const settings = useSettings()
+const selectedAppFont = toRef(settings.getAppFont)
+const selectedEditorFont = toRef(settings.getEditorFont)
+const selectedTextColors = toRef(settings.getFontColor)
+const selectedFontSize = toRef(settings.getEditorFontSize)
+
+// const extractFontFromDir = async (dir) => {
+//   const res = await readDir(dir as string)
+//   res.forEach(el => {
+//     // console.log(el)
+//     if(el.children != undefined){
+//       extractFontFromDir(el.path)
+//     } else {
+//       const extension = el.name.split('.').pop()
+//       const valid = ['ttf'];
+//       if(extension.includes(valid)){
+//         fontFamilies.value.push(el)
+//       }
+//     }
+//   });
+// }
 
 const fontFamilies = ref([
   {
@@ -81,31 +104,9 @@ const textColors = ref(
 
 ])
 
-const settings = useSettings()
-const selectedAppFont = toRef(settings.getAppFont)
-const selectedEditorFont = toRef(settings.getEditorFont)
-const selectedTextColors = toRef(settings.getFontColor)
-const selectedFontSize = toRef(12)
-
-// const extractFontFromDir = async (dir) => {
-//   const res = await readDir(dir as string)
-//   res.forEach(el => {
-//     // console.log(el)
-//     if(el.children != undefined){
-//       extractFontFromDir(el.path)
-//     } else {
-//       const extension = el.name.split('.').pop()
-//       const valid = ['ttf'];
-//       if(extension.includes(valid)){
-//         fontFamilies.value.push(el)
-//       }
-//     }
-//   });
-// }
-
 const reload = async () => await relaunch()
 
-const selectFont = async (e, type) => {
+const selectFont = (e, type) => {
   switch (type) {
     case 'app':
       settings.setAppFont(e.target.value)
@@ -118,10 +119,14 @@ const selectFont = async (e, type) => {
   }
 }
 
-const selectTextColors = async (e) => {
+const selectTextColors = (e) => {
   settings.setFontColor(e.target.value)
   document.documentElement.style.setProperty('--text_color', e.target.value)
-  console.log(selectedTextColors.value)
+}
+
+const selectFontSize = (e) => {
+  settings.setEditorFontSize(e.target.value)
+  document.documentElement.style.setProperty('--editor_font_size', `${e.target.value}px`)
 }
 
 </script>

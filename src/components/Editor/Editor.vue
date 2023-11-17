@@ -1,5 +1,5 @@
 <template>
-  <div v-if="editor" class="markdown-body" @keyup.ctrl.s="saveFile">
+  <div v-if="editor" class="markdown-body editor_font_size" @keyup.ctrl.s="saveFile">
     <EditorButtons :editor="editor" />
     <editor-content :editor="editor" />
   </div>

@@ -5,6 +5,7 @@ export const useSettings = defineStore('settings', {
     appFont: 'Arial',
     editorFont: 'Consolas',
     fontColor: '#fff',
+    editorFontSize: 16,
   }),
 
   persist: true,
@@ -12,7 +13,8 @@ export const useSettings = defineStore('settings', {
   getters: {
     getAppFont: (state) => state.appFont,
     getEditorFont: (state) => state.editorFont,
-    getFontColor: (state) => state.fontColor
+    getFontColor: (state) => state.fontColor,
+    getEditorFontSize: (state) => state.editorFontSize
   },
 
   actions: {
@@ -24,6 +26,9 @@ export const useSettings = defineStore('settings', {
     },
     setFontColor(color: string){
       this.fontColor = color
+    },
+    setEditorFontSize(number: number){
+      this.editorFontSize = number
     }
   }
   
