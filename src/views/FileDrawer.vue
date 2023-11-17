@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col app_font">
+  <div class="w-48 min-w-32 flex flex-col app_font">
     <button @click="readFileContents">choose dir</button>
     <FileList :files="filesAndDir"/>
     <router-link class="mt-auto mb-2 ml-2" :to="settignsLink.to">

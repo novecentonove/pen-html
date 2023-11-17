@@ -77,11 +77,6 @@
       </div>
     <!-- </transition> -->
   </div>
-
-  <!-- <div ref="el" :style="style" style="position: fixed">
-    Drag me! I am at {{x}}, {{y}}
-  </div> -->
-
 </template>
 
 <script setup lang="ts">

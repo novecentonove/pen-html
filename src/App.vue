@@ -15,7 +15,7 @@
   </div>
   <div class="main text_color overflow-x-hidden">
     <div class="flex">
-      <FileDrawer class="fileDrawer w-64"/>
+      <FileDrawer class="fileDrawer"/>
       <div class="router_view w-full">
         <RouterView />
       </div>
@@ -95,6 +95,7 @@ font-family: ADELIA
 .fileDrawer, .main{
   height: 100vh;
   max-height: calc(100vh - 30px);
+  /* min-width: 300px; */
 }
 
 .fileDrawer {

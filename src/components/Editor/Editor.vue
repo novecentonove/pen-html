@@ -1,7 +1,9 @@
 <template>
-  <div v-if="editor" class="wrapper_editor markdown-body editor_font editor_font_size" @keyup.ctrl.s="saveFile">
-    <EditorButtons :editor="editor" />
-    <editor-content :editor="editor" />
+  <div @click="doFocus">
+    <div v-if="editor" class="wrapper_editor markdown-body editor_font editor_font_size" @keyup.ctrl.s="saveFile">
+      <EditorButtons :editor="editor" />
+      <editor-content :editor="editor" />
+    </div>
   </div>
 </template>
 
@@ -22,7 +24,9 @@ const props = defineProps<Props>()
 
 const emit = defineEmits(['update:modelValue'])
 
-const isSame = ref(false)
+const isSame = ref(null)
+
+let lastFileContent = ''
 
 let editor = null
 // const converter = new showdown.Converter();
@@ -56,6 +60,7 @@ const doFocus = () => {
 }
 
 watch(() => props.modelValue, (value) => {
+  console.log(lastFileContent == editor.getHTML())
   // HTML
   isSame.value = editor.getHTML() === value
 
@@ -72,6 +77,8 @@ watch(() => props.modelValue, (value) => {
 
 
 onMounted( () => {
+  lastFileContent = Object.assign({}, props.modelValue)
+
   editor = new Editor({
       extensions: [
         StarterKit,
@@ -105,7 +112,7 @@ onBeforeUnmount( () => {
   outline: none;
 } */
 .wrapper_editor {
-  margin-left:20px;
+  margin-left: 40px;
 }
 .ProseMirror {
   max-height: 85vh;
