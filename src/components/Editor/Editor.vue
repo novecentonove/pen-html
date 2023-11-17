@@ -1,5 +1,5 @@
 <template>
-  <div v-if="editor" class="markdown-body editor_font_size" @keyup.ctrl.s="saveFile">
+  <div v-if="editor" class="wrapper_editor markdown-body editor_font editor_font_size" @keyup.ctrl.s="saveFile">
     <EditorButtons :editor="editor" />
     <editor-content :editor="editor" />
   </div>
@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import StarterKit from '@tiptap/starter-kit'
 import { Editor, EditorContent } from '@tiptap/vue-3'
-import { onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { writeFile } from '@tauri-apps/api/fs';
 import EditorButtons from './EditorButtons.vue';
 
@@ -93,38 +93,36 @@ onMounted( () => {
     doFocus()
 })
 
-//   beforeUnmount() {
-//     this.editor.destroy()
-//   },
-// }
+onBeforeUnmount( () => {
+  editor.destroy()
+})
+
 </script>
 
 <style>
 
-.ProseMirror:focus {
+/* .ProseMirror:focus {
   outline: none;
+} */
+.wrapper_editor {
+  margin-left:20px;
 }
 .ProseMirror {
   max-height: 85vh;
   overflow: scroll;
-  margin-left: 10%;
   max-width: 750px;
-  /* width: 100%; */
+  margin-left: auto;
+  margin-right: auto;
+  height: 100vh;
 }
 
 .tiptap {
-  padding-right: 15px;
+  padding-right: 35px;
 }
 
 .is-active{
   background-color: gray;
   border-radius: .2rem;
 }
-
-/* .editor_frame {
-  max-width: 800px;
-  margin-left: 5%;
-  margin-right: 50px;
-}  */
 
 </style>

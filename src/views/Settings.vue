@@ -1,6 +1,6 @@
 <template>
-  <div class="px-4">
-    <router-link class="mt-auto" to="/">back to files</router-link>
+  <div class="py-4">
+    <router-link class="mt-auto" to="/"><Left /></router-link>
   </div>
   <div class="flex flex-col [&>select]:mb-2 [&>*]:w-64">
     <label>App Font</label>
@@ -28,7 +28,7 @@
   <div>
     <!-- <button @click="reload">Reload</button> -->
   </div>
-<div>
+<div class="mt-10">
   app_font: {{ selectedAppFont }} <br>
   editor_font: {{ selectedEditorFont }} <br>
   color_font: {{ selectedTextColors }}
@@ -41,6 +41,7 @@ import { readDir } from '@tauri-apps/api/fs';
 import { onMounted, ref, nextTick, toRef, computed} from 'vue';
 import { useSettings } from '@/stores/use-settings.ts'
 import { relaunch } from '@tauri-apps/api/process';
+import Left from 'vue-material-design-icons/ChevronLeft.vue';
 
 const settings = useSettings()
 const selectedAppFont = toRef(settings.getAppFont)

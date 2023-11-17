@@ -95,7 +95,8 @@
         "height": 800,
         "resizable": true,
         "title": "ThunderDown",
-        "width": 1000
+        "width": 1000,
+        "transparent": true
       }
     ]
   }

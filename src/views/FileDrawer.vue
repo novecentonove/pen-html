@@ -2,7 +2,9 @@
   <div class="flex flex-col app_font">
     <button @click="readFileContents">choose dir</button>
     <FileList :files="filesAndDir"/>
-    <router-link class="mt-auto" :to="settignsLink.to">{{ settignsLink.name }}</router-link>
+    <router-link class="mt-auto mb-2 ml-2" :to="settignsLink.to">
+      <IconSettings :size="18"/>
+    </router-link>
   </div>
 </template>
 
@@ -12,6 +14,7 @@ import { readDir } from '@tauri-apps/api/fs';
 import { open } from '@tauri-apps/api/dialog'
 import FileList from '@/components/FileDrawer/FileList.vue'
 import { useRoute } from 'vue-router'
+import IconSettings from 'vue-material-design-icons/Cog.vue';
 
 const route = useRoute()
 const pathDir = ref<string>('/home/dav/test')
@@ -26,9 +29,9 @@ onMounted( async () => {
 const readFileContents = async () => {
   try{
       const selecteDir = await open({
-          multiple: false,
-          title: 'Open Dir',
-          directory: true
+        multiple: false,
+        title: 'Open Dir',
+        directory: true
       });
       const files = await readDir(selecteDir as string)
   } catch(e){

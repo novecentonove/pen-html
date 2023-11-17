@@ -64,7 +64,7 @@ font-family: ADELIA
     document.documentElement.style.setProperty('--app_font', app_font.value)
     document.documentElement.style.setProperty('--editor_font', editor_font.value)
     document.documentElement.style.setProperty('--text_color', text_color.value)
-    document.documentElement.style.setProperty('--editor_font_size', `${editor_font_size}px`)
+    document.documentElement.style.setProperty('--editor_font_size', `${editor_font_size.value}px`)
 </script>
 
 <style>

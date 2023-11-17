@@ -1,5 +1,5 @@
 <template>
-  <div class="text-xs">
+  <div class="text-xs h-full">
     <ul class="inline-flex px-1 w-full list-none">
       <li v-for="(file, i) in openFiles" :key="i" @click="selectedPath = file.path"
         :class="{ 'border-b shadow-lg': selectedPath != file.path, 'border-t border-r border-l' :selectedPath == file.path}" 
