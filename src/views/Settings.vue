@@ -2,7 +2,7 @@
   <div class="px-4">
     <router-link class="mt-auto" to="/">back to files</router-link>
   </div>
-  <div class="flex flex-col [&>select]:mb-2 [&>select]:w-64">
+  <div class="flex flex-col [&>select]:mb-2 [&>*]:w-64">
     <label>App Font</label>
     <select v-model="selectedAppFont" @change="selectFont($event, 'app')">
       <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
@@ -20,6 +20,9 @@
         {{color.name}}
       </option>
     </select>
+
+    <label>Font size</label>
+    <input type="number" v-model="selectedFontSize">
   </div>
 
   <div>
@@ -82,6 +85,7 @@ const settings = useSettings()
 const selectedAppFont = toRef(settings.getAppFont)
 const selectedEditorFont = toRef(settings.getEditorFont)
 const selectedTextColors = toRef(settings.getFontColor)
+const selectedFontSize = toRef(12)
 
 // const extractFontFromDir = async (dir) => {
 //   const res = await readDir(dir as string)

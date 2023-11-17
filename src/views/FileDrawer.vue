@@ -10,7 +10,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { readDir } from '@tauri-apps/api/fs';
 import { open } from '@tauri-apps/api/dialog'
-import FileList from './FileList.vue'
+import FileList from '@/components/FileDrawer/FileList.vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()

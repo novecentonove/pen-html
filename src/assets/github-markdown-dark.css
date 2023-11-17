@@ -444,7 +444,7 @@
 .markdown-body pre,
 .markdown-body details {
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .markdown-body blockquote>:first-child {
@@ -563,7 +563,7 @@
 }
 
 .markdown-body li>p {
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
 .markdown-body li+li {

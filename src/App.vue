@@ -34,7 +34,7 @@ veder anche per locale:
 font-family: ADELIA
 */
   import { RouterView } from 'vue-router'
-  import FileDrawer from '@/views/FileDrawer/FileDrawer.vue';
+  import FileDrawer from '@/views/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
   import { computed, onMounted } from 'vue'
   import { useSettings } from '@/stores/use-settings'
@@ -92,7 +92,7 @@ font-family: ADELIA
 
 .fileDrawer, .main{
   height: 100vh;
-  max-height: calc(100vh - 32px);
+  max-height: calc(100vh - 30px);
 }
 
 .fileDrawer {
