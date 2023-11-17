@@ -1,5 +1,5 @@
 <template>
-  <div ref="el" :style="style" class="fixed flex bottom-2 right-12 z-10 h-10 w-[444px]">
+  <div ref="el" class="absolute flex bottom-2 left-2 z-10 h-10 w-[444px]">
     <div @click="toggle = !toggle" class="buttons_bar z-10 rounded-l-lg cursor-pointer inline-flex items-center justify-center pl-2 pr-2 h-10">
       <Right :size="15" />
     </div>
@@ -94,7 +94,7 @@ import Drag from 'vue-material-design-icons/Drag.vue';
 import Right from 'vue-material-design-icons/ChevronRight.vue';
 
 import { ref } from 'vue'
-import { useDraggable } from '@vueuse/core'
+// import { useDraggable } from '@vueuse/core'
 // import { useDraggable as Draggable} from '@vueuse/components'
 type Props = { 
   editor:  Object | null
@@ -105,9 +105,9 @@ const toggle = ref(false)
 
 const el = ref<HTMLElement | null>(null)
 
-const { x, y, style } = useDraggable(el, {
-  initialValue: { x: 200, y: 750 },
-})
+// const { x, y, style } = useDraggable(el, {
+//   initialValue: { x: 200, y: 750 },
+// })
 
 </script>
 

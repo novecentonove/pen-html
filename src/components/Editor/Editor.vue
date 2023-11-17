@@ -1,9 +1,11 @@
 <template>
-  <div @click="doFocus">
-    <div v-if="editor" class="wrapper_editor markdown-body editor_font editor_font_size" @keyup.ctrl.s="saveFile">
-      <EditorButtons :editor="editor" />
-      <editor-content :editor="editor" />
+  <div class="wrapper_editor relative markdown-body editor_font editor_font_size">
+    <div @click="doFocus($event)">
+      <div v-if="editor" @keyup.ctrl.s="saveFile">
+        <editor-content :editor="editor" />
+      </div>
     </div>
+    <EditorButtons v-if="editor" id="editor_buttons" :editor="editor" />
   </div>
 </template>
 
@@ -52,7 +54,7 @@ const saveFile = async () => {
   }
 }
 
-const doFocus = () => {
+const doFocus = (e = null) => {
   if(!editor.isFocused){
     editor.commands.focus('start')
   }
@@ -112,20 +114,37 @@ onBeforeUnmount( () => {
   outline: none;
 } */
 .wrapper_editor {
-  margin-left: 40px;
+  /* background-color: blueviolet; */
+  /* width: 100%; */
 }
-.ProseMirror {
+.tiptap  {
+  /* background-color: brown; */
+
   max-height: 85vh;
-  overflow: scroll;
+  overflow-y: scroll; 
+  /* margin: 30px auto;
   max-width: 750px;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100vh;
+  padding-right: 5%;
+  */
 }
 
-.tiptap {
-  padding-right: 35px;
+@media screen and (min-width: 701px) and (max-width: 1100px) {
+ .tiptap  {
+    /* max-width: 74%;
+    margin: 30px 5%; */
+  }
 }
+
+@media screen and (max-width: 700px) {
+ .tiptap  {
+    /* max-width: 400px;
+    margin: 30px 30px; */
+  }
+}
+
+/* .tiptap {
+  padding-right: 120px;
+} */
 
 .is-active{
   background-color: gray;
@@ -133,3 +152,5 @@ onBeforeUnmount( () => {
 }
 
 </style>
+
+

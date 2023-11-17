@@ -1,5 +1,5 @@
 <template>
-  <div class="text-xs h-full">
+  <div class="text-xs h-full w-full">
     <ul class="inline-flex px-1 w-full list-none">
       <li v-for="(file, i) in openFiles" :key="i" @click="selectedPath = file.path"
         :class="{ 'border-b shadow-lg': selectedPath != file.path, 'border-t border-r border-l' :selectedPath == file.path}" 
@@ -10,9 +10,9 @@
       <li class="border-b border-gray-600 shadow-lg w-full"></li>
     </ul> 
     <!-- <transition-group tag="ul" mode="out-in" name="list" appear> -->
-      <span v-for="file in openFiles" :key="file.path">
+      <section v-for="file in openFiles" :key="file.path">
         <Tab :name="file.name" :path="file.path">{{ file.content }}</Tab>
-      </span>
+      </section>
     <!-- </transition-group> -->
   </div>
 </template>
@@ -21,7 +21,7 @@
   import { useFiles } from '@/stores/use-files.ts'
   import { computed, provide, ref, watch } from 'vue'
   import TabsWrapper from './TabsWrapper.vue'
-  import Tab from './Tab.vue'
+  import Tab from '@/components/HomeTabs/Tab.vue'
   import  XMarkIcon from "@/components/Icons/XMarkIcon.vue";
 
   const store = useFiles()
