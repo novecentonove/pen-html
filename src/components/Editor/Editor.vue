@@ -1,8 +1,8 @@
 <template>
-  <div class="wrapper_editor relative markdown-body editor_font editor_font_size">
+  <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
     <div @click="doFocus($event)">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
-        <editor-content :editor="editor" />
+        <editor-content :editor="editor" class="" />
       </div>
     </div>
     <EditorButtons v-if="editor" id="editor_buttons" :editor="editor" />
@@ -16,7 +16,7 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { writeFile } from '@tauri-apps/api/fs';
 import EditorButtons from './EditorButtons.vue';
 
-type Props = { 
+type Props = {
   modelValue: '',
   name: '',
   path: ''
@@ -109,42 +109,37 @@ onBeforeUnmount( () => {
 </script>
 
 <style>
-
-/* .ProseMirror:focus {
-  outline: none;
-} */
-.wrapper_editor {
-  /* background-color: blueviolet; */
-  /* width: 100%; */
+.wrapper_editor, .tiptap {
+  max-height: 85vh;
+  height: 85vh;
 }
 .tiptap  {
-  /* background-color: brown; */
-
-  max-height: 85vh;
-  overflow-y: scroll; 
-  /* margin: 30px auto;
+  overflow-y: scroll;
+  margin: 30px auto;
   max-width: 750px;
   padding-right: 5%;
-  */
 }
 
-@media screen and (min-width: 701px) and (max-width: 1100px) {
+@media screen and (min-width: 901px) and (max-width: 1000px) {
  .tiptap  {
-    /* max-width: 74%;
-    margin: 30px 5%; */
+    max-width: 75%;
+    margin-left: 7%;
+  }
+}
+
+@media screen and (min-width: 701px) and (max-width: 900px) {
+ .tiptap  {
+    max-width: 71%;
+    margin-left: 30px;
   }
 }
 
 @media screen and (max-width: 700px) {
  .tiptap  {
-    /* max-width: 400px;
-    margin: 30px 30px; */
+    width: 60%;
+    margin-left: 30px;
   }
 }
-
-/* .tiptap {
-  padding-right: 120px;
-} */
 
 .is-active{
   background-color: gray;

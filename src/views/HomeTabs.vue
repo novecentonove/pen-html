@@ -9,11 +9,9 @@
       </li>
       <li class="border-b border-gray-600 shadow-lg w-full"></li>
     </ul> 
-    <!-- <transition-group tag="ul" mode="out-in" name="list" appear> -->
-      <section v-for="file in openFiles" :key="file.path">
-        <Tab :name="file.name" :path="file.path">{{ file.content }}</Tab>
-      </section>
-    <!-- </transition-group> -->
+    <section v-for="file in openFiles" :key="file.path">
+      <Tab :name="file.name" :path="file.path">{{ file.content }}</Tab>
+    </section>
   </div>
 </template>
 
