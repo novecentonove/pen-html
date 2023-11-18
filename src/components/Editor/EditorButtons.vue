@@ -1,14 +1,14 @@
 <template>
-  <div ref="el" class="absolute flex bottom-2 left-2 z-10 h-10 w-[444px]">
+  <!-- <div ref="el" class="absolute flex bottom-2 left-2 z-10 h-10 w-[444px]">
     <div @click="toggle = !toggle" class="buttons_bar z-10 rounded-l-lg cursor-pointer inline-flex items-center justify-center pl-2 pr-2 h-10">
       <Right :size="15" />
     </div>
     <div class="buttons_bar z-10 cursor-pointer inline-flex items-center justify-center pl-2 pr-2 h-10">
       <Drag :size="15" />
-    </div>
+    </div> -->
 
     <!-- <transition name="slide"> -->
-      <div v-if="toggle" class="buttons_bar h-10 flex z-10 rounded-r-lg">
+      <div class="buttons_bar h-10 flex z-10 rounded-r-lg">
         <section  class="toggle_section inline-flex items-center flex-wrap gap-x-4 p-1 rounded-r-lg [&>button]:p-1">
           <button @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
           <IconBold :size="15" />
@@ -76,7 +76,7 @@
         </section>
       </div>
     <!-- </transition> -->
-  </div>
+  <!-- </div> -->
 </template>
 
 <script setup lang="ts">
@@ -101,9 +101,9 @@ type Props = {
 }
 const props = defineProps<Props>()
 const editor = props.editor
-const toggle = ref(false)
+// const toggle = ref(false)
 
-const el = ref<HTMLElement | null>(null)
+// const el = ref<HTMLElement | null>(null)
 
 // const { x, y, style } = useDraggable(el, {
 //   initialValue: { x: 200, y: 750 },

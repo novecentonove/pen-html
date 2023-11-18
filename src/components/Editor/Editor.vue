@@ -1,18 +1,26 @@
 <template>
   <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
-    <div @click="doFocus($event)">
-      <!-- <p v-html="props.modelValue"></p> -->
+    <div>
+
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content :editor="editor" class="" />
       </div>
     </div>
-    <EditorButtons v-if="editor" id="editor_buttons" :editor="editor" />
+
+    <bubble-menu
+      :editor="editor"
+      :tippy-options="{ duration: 100 }"
+      v-if="editor"
+      class="buttons_bar h-10 flex z-10 rounded-r-lg"
+    >
+      <EditorButtons :editor="editor" />
+    </bubble-menu>
   </div>
 </template>
 
 <script setup lang="ts">
 import StarterKit from '@tiptap/starter-kit'
-import { Editor, EditorContent } from '@tiptap/vue-3'
+import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { writeFile } from '@tauri-apps/api/fs'
 import EditorButtons from './EditorButtons.vue'
@@ -91,6 +99,7 @@ onMounted( () => {
   editor = new Editor({
       extensions: [
         StarterKit,
+        BubbleMenu,
       ],
       editorProps: {
         attributes: {
@@ -124,30 +133,9 @@ onBeforeUnmount( () => {
   max-width: 95%;
   overflow-y: scroll;
   margin: 30px 12%;
-  padding-right: 30px;
+  padding-right: 40px;
   word-break: break-all;
 }
-
-/* @media screen and (min-width: 901px) and (max-width: 1000px) {
- .tiptap  {
-    width: 75%;
-    margin-left: 7%;
-  }
-}
-
-@media screen and (min-width: 701px) and (max-width: 900px) {
- .tiptap  {
-    width: 71%;
-    margin-left: 30px;
-  }
-}
-
-@media screen and (max-width: 700px) {
- .tiptap  {
-    width: 60%;
-    margin-left: 30px;
-  }
-} */
 
 .is-active{
   background-color: gray;
