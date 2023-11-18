@@ -1,45 +1,47 @@
 <template>
-  <div class="py-4">
-    <router-link class="mt-auto" to="/"><Left /></router-link>
-  </div>
-  <div class="flex flex-col [&>select]:mb-2 [&>*]:w-64">
-    <label>App Font</label>
-    <select v-model="selectedAppFont" @change="selectFont($event, 'app')">
-      <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
-    </select>
-
-    <label>Editor Font</label>
-    <select v-model="selectedEditorFont" @change="selectFont($event, 'editor')">
-      <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
-    </select>
-
-    <label>Text color</label>
-    <select v-model="selectedTextColors" @change="selectTextColors($event)">
-      <option v-for="(color, i) in textColors" :key="i" :value="color.value">
-        <!-- <div class="w-2 h-2" :style="`background-color:${color.value}`"></div> -->
-        {{color.name}}
-      </option>
-    </select>
-
-    <label>Font size</label>
-    <input type="number" v-model="selectedFontSize" @change="selectFontSize($event)">
-
-    <label class="mt-6">Base Dir</label>
-    <button @click="readFileContents">{{baseDir}}</button>
-
-    <div class="mt-10">
-      app_font: {{ selectedAppFont }} <br>
-      editor_font: {{ selectedEditorFont }} <br>
-      color_font: {{ selectedTextColors }} <br>
-      font_size: {{ selectedFontSize }}
+  <div class="px-12 overflow-y-scroll">
+    <div>
+      <router-link class="mt-auto" to="/"><Left /></router-link>
     </div>
-    
-    <div class="mt-10">
-      <label>Font size test</label>
-      <p :style="`font-size:${selectedFontSize}px`">
-        But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
-      </p>
+    <div class="flex flex-col [&>select]:mb-2 [&>*]:w-64">
+      <label>App Font</label>
+      <select v-model="selectedAppFont" @change="selectFont($event, 'app')">
+        <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
+      </select>
+
+      <label>Editor Font</label>
+      <select v-model="selectedEditorFont" @change="selectFont($event, 'editor')">
+        <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
+      </select>
+
+      <label>Text color</label>
+      <select v-model="selectedTextColors" @change="selectTextColors($event)">
+        <option v-for="(color, i) in textColors" :key="i" :value="color.value">
+          <!-- <div class="w-2 h-2" :style="`background-color:${color.value}`"></div> -->
+          {{color.name}}
+        </option>
+      </select>
+
+      <label>Font size</label>
+      <input type="number" v-model="selectedFontSize" @change="selectFontSize($event)">
+
+      <label class="mt-6">Base Dir</label>
+      <button @click="readFileContents">{{baseDir}}</button>
+
+      <div class="mt-10">
+        app_font: {{ selectedAppFont }} <br>
+        editor_font: {{ selectedEditorFont }} <br>
+        color_font: {{ selectedTextColors }} <br>
+        font_size: {{ selectedFontSize }}
       </div>
+    </div>
+      <div class="mt-10">
+        <label>Font size test</label>
+        <p :style="`font-size:${selectedFontSize}px`">
+          But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
+        </p>
+      </div>
+
   </div>
 
 

@@ -18,7 +18,7 @@
             <WindowClose :size="15" />
           </div>
         </div>
-        <RouterView/>
+        <RouterView />
       </div>
       
     </div>

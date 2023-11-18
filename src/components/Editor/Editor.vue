@@ -11,7 +11,6 @@
       :editor="editor"
       :tippy-options="{ duration: 100 }"
       v-if="editor"
-      class="buttons_bar h-10 flex z-10 rounded-r-lg"
     >
       <EditorButtons :editor="editor" />
     </bubble-menu>
@@ -137,10 +136,7 @@ onBeforeUnmount( () => {
   word-break: break-all;
 }
 
-.is-active{
-  background-color: gray;
-  border-radius: .2rem;
-}
+
 
 </style>
 
