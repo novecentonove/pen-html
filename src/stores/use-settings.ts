@@ -6,6 +6,7 @@ export const useSettings = defineStore('settings', {
     editorFont: 'Consolas',
     fontColor: '#fff',
     editorFontSize: 16,
+    basedir: '/home/dav/test'
   }),
 
   persist: true,
@@ -14,7 +15,8 @@ export const useSettings = defineStore('settings', {
     getAppFont: (state) => state.appFont,
     getEditorFont: (state) => state.editorFont,
     getFontColor: (state) => state.fontColor,
-    getEditorFontSize: (state) => state.editorFontSize
+    getEditorFontSize: (state) => state.editorFontSize,
+    getBaseDir: (state) => state.basedir
   },
 
   actions: {
@@ -29,6 +31,9 @@ export const useSettings = defineStore('settings', {
     },
     setEditorFontSize(number: number){
       this.editorFontSize = number
+    },
+    setBaseDir(path: string){
+      this.basedir = path
     }
   }
   

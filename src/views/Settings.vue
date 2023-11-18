@@ -24,6 +24,9 @@
     <label>Font size</label>
     <input type="number" v-model="selectedFontSize" @change="selectFontSize($event)">
 
+    <label class="mt-6">Base Dir</label>
+    <button @click="readFileContents">{{baseDir}}</button>
+
     <div class="mt-10">
       app_font: {{ selectedAppFont }} <br>
       editor_font: {{ selectedEditorFont }} <br>
@@ -44,17 +47,19 @@
 </template>
 
 <script setup lang="ts">
-import { readDir } from '@tauri-apps/api/fs';
-import { onMounted, ref, nextTick, toRef, computed} from 'vue';
+import { readDir } from '@tauri-apps/api/fs'
+import { open } from '@tauri-apps/api/dialog'
+import { onMounted, ref, nextTick, toRef, computed} from 'vue'
 import { useSettings } from '@/stores/use-settings.ts'
-import { relaunch } from '@tauri-apps/api/process';
-import Left from 'vue-material-design-icons/ChevronLeft.vue';
+import { relaunch } from '@tauri-apps/api/process'
+import Left from 'vue-material-design-icons/ChevronLeft.vue'
 
 const settings = useSettings()
-const selectedAppFont = toRef(settings.getAppFont)
-const selectedEditorFont = toRef(settings.getEditorFont)
-const selectedTextColors = toRef(settings.getFontColor)
-const selectedFontSize = toRef(settings.getEditorFontSize)
+const selectedAppFont = computed( () => settings.getAppFont)
+const selectedEditorFont = computed( () => settings.getEditorFont)
+const selectedTextColors = computed( () => settings.getFontColor)
+const selectedFontSize = computed( () => settings.getEditorFontSize)
+const baseDir = computed( () => settings.getBaseDir)
 
 // const extractFontFromDir = async (dir) => {
 //   const res = await readDir(dir as string)
@@ -135,6 +140,19 @@ const selectTextColors = (e) => {
 const selectFontSize = (e) => {
   settings.setEditorFontSize(e.target.value)
   document.documentElement.style.setProperty('--editor_font_size', `${e.target.value}px`)
+}
+
+const readFileContents = async () => {
+  try{
+      const selecteDir = await open({
+        multiple: false,
+        title: 'Open Dir',
+        directory: true
+      });
+      settings.setBaseDir(selecteDir)
+  } catch(e){
+      console.error(e)
+  }
 }
 
 </script>

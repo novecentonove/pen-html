@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import FileType from '@/types/FileType.ts'
 
 export type RootState = {
-  openFiles: FileType[]
-  clickDrawerFile: FileType[]
+  openFiles: Omit<FileType, 'children'>[]
+  clickDrawerFile: Omit<FileType, 'children'>[]
   savedFile: 0
 };
 
@@ -23,7 +23,7 @@ export const useFiles = defineStore('files', {
   },
 
   actions: {
-    addPage(file: FileType) {
+    addPage(file: Omit<FileType, 'children'>) {
       let exists = false
       this.openFiles.forEach(tab => {
         if(tab.path === file.path){
