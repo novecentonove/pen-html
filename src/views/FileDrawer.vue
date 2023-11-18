@@ -1,16 +1,16 @@
 <template>
   <div class="pl-2 pt-[26px] flex flex-col app_font text-sm">
-    <div v-if="openedFiles.length">
+    <div >
       <p class="pb-[6px] pl-2 mb-2 border-b border-gray-600">Opened files</p>
       <ul v-for="file in openedFiles">
         <li class="pl-2 mb-2 flex items-center"><Text :size="12" class="mr-1" /> {{ file.name }}</li>
       </ul>
     </div>
-    <div class="p-2 leading-7 overflow-x-scroll">
+    <div class="h-full p-2 leading-7 overflow-x-scroll">
       <p class="pb-[6px] border-b border-gray-600"></p>
       <FileList :files="filesAndDir"/>
     </div>
-    <div class="relative flex justify-between mt-auto mb-3 mx-3">
+    <div class="relative pt-3 flex justify-between mt-auto mb-3 mx-3">
       <router-link :to="settignsLink.to">
         <IconSettings :size="18"/>
       </router-link>

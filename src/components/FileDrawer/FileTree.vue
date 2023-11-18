@@ -38,7 +38,7 @@ const toggleChildren = () => {
 }
 
 const openFile = async (file: FileType) => {
-  const allowedExt = ['md', 'txt', 'html'];
+  const allowedExt = ['html'];
   var ext = file.name.split('.').pop();
   if(allowedExt.includes(ext)) {
     store.addPage(file)

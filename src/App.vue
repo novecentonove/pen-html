@@ -1,7 +1,7 @@
 <template>
   <div class="main text_color overflow-x-scroll">
     <div class="flex max-w-full">
-      <FileDrawer class="fileDrawer min-w-[144px]"/>
+      <FileDrawer class="fileDrawer min-w-[190px]"/>
       
       <div class="flex flex-col w-full">
         <div data-tauri-drag-region class="titlebar text_color">
