@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
     <div @click="doFocus($event)">
+      <!-- <p v-html="props.modelValue"></p> -->
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content :editor="editor" class="" />
       </div>
@@ -120,13 +121,14 @@ onBeforeUnmount( () => {
   height: 85vh;
 }
 .tiptap  {
+  max-width: 95%;
   overflow-y: scroll;
   margin: 30px 30px;
-  width: 750px;
   padding-right: 30px;
+  word-break: break-all;
 }
 
-@media screen and (min-width: 901px) and (max-width: 1000px) {
+/* @media screen and (min-width: 901px) and (max-width: 1000px) {
  .tiptap  {
     width: 75%;
     margin-left: 7%;
@@ -145,7 +147,7 @@ onBeforeUnmount( () => {
     width: 60%;
     margin-left: 30px;
   }
-}
+} */
 
 .is-active{
   background-color: gray;
