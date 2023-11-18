@@ -13,7 +13,7 @@ type Props = {
 }
 const props = defineProps<Props>()
 
-const show = ref(true)
+const show = ref(false)
 
 watch(() => props.trigger, (val) => {
   show.value = true

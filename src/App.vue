@@ -15,9 +15,9 @@
   </div>
   <div class="main text_color overflow-x-scroll">
     <div class="flex max-w-full">
-      <FileDrawer class="fileDrawer min-w-[144px]" style="flex-shrink: 0;"/>
+      <FileDrawer class="fileDrawer min-w-[144px]"/>
       <!-- <div class="router_view"> -->
-      <RouterView style="flex-shrink: 1;"/>
+      <RouterView/>
       <!-- </div> -->
     </div>
   </div>

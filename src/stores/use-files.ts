@@ -36,11 +36,7 @@ export const useFiles = defineStore('files', {
     },
 
     closeTab(path: string){
-      this.openFiles.forEach((tab, i) => {
-        if(tab.path === path){
-          this.openFiles.splice(i, i+1);
-        }
-      })
+      this.openFiles = this.openFiles.filter( tab => tab.path !== path)
     },
 
     savedFileTrigger(){
