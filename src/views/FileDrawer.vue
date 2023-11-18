@@ -1,6 +1,6 @@
 <template>
   <div class="pl-2 pt-[26px] flex flex-col app_font text-sm">
-    <div >
+    <div v-if="openedFiles.length">
       <p class="pb-[6px] pl-2 mb-2 border-b border-gray-600">Opened files</p>
       <ul v-for="file in openedFiles">
         <li class="pl-2 mb-2 flex items-center"><Text :size="12" class="mr-1" /> {{ file.name }}</li>

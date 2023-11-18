@@ -7,7 +7,7 @@
         {{file.name}} 
         <XMarkIcon @click="closeTab(selectedPath)" class="ml-3 h-auto w-3 text-gray-500" />
       </li>
-      <li class="border-b border-gray-600 shadow-lg w-full"></li>
+      <li class="border-b border-gray-600 shadow-lg w-full min-h-[21px]"></li>
     </ul> 
     <section v-for="file in openFiles" :key="file.path">
       <Tab :name="file.name" :path="file.path">{{ file.content }}</Tab>
@@ -30,7 +30,8 @@
 
   provide('selectedPath', selectedPath)
 
-  watch(store.getOpenFiles, (file) => {
+  watch(openFiles, (file) => {
+    console.log('openFiles')
     if(file.length){
       selectedPath.value = file[file.length-1].path
     }

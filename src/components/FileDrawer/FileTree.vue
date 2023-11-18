@@ -18,7 +18,7 @@ import FileType from '@/types/FileType.ts'
 import Folder from 'vue-material-design-icons/Folder.vue';
 import Text from 'vue-material-design-icons/TextLong.vue';
 import FileTree from './FileTree.vue'
-import { computed, ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 import { useFiles } from '@/stores/use-files.ts'
 
 const store = useFiles()
@@ -28,7 +28,6 @@ const props = defineProps<{
   depth: number
   file: FileType
 }>()
-
 
 const indent = computed( () => `transform: translate(${props.depth * 10}px)` )
 const showChildren = ref(false)
@@ -42,6 +41,7 @@ const openFile = async (file: FileType) => {
   var ext = file.name.split('.').pop();
   if(allowedExt.includes(ext)) {
     store.addPage(file)
+    // provide('selectedPath', file.path) commentato perchè prima funzionava
   }
 }
 
