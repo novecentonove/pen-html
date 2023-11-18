@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col app_font">
-    <button @click="readFileContents">choose dir</button>
-    <FileList :files="filesAndDir"/>
+    <!-- <button @click="readFileContents">choose dir</button> -->
+    <div class="p-2 leading-7">
+      <FileList :files="filesAndDir"/>
+    </div>
     <div class="relative flex justify-between mt-auto mb-3 mx-3">
       <router-link :to="settignsLink.to">
         <IconSettings :size="18"/>
@@ -32,9 +34,30 @@ watch(saved_file, (value) => {
   console.log('saved', value)
 })
 
+
+// recursive get structure
+const getLStructureDir = async (content) => {
+  for (const file of content) {
+
+      if(typeof file.children === 'object'){
+        const inside = await readDir((file.path as string))
+        getLStructureDir(inside)
+        file.children = (inside)
+      }
+    }
+
+    content.sort( (a,b) => typeof a.children === 'object' ? -1 : 1)
+
+    return content
+}
+
 onMounted( async () => {
   if(pathDir.value){
-    filesAndDir.value = await readDir(pathDir.value as string)
+    const content = await readDir(pathDir.value as string)
+    const result = await getLStructureDir(content)
+
+    filesAndDir.value = result
+    console.log(result)
   }
 })
 

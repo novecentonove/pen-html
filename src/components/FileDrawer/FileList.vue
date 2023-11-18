@@ -1,41 +1,24 @@
 <template>
   <template v-if="files?.length">
-    <div v-for="file in files" :key="file.name">
-      <span @click="openFile(file)">{{ file.name }}</span>
-    </div>
+
+    <ul class="list-none text-md">
+      <FileTree v-for="file in files" :file="file" :children="file.children" :depth="0"/>
+    </ul>
+
   </template>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { readTextFile, readDir } from '@tauri-apps/api/fs';
-import { useFiles } from '@/stores/use-files.ts'
+
 import FileType from '@/types/FileType.ts'
+import FileTree from './FileTree.vue'
 
-const store = useFiles()
-
+import Structure from './Structure.vue'
 
 const props = defineProps<{
   files?: FileType[]
 }>()
 
-const openFile = async (file: FileType) => {
-  if(typeof file.children === 'object') return
-  // const content = await readTextFile(file.path as string)
-  store.addPage(file)
-}
-
-// {
-//   "children": [],
-//   "name": "Dir",
-//   "path": "/home/dav/test/Dir"
-// },
-// {
-//   "name": "file.txt",
-//   "path": "/home/dav/test/file.txt"
-// },
-// {
-//   "name": "file2.txt",
-//   "path": "/home/dav/test/file2.txt"
-// }
 </script>
