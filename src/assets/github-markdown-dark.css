@@ -722,8 +722,16 @@
   margin: 0;
   font-size: 85%;
   white-space: break-spaces;
-  background-color: rgba(110,118,129,0.4);
+  background-color: #87837826;
   border-radius: 6px;
+}
+
+.markdown-body code{
+  color: #EB5757;
+}
+
+.markdown-body pre code{
+  color: #969696;
 }
 
 .markdown-body code br,

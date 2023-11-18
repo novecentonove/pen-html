@@ -123,7 +123,7 @@ onBeforeUnmount( () => {
 .tiptap  {
   max-width: 95%;
   overflow-y: scroll;
-  margin: 30px 30px;
+  margin: 30px 12%;
   padding-right: 30px;
   word-break: break-all;
 }

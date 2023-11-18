@@ -1,6 +1,13 @@
 <template>
-  <div class="flex flex-col app_font">
-    <div class="p-2 leading-7">
+  <div class="pl-2 pt-[26px] flex flex-col app_font text-sm">
+    <div v-if="openedFiles.length">
+      <p class="pb-[6px] pl-2 mb-2 border-b border-gray-600">Opened files</p>
+      <ul v-for="file in openedFiles">
+        <li class="pl-2 mb-2 flex items-center"><Text :size="12" class="mr-1" /> {{ file.name }}</li>
+      </ul>
+    </div>
+    <div class="p-2 leading-7 overflow-x-scroll">
+      <p class="pb-[6px] border-b border-gray-600"></p>
       <FileList :files="filesAndDir"/>
     </div>
     <div class="relative flex justify-between mt-auto mb-3 mx-3">
@@ -21,6 +28,7 @@ import IconSettings from 'vue-material-design-icons/Cog.vue';
 import { useRoute } from 'vue-router'
 import { useFiles } from '@/stores/use-files'
 import { useSettings } from '@/stores/use-settings'
+import Text from 'vue-material-design-icons/TextLong.vue'
 
 const route = useRoute()
 // const pathDir = ref<string>('/home/dav/test')
@@ -29,7 +37,9 @@ const files = useFiles()
 const settings = useSettings()
 
 const saved_file = computed(() => files.getSavedFile)
+const openedFiles = computed( () => files.getOpenFiles)
 const baseDir = computed( () => settings.getBaseDir)
+
 
 watch(saved_file, (value) => {
   console.log('saved', value)

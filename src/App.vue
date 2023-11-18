@@ -1,24 +1,26 @@
 <template>
-  <div data-tauri-drag-region class="titlebar text_color">
-    <div class="mx-auto pt-1">
-      <p>pen</p>
-    </div>
-    <div class="titlebar-button" id="titlebar-minimize">
-      <WindowMinimize :size="15" />
-    </div>
-    <div class="titlebar-button" id="titlebar-maximize">
-      <WindowMaximize :size="15" />
-    </div>
-    <div class="titlebar-button" id="titlebar-close">
-      <WindowClose :size="15" />
-    </div>
-  </div>
   <div class="main text_color overflow-x-scroll">
     <div class="flex max-w-full">
       <FileDrawer class="fileDrawer min-w-[144px]"/>
-      <!-- <div class="router_view"> -->
-      <RouterView/>
-      <!-- </div> -->
+      
+      <div class="flex flex-col w-full">
+        <div data-tauri-drag-region class="titlebar text_color">
+          <div class="mx-auto pt-1">
+            <p class="text-xs pt-0.5">pen</p>
+          </div>
+          <div class="titlebar-button" id="titlebar-minimize">
+            <WindowMinimize :size="15" />
+          </div>
+          <div class="titlebar-button" id="titlebar-maximize">
+            <WindowMaximize :size="15" />
+          </div>
+          <div class="titlebar-button" id="titlebar-close">
+            <WindowClose :size="15" />
+          </div>
+        </div>
+        <RouterView/>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -73,8 +75,8 @@ font-family: ADELIA
 
 <style>
 .titlebar {
-  height: 30px;
-  background-color: #282c34;
+  width: 100%;
+  height: 20px;
   user-select: none;
   display: flex;
   justify-content: flex-end;
@@ -93,7 +95,7 @@ font-family: ADELIA
 }
 
 .titlebar-button:hover {
-  background: #5bbec3;
+  background: black;
 }
 
 .fileDrawer, .main{
@@ -102,12 +104,29 @@ font-family: ADELIA
   /* min-width: 300px; */
 }
 
+.titlebar {
+  background-color: #191919;
+}
+
 .fileDrawer {
-  background-color: #21252b;
+  background-color: #202020;
 }
 
 .main{
-  background-color: #282c34;
+  background-color: #191919;
 }
 
+
+/*
+initiols: 
+
+fileDrawer #21252b;
+main #282c34;
+
+fileDrawer #1a181f
+
+fileDrawer #0f0f0f
+main #171717;
+textcolor: #aec3d1
+ */
 </style>

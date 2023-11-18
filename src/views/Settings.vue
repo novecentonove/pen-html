@@ -91,8 +91,8 @@ const fontFamilies = ref([
 
 const textColors = ref(
   [
-  { name: 'Thundercloud', value: '#808080' },
-  { name: 'Slate', value: '#888888' },
+  { name: 'Notion', value: '#d3d3d3' },
+  { name: 'NotionDark', value: '#b0b0b0' },
   { name: 'Stormy Sky', value: '#909090' },
   { name: 'Pewter', value: '#989898' },
   { name: 'Silver Bullet', value: '#A0A0A0' },
