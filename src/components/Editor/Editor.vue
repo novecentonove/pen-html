@@ -17,7 +17,6 @@ import { writeFile } from '@tauri-apps/api/fs'
 import EditorButtons from './EditorButtons.vue'
 import { useFiles } from '@/stores/use-files'
 
-
 type Props = {
   modelValue: '',
   name: '',

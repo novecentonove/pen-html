@@ -2,23 +2,35 @@
   <div class="flex flex-col app_font">
     <button @click="readFileContents">choose dir</button>
     <FileList :files="filesAndDir"/>
-    <router-link class="mt-auto mb-2 ml-2" :to="settignsLink.to">
-      <IconSettings :size="18"/>
-    </router-link>
+    <div class="relative flex justify-between mt-auto mb-3 mx-3">
+      <router-link :to="settignsLink.to">
+        <IconSettings :size="18"/>
+      </router-link>
+      <Toast :trigger="saved_file" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { readDir } from '@tauri-apps/api/fs';
 import { open } from '@tauri-apps/api/dialog'
 import FileList from '@/components/FileDrawer/FileList.vue'
-import { useRoute } from 'vue-router'
+import Toast from '@/components/FileDrawer/Toast.vue'
 import IconSettings from 'vue-material-design-icons/Cog.vue';
+import { useRoute } from 'vue-router'
+import { useFiles } from '@/stores/use-files'
 
 const route = useRoute()
 const pathDir = ref<string>('/home/dav/test')
 const filesAndDir = ref([])
+const files = useFiles()
+
+const saved_file = computed(() => files.getSavedFile)
+
+watch(saved_file, (value) => {
+  console.log('saved', value)
+})
 
 onMounted( async () => {
   if(pathDir.value){
@@ -51,5 +63,6 @@ const settignsLink = computed( () => {
       name: 'back to files'
     }
 })
+
 </script>
 
