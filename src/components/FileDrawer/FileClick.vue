@@ -9,7 +9,8 @@ import { useFiles } from '@/stores/use-files.ts'
 const files = useFiles()
 
 type Props = { 
-  file:  FileType | null
+  file:  FileType | null,
+  onlySelect?:  boolean,
 }
 const props = defineProps<Props>()
 
@@ -18,9 +19,10 @@ const openFile = async (file: FileType) => {
   var ext = file.name.split('.').pop();
 
   if(allowedExt.includes(ext)) {
-    files.addPage(file)
+    if(!props.onlySelect){
+      files.addPage(file)
+    }
     files.setSelectedPath(file.path)
-    console.log('FileClick', file.path)
   }
   
 }

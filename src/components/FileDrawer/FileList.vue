@@ -9,13 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { readTextFile, readDir } from '@tauri-apps/api/fs';
-
 import FileType from '@/types/FileType.ts'
 import FileTree from './FileTree.vue'
-
-import Structure from './Structure.vue'
 
 const props = defineProps<{
   files?: FileType[]

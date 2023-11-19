@@ -28,6 +28,7 @@ export const useFiles = defineStore('files', {
   actions: {
     setSelectedPath(path: string) {
       this.selectedPath = path
+      console.log('now path is:', path )
     },
     addPage(file: Omit<FileType, 'children'>) {
       let exists = false
@@ -43,6 +44,16 @@ export const useFiles = defineStore('files', {
 
     closeTab(path: string){
       this.openFiles = this.openFiles.filter( tab => tab.path !== path)
+      console.log('1', this.getSelectedPath)
+      if(this.getOpenFiles.length){
+        console.log('ok')
+
+        this.setSelectedPath(this.getOpenFiles[this.getOpenFiles.length-1].path)
+      } else {
+        this.setSelectedPath('')
+      }
+      console.log('2', this.getSelectedPath)
+
     },
 
     savedFileTrigger(){
