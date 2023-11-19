@@ -129,12 +129,13 @@ onBeforeUnmount( () => {
   overflow-y: scroll;
   margin: 30px 12%;
   padding-right: 40px;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 @media screen and (max-width: 1000px){
   .tiptap {
     margin: 30px 0;
+    padding-right: 15px;
   }
 }
 
