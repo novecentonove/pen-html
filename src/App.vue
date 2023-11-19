@@ -1,24 +1,24 @@
 <template>
   <div class="main text_color overflow-x-scroll">
-    <div class="flex max-w-full">
+    <div class="flex">
       <FileDrawer class="fileDrawer min-w-[190px]"/>
       
-      <div class="flex flex-col w-full">
+      <div class="flex flex-col w-full h-screen">
         <div data-tauri-drag-region class="titlebar text_color">
           <div class="mx-auto pt-1">
             <p class="text-xs pt-0.5">pen</p>
           </div>
-          <div class="titlebar-button" id="titlebar-minimize">
+          <div class="titlebar-button" @click="appWindow.minimize()">
             <WindowMinimize :size="15" />
           </div>
-          <div class="titlebar-button" id="titlebar-maximize">
+          <div class="titlebar-button" @click="appWindow.toggleMaximize()">
             <WindowMaximize :size="15" />
           </div>
-          <div class="titlebar-button" id="titlebar-close">
+          <div class="titlebar-button" @click="appWindow.close()">
             <WindowClose :size="15" />
           </div>
         </div>
-        <RouterView />
+        <RouterView class="px-12 pb-12"/>
       </div>
       
     </div>
@@ -53,16 +53,6 @@ font-family: ADELIA
   const editor_font_size = computed( ()=> settings.getEditorFontSize)
 
   onMounted( () => {
-    document
-      .getElementById('titlebar-minimize')
-      .addEventListener('click', () => appWindow.minimize())
-    document
-      .getElementById('titlebar-maximize')
-      .addEventListener('click', () => appWindow.toggleMaximize())
-    document
-      .getElementById('titlebar-close')
-      .addEventListener('click', () => appWindow.close())
-
       // set fonts
       document.documentElement.style.setProperty('--app_font', app_font.value)
       document.documentElement.style.setProperty('--editor_font', editor_font.value)
@@ -76,18 +66,14 @@ font-family: ADELIA
 <style>
 .titlebar {
   width: 100%;
-  height: 20px;
+  height: 30px;
   user-select: none;
   display: flex;
   justify-content: flex-end;
-  /* position: fixed; */
-  top: 0;
-  left: 0;
-  right: 0;
 }
 
 .titlebar-button {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 30px;
@@ -95,13 +81,18 @@ font-family: ADELIA
 }
 
 .titlebar-button:hover {
-  background: black;
+  background-color: black;
 }
 
-.fileDrawer, .main{
+.main{
+  /* height: calc(100vh + 40px); */
   height: 100vh;
-  max-height: calc(100vh - 30px);
+  /* max-height: calc(100vh); */
   /* min-width: 300px; */
+}
+.fileDrawer {
+  /* max-height: calc(100vh); */
+  height: 100vh;
 }
 
 .titlebar {

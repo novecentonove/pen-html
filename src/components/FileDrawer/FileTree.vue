@@ -1,8 +1,8 @@
 <template>
-  <li v-if="props.children" :style="indent" class="flex items-center" @click="toggleChildren">
+  <li v-if="props.children" :style="indent" class="cursor-pointer flex items-center" @click="toggleChildren">
     <Folder :size="12" class="mr-1" />{{ props.file.name }}
   </li>
-  <li v-else :style="indent" class="flex items-center" >
+  <li v-else :style="indent" class="cursor-pointer flex items-center" >
     <Text :size="12" class="mr-1" /><FileClick :file="props.file" />
   </li>
   

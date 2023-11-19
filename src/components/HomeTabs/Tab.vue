@@ -22,7 +22,7 @@ const path = toRef(props.path)
 
 const selectedPath = computed( () => files.getSelectedPath)
 
-const content = ref('')
+const content = ref(' ')
 
 onMounted( async () => {
   content.value = await readTextFile(props.path as string)

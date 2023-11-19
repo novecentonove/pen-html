@@ -122,8 +122,7 @@ onBeforeUnmount( () => {
 
 <style>
 .wrapper_editor, .tiptap {
-  max-height: 85vh;
-  height: 85vh;
+  max-height: calc(100vh - 111px);
 }
 .tiptap  {
   max-width: 95%;
@@ -133,6 +132,11 @@ onBeforeUnmount( () => {
   word-break: break-all;
 }
 
+@media screen and (max-width: 1000px){
+  .tiptap {
+    margin: 30px 0;
+  }
+}
 
 
 </style>
