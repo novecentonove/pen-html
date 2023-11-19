@@ -73,7 +73,7 @@ const doFocus = (e = null) => {
 }
 
 watch(() => props.modelValue, (value) => {
-  console.log(lastFileContent == editor.getHTML())
+  console.log(lastFileContent == editor.getHTML()) // TODO
   // HTML
   isSame.value = editor.getHTML() === value
 
@@ -135,7 +135,7 @@ onBeforeUnmount( () => {
 @media screen and (max-width: 1000px){
   .tiptap {
     margin: 30px 0;
-    padding-right: 15px;
+    padding-right: 5%;
   }
 }
 
