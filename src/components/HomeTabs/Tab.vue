@@ -1,20 +1,26 @@
 <template>
-  <div v-show="props.path == selectedPath">
+  <div v-show="path == selectedPath">
     <Editor v-model="content" :name="name" :path="path" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted, ref } from 'vue'
+import { computed, inject, onMounted, ref, toRef } from 'vue'
 import { readTextFile } from '@tauri-apps/api/fs'
 import Editor from '@/components/Editor/Editor.vue'
+import { useFiles } from '@/stores/use-files.ts'
+import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
   name: string
   path: string
 }>()
 
-const selectedPath = inject('selectedPath')
+const files = useFiles()
+
+const path = toRef(props.path)
+
+const selectedPath = computed( () => files.getSelectedPath)
 
 const content = ref('')
 

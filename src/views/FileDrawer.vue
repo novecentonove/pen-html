@@ -3,7 +3,7 @@
     <div v-if="openedFiles.length">
       <p class="pb-[6px] pl-2 mb-2 border-b border-gray-600">Opened files</p>
       <ul v-for="file in openedFiles">
-        <li class="pl-2 mb-2 flex items-center"><Text :size="12" class="mr-1" /> {{ file.name }}</li>
+        <li class="pl-2 mb-2 flex items-center"><Text :size="12" class="mr-1" /><FileClick :file="file"/></li>
       </ul>
     </div>
     <div class="h-full p-2 leading-7 overflow-x-scroll">
@@ -29,6 +29,7 @@ import { useRoute } from 'vue-router'
 import { useFiles } from '@/stores/use-files'
 import { useSettings } from '@/stores/use-settings'
 import Text from 'vue-material-design-icons/TextLong.vue'
+import FileClick from '../components/FileDrawer/FileClick.vue';
 
 const route = useRoute()
 // const pathDir = ref<string>('/home/dav/test')
@@ -39,11 +40,6 @@ const settings = useSettings()
 const saved_file = computed(() => files.getSavedFile)
 const openedFiles = computed( () => files.getOpenFiles)
 const baseDir = computed( () => settings.getBaseDir)
-
-
-watch(saved_file, (value) => {
-  console.log('saved', value)
-})
 
 watch(baseDir, async (value) => {
   const content = await readDir(value as string)

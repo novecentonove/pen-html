@@ -59,12 +59,10 @@ const saveFile = async () => {
         path: props.path,
       }
     )
-    // console.log('saved!')
     files.savedFileTrigger()
 
   } catch (e) {
-    console.log(e);
-
+    console.log(e)
   }
 }
 
@@ -72,7 +70,6 @@ const doFocus = (e = null) => {
   if(!editor.isFocused){
     editor.commands.focus('start')
   }
-  console.log('focus')
 }
 
 watch(() => props.modelValue, (value) => {

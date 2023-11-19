@@ -1,7 +1,7 @@
 <template>
   <div class="text-xs h-full w-full">
     <ul class="flex w-full list-none">
-      <li v-for="(file, i) in openFiles" :key="i" @click="selectedPath = file.path"
+      <li v-for="(file, i) in openFiles" :key="i" @click="setSelectedPath(file)"
         :class="{ 'border-b shadow-lg': selectedPath != file.path, 'border-t border-r border-l' :selectedPath == file.path}" 
         class="flex shrink-0 align-middle pl-4 py-2 pr-2 font-semibold rounded-t border-gray-600 cursor-pointer">
         {{file.name}} 
@@ -18,31 +18,33 @@
 <script setup lang="ts">
   import { useFiles } from '@/stores/use-files.ts'
   import { computed, provide, ref, watch } from 'vue'
-  import TabsWrapper from './TabsWrapper.vue'
   import Tab from '@/components/HomeTabs/Tab.vue'
-  import  XMarkIcon from "@/components/Icons/XMarkIcon.vue";
+  import XMarkIcon from "@/components/Icons/XMarkIcon.vue";
+  import FileType from '../types/FileType';
 
-  const store = useFiles()
-  const openFiles = computed(() => store.getOpenFiles)
-  const clickedFromDrawer = computed(() => store.getClickDrawerFile)
+  const files = useFiles()
+  const openFiles = computed(() => files.getOpenFiles)
+  const clickedFromDrawer = computed(() => files.getClickDrawerFile)
 
-  const selectedPath = ref(store.openFiles?.[0] ? store.openFiles[0].path : null)
+  const selectedPath = computed( () => files.getSelectedPath)
 
-  provide('selectedPath', selectedPath)
-
-  watch(openFiles, (file) => {
-    console.log('openFiles')
+  watch(openFiles, (file: FileType) => {
     if(file.length){
       selectedPath.value = file[file.length-1].path
     }
   })
 
-  watch(clickedFromDrawer, (file) => {
+  watch(clickedFromDrawer, (file: FileType) => {
     selectedPath.value = file.path
   })
 
-  const closeTab = (selectedPath: string) => {
-    store.closeTab(selectedPath)
+  const setSelectedPath = (file: FileType) => {
+    console.log('click to tab', file.path)
+    files.setSelectedPath(file.path)
+  }
+
+  const closeTab = (path: string) => {
+    files.closeTab(path)
   }
 
 </script>

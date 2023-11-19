@@ -3,6 +3,7 @@ import FileType from '@/types/FileType.ts'
 
 export type RootState = {
   openFiles: Omit<FileType, 'children'>[]
+  selectedPath: string,
   clickDrawerFile: Omit<FileType, 'children'>[]
   savedFile: 0
 };
@@ -10,6 +11,7 @@ export type RootState = {
 export const useFiles = defineStore('files', {
   state: () => ({ 
     openFiles: [],
+    selectedPath: '',
     clickDrawerFile: [],
     savedFile: 0
   } as RootState),
@@ -20,9 +22,13 @@ export const useFiles = defineStore('files', {
     getOpenFiles: (state) => state.openFiles,
     getClickDrawerFile: (state) => state.clickDrawerFile,
     getSavedFile: (state) => state.savedFile,
+    getSelectedPath: (state) => state.selectedPath,
   },
 
   actions: {
+    setSelectedPath(path: string) {
+      this.selectedPath = path
+    },
     addPage(file: Omit<FileType, 'children'>) {
       let exists = false
       this.openFiles.forEach(tab => {
