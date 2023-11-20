@@ -8,7 +8,7 @@
 import { computed, onMounted, ref, toRef } from 'vue'
 import { readTextFile } from '@tauri-apps/api/fs'
 import Editor from '@/components/Editor/Editor.vue'
-import { useFiles } from '@/stores/use-files.ts'
+import { useFiles } from '@/stores/use-files'
 
 const props = defineProps<{
   name: string

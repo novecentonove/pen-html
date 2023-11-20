@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 // @ts-ignore
-import { FileType } from '@/types/FileType.ts'
+import { type FileType } from '@/types/FileType.ts'
 
 export type RootState = {
   openFiles: Omit<FileType, 'children'>[]

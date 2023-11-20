@@ -16,11 +16,11 @@
 </template>
 
 <script setup lang="ts">
-  import { useFiles } from '@/stores/use-files.ts'
+  import { useFiles } from '@/stores/use-files'
   import { computed } from 'vue'
   import Tab from '@/components/HomeTabs/Tab.vue'
   import XMarkIcon from "@/components/Icons/XMarkIcon.vue"
-  import { FileType } from '@/types/FileType'
+  import { type FileType } from '@/types/FileType'
 
   const files = useFiles()
   const openFiles = computed(() => files.getOpenFiles)

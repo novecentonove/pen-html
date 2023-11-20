@@ -32,7 +32,7 @@ import { useSettings } from '@/stores/use-settings'
 // @ts-ignore
 import Text from 'vue-material-design-icons/TextLong.vue'
 import FileClick from '../components/FileDrawer/FileClick.vue';
-import { FileType } from '@/types/FileType';
+import { type FileType } from '@/types/FileType';
 
 const route = useRoute()
 // const pathDir = ref<string>('/home/dav/test')

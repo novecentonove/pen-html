@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { FileType } from '../../types/FileType';
-import { useFiles } from '@/stores/use-files.ts'
+import { type FileType } from '../../types/FileType';
+import { useFiles } from '@/stores/use-files'
 
 const files = useFiles()
 

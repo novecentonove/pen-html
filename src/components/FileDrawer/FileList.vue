@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { FileType } from '@/types/FileType.ts'
+import { type FileType } from '@/types/FileType.ts'
 import FileTree from './FileTree.vue'
 
 const props = defineProps<{

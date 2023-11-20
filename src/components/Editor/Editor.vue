@@ -20,10 +20,10 @@
 <script setup lang="ts">
 import StarterKit from '@tiptap/starter-kit'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
-import { Ref, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { type Ref, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { writeFile } from '@tauri-apps/api/fs'
 import EditorButtons from './EditorButtons.vue'
-import { useFiles } from '../../stores/use-files.ts'
+import { useFiles } from '../../stores/use-files'
 
 type Props = {
   modelValue: string,
