@@ -18,7 +18,7 @@
             <WindowClose :size="15" />
           </div>
         </div>
-        <RouterView class="px-12 pb-12"/>
+        <RouterView class="pb-12"/> <!-- before px-12 -->
       </div>
       
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-y-scroll">
+  <div class="px-12 overflow-y-scroll">
     <div>
       <router-link class="mt-auto" to="/"><Left /></router-link>
     </div>

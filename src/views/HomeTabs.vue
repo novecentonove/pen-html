@@ -1,10 +1,10 @@
 <template>
   <div class="text-xs overflow-y-scroll">
     <ul class="flex w-full list-none">
-      <li v-for="(file, i) in openFiles" :key="i"
+      <li v-for="(file, i) in openFiles" :key="i" @click="openFile(file)"
         :class="{ 'border-b shadow-lg': selectedPath != file.path, 'border-t border-r border-l' :selectedPath == file.path}" 
         class="flex shrink-0 align-middle pl-4 py-2 pr-2 font-semibold rounded-t border-gray-600 cursor-pointer">
-        <FileClick :file="file" :only-select="true" />
+        {{ file.name }}
         <XMarkIcon @click="closeTab(selectedPath)" class="ml-3 h-auto w-3 text-gray-500" />
       </li>
       <li class="border-b border-gray-600 shadow-lg w-full min-h-[21px]"></li>
@@ -19,31 +19,28 @@
   import { useFiles } from '@/stores/use-files.ts'
   import { computed } from 'vue'
   import Tab from '@/components/HomeTabs/Tab.vue'
-  import XMarkIcon from "@/components/Icons/XMarkIcon.vue";
-  import FileClick from '@/components/FileDrawer/FileClick.vue'
+  import XMarkIcon from "@/components/Icons/XMarkIcon.vue"
+  import { FileType } from '@/types/FileType'
 
   const files = useFiles()
   const openFiles = computed(() => files.getOpenFiles)
 
   const selectedPath = computed( () => files.getSelectedPath)
 
-  // watch(openFiles, (file: FileType) => {
-  //   if(file.length){
-  //     selectedPath.value = file[file.length-1].path
-  //   }
-  // })
-
-  // watch(clickedFromDrawer, (file: FileType) => {
-  //   selectedPath.value = file.path
-  // })
-
-  // const setSelectedPath = (file: FileType) => {
-  //   files.setSelectedPath(file.path)
-  // }
-
   const closeTab = (path: string) => {
     files.closeTab(path)
   }
+  
+  const openFile = async (file: FileType | null) => {
+  if(file){
+    const allowedExt = ['html'];
+    const ext = file.name.split('.').pop();
+
+    if(allowedExt.includes(ext ?? '')) {
+      files.setSelectedPath(file.path)
+    }
+  }
+}
 
 </script>
 
