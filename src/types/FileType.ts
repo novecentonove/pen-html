@@ -1,7 +1,5 @@
-type FileType = {
-  children?: Array<string>,
+export type FileType = {
+  children?: Array<FileType>,
   name: string,
   path: string,
 }
-
-export default FileType

@@ -15,7 +15,7 @@ const props = defineProps<Props>()
 
 const show = ref(false)
 
-watch(() => props.trigger, (val) => {
+watch(() => props.trigger, () => {
   show.value = true
   setTimeout(() => {
     show.value = false

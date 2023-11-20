@@ -5,11 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref, toRef } from 'vue'
+import { computed, onMounted, ref, toRef } from 'vue'
 import { readTextFile } from '@tauri-apps/api/fs'
 import Editor from '@/components/Editor/Editor.vue'
 import { useFiles } from '@/stores/use-files.ts'
-import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
   name: string

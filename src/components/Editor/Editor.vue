@@ -20,15 +20,15 @@
 <script setup lang="ts">
 import StarterKit from '@tiptap/starter-kit'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { Ref, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { writeFile } from '@tauri-apps/api/fs'
 import EditorButtons from './EditorButtons.vue'
-import { useFiles } from '@/stores/use-files'
+import { useFiles } from '../../stores/use-files.ts'
 
 type Props = {
-  modelValue: '',
-  name: '',
-  path: ''
+  modelValue: string,
+  name: string,
+  path: string
 }
 
 const files = useFiles()
@@ -37,17 +37,20 @@ const props = defineProps<Props>()
 
 const emit = defineEmits(['update:modelValue'])
 
-const isSame = ref(null)
+const isSame = <Ref>ref('')
 
 let lastFileContent = ''
 
-let editor = null
+type EditorVar = Editor | null
+
+let editor:EditorVar = null
 // const converter = new showdown.Converter();
 
 const getText = () => {
-  const htmlContent = editor.getHTML();
-  return htmlContent
-  // return converter.makeMarkdown(htmlContent);
+  if(editor !== null){
+    const htmlContent = editor.getHTML();
+    return htmlContent
+  }
 }
 
 const saveFile = async () => {
@@ -55,7 +58,7 @@ const saveFile = async () => {
   try {
     await writeFile(
       {
-        contents: content,
+        contents: content ?? '',
         path: props.path,
       }
     )
@@ -66,26 +69,32 @@ const saveFile = async () => {
   }
 }
 
-const doFocus = (e = null) => {
-  if(!editor.isFocused){
-    editor.commands.focus('start')
+const doFocus = () => {
+  if(editor){
+    if(!editor.isFocused){
+      editor.commands.focus('start')
+    }
   }
 }
 
-watch(() => props.modelValue, (value) => {
-  console.log(lastFileContent == editor.getHTML()) // TODO
-  // HTML
-  isSame.value = editor.getHTML() === value
+watch(() => props.modelValue, (value: {}) => {
+  if(editor){
+    console.log(lastFileContent == editor.getHTML()) // TODO
+    // HTML
 
-  // JSON
-  // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
+    isSame.value = editor.getHTML() === value
+    
 
-  if (isSame.value) {
-    return
+    // JSON
+    // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
+
+    if (isSame.value) {
+      return
+    }
+
+    // const htmlText = converter.makeHtml(value);
+    editor.commands.setContent(value, false)
   }
-
-  // const htmlText = converter.makeHtml(value);
-  editor.commands.setContent(value, false)
 })
 
 
@@ -94,8 +103,10 @@ onMounted( () => {
 
   editor = new Editor({
       extensions: [
-        StarterKit,
+        // @ts-ignore
         BubbleMenu,
+        StarterKit
+        ,
       ],
       editorProps: {
         attributes: {
@@ -105,7 +116,7 @@ onMounted( () => {
       content: props.modelValue,
       onUpdate: () => {
         // HTML
-        emit('update:modelValue', editor.getHTML())
+        emit('update:modelValue', editor?.getHTML())
 
         // JSON
         // this.$emit('update:modelValue', this.editor.getJSON())
@@ -115,7 +126,9 @@ onMounted( () => {
 })
 
 onBeforeUnmount( () => {
-  editor.destroy()
+  if(editor){
+    editor.destroy()
+  }
 })
 
 </script>

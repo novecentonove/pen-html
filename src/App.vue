@@ -40,9 +40,11 @@ font-family: ADELIA
   import { appWindow } from '@tauri-apps/api/window'
   import { computed, onMounted } from 'vue'
   import { useSettings } from '@/stores/use-settings'
- 
+ // @ts-ignore
   import WindowMinimize from 'vue-material-design-icons/WindowMinimize.vue';
+  // @ts-ignore
   import WindowMaximize from 'vue-material-design-icons/WindowMaximize.vue';
+  // @ts-ignore
   import WindowClose from 'vue-material-design-icons/WindowClose.vue';
 
   const settings = useSettings()

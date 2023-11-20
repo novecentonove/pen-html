@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import FileType from '@/types/FileType.ts'
+// @ts-ignore
+import { FileType } from '@/types/FileType.ts'
 
 export type RootState = {
   openFiles: Omit<FileType, 'children'>[]
@@ -28,13 +29,13 @@ export const useFiles = defineStore('files', {
   actions: {
     setSelectedPath(path: string) {
       this.selectedPath = path
-      console.log('now path is:', path )
     },
     addPage(file: Omit<FileType, 'children'>) {
       let exists = false
       this.openFiles.forEach(tab => {
         if(tab.path === file.path){
           exists = true
+          // @ts-ignore
           this.clickDrawerFile = file
         }
       })
@@ -44,16 +45,12 @@ export const useFiles = defineStore('files', {
 
     closeTab(path: string){
       this.openFiles = this.openFiles.filter( tab => tab.path !== path)
-      console.log('1', this.getSelectedPath)
-      if(this.getOpenFiles.length){
-        console.log('ok')
 
+      if(this.getOpenFiles.length){
         this.setSelectedPath(this.getOpenFiles[this.getOpenFiles.length-1].path)
       } else {
         this.setSelectedPath('')
       }
-      console.log('2', this.getSelectedPath)
-
     },
 
     savedFileTrigger(){

@@ -1,5 +1,5 @@
 <template>
-  <div class="buttons_bar inline-flex items-center flex-wrap gap-x-2 p-1 [&>button]:p-0.5 [&>button]:rounded [&>button:hover]:bg-gray-700 rounded-lg">
+  <div v-if="editor" class="buttons_bar inline-flex items-center flex-wrap gap-x-2 p-1 [&>button]:p-0.5 [&>button]:rounded [&>button:hover]:bg-gray-700 rounded-lg">
     <button @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
       <IconBold :size="size" />
     </button>
@@ -67,21 +67,33 @@
 </template>
 
 <script setup lang="ts">
+// @ts-ignore
 import IconBold from 'vue-material-design-icons/FormatBold.vue';
+// @ts-ignore
 import IconItalic from 'vue-material-design-icons/FormatItalic.vue';
+// @ts-ignore
 import IconStrike from 'vue-material-design-icons/FormatStrikethroughVariant.vue';
+// @ts-ignore
 import IconCodeBlock from 'vue-material-design-icons/CodeBraces.vue';
+// @ts-ignore
 import IconCode from 'vue-material-design-icons/CodeBrackets.vue';
+// @ts-ignore
 import IconOl from 'vue-material-design-icons/FormatListNumbered.vue';
+// @ts-ignore
 import IconUl from 'vue-material-design-icons/FormatListBulleted.vue';
+// @ts-ignore
 import IconQuote from 'vue-material-design-icons/FormatQuoteOpen.vue';
+// @ts-ignore
 import IconClear from 'vue-material-design-icons/ClipboardOutline.vue';
-import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue';
-import Drag from 'vue-material-design-icons/Drag.vue';
-import Right from 'vue-material-design-icons/ChevronRight.vue';
+// import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue';
+// import Drag from 'vue-material-design-icons/Drag.vue';
+// import Right from 'vue-material-design-icons/ChevronRight.vue';
+import { Editor, } from '@tiptap/vue-3'
+
+type EditorVar = Editor | null
 
 type Props = { 
-  editor:  Object | null
+  editor:  EditorVar | null
 }
 const props = defineProps<Props>()
 const editor = props.editor

@@ -10,22 +10,20 @@
       <li class="border-b border-gray-600 shadow-lg w-full min-h-[21px]"></li>
     </ul> 
     <section v-for="file in openFiles" :key="file.path">
-      <Tab :name="file.name" :path="file.path">{{ file.content }}</Tab>
+      <Tab :name="file.name" :path="file.path" />
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
   import { useFiles } from '@/stores/use-files.ts'
-  import { computed, provide, ref, watch } from 'vue'
+  import { computed } from 'vue'
   import Tab from '@/components/HomeTabs/Tab.vue'
   import XMarkIcon from "@/components/Icons/XMarkIcon.vue";
-  import FileType from '../types/FileType';
   import FileClick from '@/components/FileDrawer/FileClick.vue'
 
   const files = useFiles()
   const openFiles = computed(() => files.getOpenFiles)
-  const clickedFromDrawer = computed(() => files.getClickDrawerFile)
 
   const selectedPath = computed( () => files.getSelectedPath)
 

@@ -24,16 +24,19 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { readDir } from '@tauri-apps/api/fs';
 import FileList from '@/components/FileDrawer/FileList.vue'
 import Toast from '@/components/FileDrawer/Toast.vue'
+// @ts-ignore
 import IconSettings from 'vue-material-design-icons/Cog.vue';
 import { useRoute } from 'vue-router'
 import { useFiles } from '@/stores/use-files'
 import { useSettings } from '@/stores/use-settings'
+// @ts-ignore
 import Text from 'vue-material-design-icons/TextLong.vue'
 import FileClick from '../components/FileDrawer/FileClick.vue';
+import { FileType } from '@/types/FileType';
 
 const route = useRoute()
 // const pathDir = ref<string>('/home/dav/test')
-const filesAndDir = ref([])
+const filesAndDir = ref<FileType[] | []>([])
 const files = useFiles()
 const settings = useSettings()
 
@@ -47,7 +50,8 @@ watch(baseDir, async (value) => {
 })
 
 // recursive get structure
-const getLStructureDir = async (content) => {
+// TODO : use FileType to any
+const getLStructureDir = async (content: any) => { 
   for (const file of content) {
       if(typeof file.children === 'object'){
         const inside = await readDir((file.path as string))
@@ -55,7 +59,7 @@ const getLStructureDir = async (content) => {
         file.children = (inside)
       }
     }
-    content.sort( (a,b) => typeof a.children === 'object' ? -1 : 1)
+    content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
     return content
 }
 

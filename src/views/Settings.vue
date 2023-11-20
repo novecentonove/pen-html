@@ -5,17 +5,17 @@
     </div>
     <div class="flex flex-col [&>select]:mb-2 [&>*]:w-64">
       <label>App Font</label>
-      <select v-model="selectedAppFont" @change="selectFont($event, 'app')">
+      <select v-model="selectedAppFont" @change="selectFont($event as InputFileEvent, 'app')">
         <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
       </select>
 
       <label>Editor Font</label>
-      <select v-model="selectedEditorFont" @change="selectFont($event, 'editor')">
+      <select v-model="selectedEditorFont" @change="selectFont($event as InputFileEvent, 'editor')">
         <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
       </select>
 
       <label>Text color</label>
-      <select v-model="selectedTextColors" @change="selectTextColors($event)">
+      <select v-model="selectedTextColors" @change="selectTextColors($event as InputFileEvent)">
         <option v-for="(color, i) in textColors" :key="i" :value="color.value">
           <!-- <div class="w-2 h-2" :style="`background-color:${color.value}`"></div> -->
           {{color.name}}
@@ -23,7 +23,7 @@
       </select>
 
       <label>Font size</label>
-      <input type="number" v-model="selectedFontSize" @change="selectFontSize($event)">
+      <input type="number" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
 
       <label class="mt-6">Base Dir</label>
       <button @click="readFileContents">{{baseDir}}</button>
@@ -43,17 +43,14 @@
       </div>
 
   </div>
-
-
-
 </template>
 
 <script setup lang="ts">
-import { readDir } from '@tauri-apps/api/fs'
 import { open } from '@tauri-apps/api/dialog'
-import { onMounted, ref, nextTick, toRef, computed} from 'vue'
+import { computed, ref} from 'vue'
 import { useSettings } from '@/stores/use-settings.ts'
-import { relaunch } from '@tauri-apps/api/process'
+// import { relaunch } from '@tauri-apps/api/process'
+// @ts-ignore
 import Left from 'vue-material-design-icons/ChevronLeft.vue'
 
 const settings = useSettings()
@@ -119,9 +116,12 @@ const textColors = ref(
 
 ])
 
-const reload = async () => await relaunch()
+// const reload = async () => await relaunch()
+interface InputFileEvent extends Event {
+    target: HTMLInputElement
+}
 
-const selectFont = (e, type) => {
+const selectFont = (e: InputFileEvent, type:string) => {
   switch (type) {
     case 'app':
       settings.setAppFont(e.target.value)
@@ -134,13 +134,14 @@ const selectFont = (e, type) => {
   }
 }
 
-const selectTextColors = (e) => {
+const selectTextColors = (e: InputFileEvent) => {
   settings.setFontColor(e.target.value)
   document.documentElement.style.setProperty('--text_color', e.target.value)
 }
 
-const selectFontSize = (e) => {
-  settings.setEditorFontSize(e.target.value)
+const selectFontSize = (e: InputFileEvent) => {
+  const size = Number(+e.target.value)
+  settings.setEditorFontSize(size)
   document.documentElement.style.setProperty('--editor_font_size', `${e.target.value}px`)
 }
 
@@ -151,7 +152,7 @@ const readFileContents = async () => {
         title: 'Open Dir',
         directory: true
       });
-      settings.setBaseDir(selecteDir)
+      settings.setBaseDir(selecteDir as string)
   } catch(e){
       console.error(e)
   }
