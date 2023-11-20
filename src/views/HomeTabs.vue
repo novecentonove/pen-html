@@ -9,7 +9,7 @@
       </li>
       <li class="border-b border-gray-600 shadow-lg w-full min-h-[21px]"></li>
     </ul> 
-    <section v-for="file in openFiles" :key="file.path">
+    <section class="px-12" v-for="file in openFiles" :key="file.path">
       <Tab :name="file.name" :path="file.path" />
     </section>
   </div>

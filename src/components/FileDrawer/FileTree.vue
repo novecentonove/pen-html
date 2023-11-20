@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { type FileType } from '@/types/FileType.ts'
+import { type FileType } from '@/types/FileType'
 // @ts-ignore
 import Folder from 'vue-material-design-icons/Folder.vue';
 // @ts-ignore

@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { open } from '@tauri-apps/api/dialog'
 import { computed, ref} from 'vue'
-import { useSettings } from '@/stores/use-settings.ts'
+import { useSettings } from '@/stores/use-settings'
 // import { relaunch } from '@tauri-apps/api/process'
 // @ts-ignore
 import Left from 'vue-material-design-icons/ChevronLeft.vue'

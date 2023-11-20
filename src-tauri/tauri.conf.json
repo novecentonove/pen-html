@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "tauri",
+    "productName": "Pen",
     "version": "0.1.0"
   },
   "tauri": {
@@ -97,6 +97,10 @@
         "width": 1000,
         "transparent": true
       }
-    ]
+    ],
+    "systemTray": {
+      "iconPath": "icons/app-icon.png",
+      "iconAsTemplate": true
+    }
   }
 }
