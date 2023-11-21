@@ -87,14 +87,12 @@ font-family: ADELIA
 }
 
 .main{
-  /* height: calc(100vh + 40px); */
   height: 100vh;
-  /* max-height: calc(100vh); */
-  /* min-width: 300px; */
 }
+
 .fileDrawer {
-  /* max-height: calc(100vh); */
   height: 100vh;
+  white-space: nowrap;
 }
 
 .titlebar {
