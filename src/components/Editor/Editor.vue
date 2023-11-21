@@ -1,7 +1,10 @@
 <template>
+  <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
+  <span v-if="!fileIsTheSame" class="pr-1">&#9679;</span>
+</Teleport>
+
   <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
     <div>
-
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content :editor="editor" class="" />
       </div>
@@ -20,10 +23,12 @@
 <script setup lang="ts">
 import StarterKit from '@tiptap/starter-kit'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
-import { type Ref, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { type Ref, onBeforeUnmount, onMounted, ref, watch, computed } from 'vue'
 import { writeFile } from '@tauri-apps/api/fs'
 import EditorButtons from './EditorButtons.vue'
 import { useFiles } from '../../stores/use-files'
+// @ts-ignore
+import { snakeCase} from 'lodash'
 
 type Props = {
   modelValue: string,
@@ -39,7 +44,15 @@ const emit = defineEmits(['update:modelValue'])
 
 const isSame = <Ref>ref('')
 
-let lastFileContent = ''
+const editorIsReady = ref(false)
+
+const fileIsTheSame = ref(true)
+
+const snakeCasePath = computed( () => snakeCase(props.path))
+
+
+
+let lastFileContent = ref('<p></p>')
 
 type EditorVar = Editor | null
 
@@ -63,7 +76,10 @@ const saveFile = async () => {
       }
     )
     files.savedFileTrigger()
-
+    if(editor){
+      lastFileContent.value = editor.getHTML()
+      fileIsTheSame.value = true
+    }
   } catch (e) {
     console.log(e)
   }
@@ -79,34 +95,37 @@ const doFocus = () => {
 
 watch(() => props.modelValue, (value: {}) => {
   if(editor){
-    console.log(lastFileContent == editor.getHTML()) // TODO
+    fileIsTheSame.value = lastFileContent.value == editor.getHTML() 
+    // files.setFilesNotSaved(props.path, fileIsTheSame.value)
+    console.log('ok')
     // HTML
-
     isSame.value = editor.getHTML() === value
-    
-
     // JSON
     // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
-
     if (isSame.value) {
       return
     }
-
     // const htmlText = converter.makeHtml(value);
     editor.commands.setContent(value, false)
   }
 })
 
+watch(editorIsReady, (value: boolean) => {
+  console.log('ready')
+    setTimeout(() => {
+      if(value && editor){
+        console.log('html', editor.getHTML())
+        lastFileContent.value = editor.getHTML()
+      }
+    }, 2000);
+})
 
 onMounted( () => {
-  lastFileContent = Object.assign({}, props.modelValue)
-
   editor = new Editor({
       extensions: [
         // @ts-ignore
         BubbleMenu,
-        StarterKit
-        ,
+        StarterKit,
       ],
       editorProps: {
         attributes: {
@@ -117,12 +136,13 @@ onMounted( () => {
       onUpdate: () => {
         // HTML
         emit('update:modelValue', editor?.getHTML())
-
         // JSON
         // this.$emit('update:modelValue', this.editor.getJSON())
       },
     })
+
     doFocus()
+    editorIsReady.value = true
 })
 
 onBeforeUnmount( () => {

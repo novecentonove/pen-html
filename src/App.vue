@@ -107,6 +107,9 @@ font-family: ADELIA
   background-color: #191919;
 }
 
+.dialog {
+  background-color: #202020;
+}
 
 /*
 initiols: 
