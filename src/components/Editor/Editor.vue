@@ -37,21 +37,12 @@ type Props = {
 }
 
 const files = useFiles()
-
 const props = defineProps<Props>()
-
 const emit = defineEmits(['update:modelValue'])
-
-const isSame = <Ref>ref('')
-
+const isSame = <Ref>ref(null)
 const editorIsReady = ref(false)
-
 const fileIsTheSame = ref(true)
-
 const snakeCasePath = computed( () => snakeCase(props.path))
-
-
-
 let lastFileContent = ref('<p></p>')
 
 type EditorVar = Editor | null
@@ -95,11 +86,10 @@ const doFocus = () => {
 
 watch(() => props.modelValue, (value: {}) => {
   if(editor){
-    fileIsTheSame.value = lastFileContent.value == editor.getHTML() 
-    // files.setFilesNotSaved(props.path, fileIsTheSame.value)
-    console.log('ok')
+    const htmlEditor = editor.getHTML() 
+    fileIsTheSame.value = lastFileContent.value == htmlEditor
     // HTML
-    isSame.value = editor.getHTML() === value
+    isSame.value = htmlEditor === value
     // JSON
     // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
     if (isSame.value) {
@@ -111,10 +101,8 @@ watch(() => props.modelValue, (value: {}) => {
 })
 
 watch(editorIsReady, (value: boolean) => {
-  console.log('ready')
     setTimeout(() => {
       if(value && editor){
-        console.log('html', editor.getHTML())
         lastFileContent.value = editor.getHTML()
       }
     }, 2000);

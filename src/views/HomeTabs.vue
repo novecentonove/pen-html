@@ -2,12 +2,12 @@
   <div class="text-xs overflow-y-scroll">
     <ul class="flex w-full list-none">
       <template v-for="file in openFiles" :key="file.path" >
-        <Li :file="file" />
+        <TabTitle :file="file" />
       </template>
       <li class="border-b border-gray-600 shadow-lg w-full min-h-[21px]"></li>
     </ul> 
     <section class="px-12" v-for="file in openFiles" :key="file.path">
-      <Tab :name="file.name" :path="file.path" />
+      <TabContent :name="file.name" :path="file.path" />
     </section>
   </div>
 </template>
@@ -15,8 +15,8 @@
 <script setup lang="ts">
   import { useFiles } from '@/stores/use-files'
   import { computed } from 'vue'
-  import Tab from '@/components/HomeTabs/Tab.vue'
-  import Li from '@/components/HomeTabs/Li.vue'
+  import TabContent from '@/components/HomeTabs/TabContent.vue'
+  import TabTitle from '@/components/HomeTabs/TabTitle.vue'
 
   const files = useFiles()
   const openFiles = computed(() => files.getOpenFiles)
