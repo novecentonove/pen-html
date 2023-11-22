@@ -1,11 +1,14 @@
 <template>
   <div v-show="path == selectedPath">
-    <Editor v-if="content" v-model="content" :name="name" :path="path" />
+    <Editor v-if="content" 
+    v-model="content" 
+    :name="name" 
+    :path="path" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, toRef, watch } from 'vue'
+import { computed, onMounted, ref, toRef } from 'vue'
 import { readTextFile } from '@tauri-apps/api/fs'
 import Editor from '@/components/Editor/Editor.vue'
 import { useFiles } from '@/stores/use-files'

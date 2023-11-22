@@ -6,7 +6,7 @@
     <span class="pl-3" ref="tabNotSave" :id="snakeCasePath(props.file.path)"></span>
     <span class="pl-2 py-2 pr-1 font-semibold" @click="openFile(file)">{{ props.file.name }}</span>
   </div>
-  <XMarkIcon @click="closeTab('check')" class="ml-1 mr-2 h-auto w-3 text-gray-500" />
+  <XMarkIcon @click="closeTab('check')" class="ml-1 mr-2 h-auto w-3 text-gray-500 hover:text-red-700 transition ease-in-out duration-300" />
 </li>
 
 <Teleport to="body">

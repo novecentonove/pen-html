@@ -6,7 +6,12 @@
   <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
     <div>
       <div v-if="editor" @keyup.ctrl.s="saveFile">
-        <editor-content :editor="editor" class="" />
+        <editor-content 
+        :editor="editor" 
+        type="color"
+        @input="editor.chain().focus().setColor($event.target.value).run()"
+        :value="editor.getAttributes('textStyle').color"
+        />
       </div>
     </div>
 
@@ -29,6 +34,12 @@ import EditorButtons from './EditorButtons.vue'
 import { useFiles } from '../../stores/use-files'
 // @ts-ignore
 import { snakeCase} from 'lodash'
+import Color from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
+
+Color.configure({
+  types: ['textStyle'],
+})
 
 type Props = {
   modelValue: string,
@@ -88,6 +99,8 @@ watch(() => props.modelValue, (value: {}) => {
   if(editor){
     const htmlEditor = editor.getHTML() 
     fileIsTheSame.value = lastFileContent.value == htmlEditor
+
+    // fileIsTheSame SALVARLO IN FILES PER RIPRENDERLO QUANDO -CHIUDI L'APPLICAZIONE
     // HTML
     isSame.value = htmlEditor === value
     // JSON
@@ -114,6 +127,8 @@ onMounted( () => {
         // @ts-ignore
         BubbleMenu,
         StarterKit,
+        TextStyle,
+        Color
       ],
       editorProps: {
         attributes: {
