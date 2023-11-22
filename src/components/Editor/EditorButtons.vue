@@ -21,6 +21,9 @@
     <button v-for="(color, i) in colors" :key="i" @click="editor.chain().focus().setColor(color).run()">
       <div class="w-3 h-3" :style="`background-color: ${color}`"></div>
     </button>
+    <button @click="editor.chain().focus().unsetColor().run()">
+      <div class="w-3 h-3 border border-gray-400"></div>
+    </button>
 
     <!-- TODO -->
     <!-- <div class="flex gap-x-2 items-center" @mouseover="showExtraButton = true" @mouseleave="showExtraButton = false">
