@@ -4,7 +4,7 @@
       <template v-for="file in openFiles" :key="file.path" >
         <TabTitle :file="file" />
       </template>
-      <li class="border-b border-gray-600 shadow-lg w-full min-h-[21px]"></li>
+      <li class="border-b border-neutral-600 shadow-lg w-full min-h-[21px]"></li>
     </ul> 
     <section class="px-12" v-for="file in openFiles" :key="file.path">
       <TabContent :name="file.name" :path="file.path" />

@@ -1,9 +1,9 @@
 <template>
-  <div class="main h-screen text_color overflow-x-scroll" @mouseup="endDragging">
+  <div class="main main_color h-screen text_color overflow-x-scroll" @mouseup="endDragging">
     <div class="flex">
       
-      <FileDrawer id="fileD" class="fileDrawer flex-shrink-0" :style="`width: ${leftW}px`" >
-        <div class="absolute h-[80%] w-2 right-0 px-2" @mousedown="startDragging" style="cursor: col-resize" />
+      <FileDrawer id="fileD" class="fileDrawer fileDrawer_color flex-shrink-0" :style="`width: ${leftW}px`" >
+        <div class="absolute h-[80%] w-2 right-0 px-1" @mousedown="startDragging" style="cursor: col-resize" />
       </FileDrawer>
       
       <div id="rightV" class="rightView grow">
@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <RouterView class="pb-12"/>
+        <HomeTabs class="pb-12"/>
         
       </div>
 
@@ -40,7 +40,7 @@ veder anche per locale:
 }
 font-family: ADELIA
 */
-  import { RouterView } from 'vue-router'
+  // import { RouterView } from 'vue-router'
   import FileDrawer from '@/views/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
   import { computed, onMounted, ref } from 'vue'
@@ -51,6 +51,7 @@ font-family: ADELIA
   import WindowMaximize from 'vue-material-design-icons/WindowMaximize.vue';
   // @ts-ignore
   import WindowClose from 'vue-material-design-icons/WindowClose.vue';
+  import HomeTabs from '@/views/HomeTabs.vue'
 
   const settings = useSettings()
 
@@ -58,18 +59,28 @@ font-family: ADELIA
   const editor_font = computed( ()=> settings.getEditorFont)
   const text_color = computed( ()=> settings.getFontColor)
   const editor_font_size = computed( ()=> settings.getEditorFontSize)
-  const leftW = ref(300)
+  const leftW = ref(160)
 
   const startDragging = (e: MouseEvent) => {
+    pauseEvent(e)
     document.addEventListener('mousemove', handleDragging)
     leftW.value = e.pageX
   }
-  const endDragging = () => {
+  const endDragging = (e: MouseEvent) => {
     document.removeEventListener('mousemove', handleDragging)
+    pauseEvent(e)
   }
 
   const handleDragging = (e: MouseEvent) => {
     leftW.value = e.pageX
+  }
+
+  const pauseEvent = (e: MouseEvent) => {
+    if(e.stopPropagation) e.stopPropagation();
+    if(e.preventDefault) e.preventDefault();
+    e.cancelBubble=true;
+    e.returnValue=false;
+    return false;
   }
 
   onMounted( () => {
@@ -126,11 +137,11 @@ font-family: ADELIA
   background-color: #191919;
 }
 
-.fileDrawer {
+.fileDrawer_color {
   background-color: #202020;
 }
 
-.main{
+.main_color{
   background-color: #191919;
 }
 

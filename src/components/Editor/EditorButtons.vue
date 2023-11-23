@@ -22,7 +22,7 @@
       <div class="w-3 h-3" :style="`background-color: ${color}`"></div>
     </button>
     <button @click="editor.chain().focus().unsetColor().run()">
-      <div class="w-3 h-3 border border-gray-400"></div>
+      <div class="w-3 h-3 border border-neutral-400"></div>
     </button>
 
     <!-- TODO -->

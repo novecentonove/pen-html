@@ -1,6 +1,6 @@
 <template>
   <transition name="saved_file"> 
-    <div class="absolute right-1 bottom-0 -mb-0.5 text-gray-800 px-2 bg-orange-800 rounded-md" v-if="show">saved!</div>
+    <div class="absolute right-1 bottom-0 -mb-0.5 text-neutral-800 px-2 bg-orange-800 rounded-md" v-if="show">saved!</div>
   </transition> 
 </template>
 

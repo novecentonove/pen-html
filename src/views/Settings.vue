@@ -1,15 +1,15 @@
 <template>
   <div class="px-12 overflow-y-scroll">
     <div>
-      <router-link class="mt-auto" to="/"><Left /></router-link>
+      <!-- <router-link class="mt-auto" to="/"><Left /></router-link> -->
     </div>
-    <div class="flex flex-col [&>input]:text-gray-800 [&>select]:text-gray-800 [&>select]:mb-2 [&>*]:w-64">
+    <div class="flex flex-col [&>input]:text-neutral-800 [&>select]:text-neutral-800 [&>select]:mb-2 [&>*]:w-64">
 
       <label class="mt-6">Base Dir</label>
-      <button class="border border-gray-500" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
+      <button class="border border-neutral-500" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
 
       <!-- <label class="mt-6">Base Font Dir</label>
-      <button class="border border-gray-500" @click="readFontDir">{{baseFontsDir ?? 'no dir selected'}}</button> -->
+      <button class="border border-neutral-500" @click="readFontDir">{{baseFontsDir ?? 'no dir selected'}}</button> -->
 
       <label class="mt-6">App Font</label>
       <select v-if="baseFontsDir" v-model="selectedAppFont" @change="selectFont($event as InputFileEvent, 'app')">
@@ -59,12 +59,12 @@
       baseFontsDir: {{ baseFontsDir }}
     </div> -->
     
-    <div class="mt-10">
+    <!-- <div class="mt-10">
       <label>Font size test</label>
       <p :style="`font-size:${selectedFontSize}px`">
         But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
       </p>
-    </div>
+    </div> -->
 
   </div>
 </template>
@@ -145,19 +145,21 @@ const selectFont = (e: InputFileEvent, type:string) => {
   //   path = (e.target.options[e.target.options.selectedIndex].getAttribute('path'))
   // }
 
-  const name = selectedAppFont.value
+  
 
   switch (type) {
     case 'app':
-      settings.setAppFont(name)
+
+      settings.setAppFont(selectedAppFont.value)
       // loadFonts({name, path})
       // console.log('check', document.fonts.check('12px' + name))
-      document.documentElement.style.setProperty('--app_font', name)
+      document.documentElement.style.setProperty('--app_font', selectedAppFont.value)
       break;
     case 'editor':
-      settings.setEditorFont(name)
+      settings.setEditorFont(selectedEditorFont.value)
       // loadFonts({name, path})
-      document.documentElement.style.setProperty('--editor_font', name)
+      document.documentElement.style.setProperty('--editor_font', selectedEditorFont.value)
+      console.log(name)
       break;
   }
 }
