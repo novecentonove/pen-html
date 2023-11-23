@@ -1,5 +1,6 @@
 <template>
-  <div class="pl-2 pt-[36px] flex flex-col app_font text-sm">
+  <div class="relative pl-2 pt-[36px]  flex flex-col app_font text-sm">
+     <slot />
     <div v-if="openedFiles.length">
       <p class="pb-[6px] pl-2 mb-2 border-b border-gray-600">Opened files</p>
       <ul v-for="file in openedFiles">
@@ -12,7 +13,7 @@
     </div>
     <div class="relative pt-3 flex justify-between mt-auto mb-3 mx-3">
       <router-link :to="settignsLink.to">
-        <IconSettings :size="18"/>
+        <IconSettings :size="20"/>
       </router-link>
       <Toast :trigger="saved_file" />
     </div>
@@ -51,7 +52,7 @@ watch(baseDir, async (value) => {
 
 // recursive get structure
 // TODO : use FileType to any
-const getLStructureDir = async (content: any) => { 
+const getLStructureDir = async (content: any) => {
   for (const file of content) {
       if(typeof file.children === 'object'){
         const inside = await readDir((file.path as string))
@@ -85,3 +86,6 @@ const settignsLink = computed( () => {
 
 </script>
 
+<style>
+
+</style>

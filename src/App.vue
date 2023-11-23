@@ -1,9 +1,12 @@
 <template>
-  <div class="main text_color overflow-x-scroll">
+  <div class="main h-screen text_color overflow-x-scroll" @mouseup="endDragging">
     <div class="flex">
-      <FileDrawer class="fileDrawer min-w-[190px]"/>
       
-      <div class="flex flex-col w-full h-screen">
+      <FileDrawer id="fileD" class="fileDrawer flex-shrink-0" :style="`width: ${leftW}px`" >
+        <div class="absolute h-[80%] w-2 right-0 px-2" @mousedown="startDragging" style="cursor: col-resize" />
+      </FileDrawer>
+      
+      <div id="rightV" class="rightView grow">
         <div data-tauri-drag-region class="titlebar text_color">
           <div class="mx-auto pt-1">
             <p class="text-xs pt-0.5">pen</p>
@@ -18,9 +21,11 @@
             <WindowClose :size="15" />
           </div>
         </div>
-        <RouterView class="pb-12"/> <!-- before px-12 -->
+
+        <RouterView class="pb-12"/>
+        
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -38,7 +43,7 @@ font-family: ADELIA
   import { RouterView } from 'vue-router'
   import FileDrawer from '@/views/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
-  import { computed, onMounted } from 'vue'
+  import { computed, onMounted, ref } from 'vue'
   import { useSettings } from '@/stores/use-settings'
  // @ts-ignore
   import WindowMinimize from 'vue-material-design-icons/WindowMinimize.vue';
@@ -53,13 +58,26 @@ font-family: ADELIA
   const editor_font = computed( ()=> settings.getEditorFont)
   const text_color = computed( ()=> settings.getFontColor)
   const editor_font_size = computed( ()=> settings.getEditorFontSize)
+  const leftW = ref(300)
+
+  const startDragging = (e: MouseEvent) => {
+    document.addEventListener('mousemove', handleDragging)
+    leftW.value = e.pageX
+  }
+  const endDragging = () => {
+    document.removeEventListener('mousemove', handleDragging)
+  }
+
+  const handleDragging = (e: MouseEvent) => {
+    leftW.value = e.pageX
+  }
 
   onMounted( () => {
-      // set fonts
-      document.documentElement.style.setProperty('--app_font', app_font.value)
-      document.documentElement.style.setProperty('--editor_font', editor_font.value)
-      document.documentElement.style.setProperty('--text_color', text_color.value)
-      document.documentElement.style.setProperty('--editor_font_size', `${editor_font_size.value}px`)
+    // set fonts
+    document.documentElement.style.setProperty('--app_font', app_font.value)
+    document.documentElement.style.setProperty('--editor_font', editor_font.value)
+    document.documentElement.style.setProperty('--text_color', text_color.value)
+    document.documentElement.style.setProperty('--editor_font_size', `${editor_font_size.value}px`)
   })
 
 
@@ -93,7 +111,16 @@ font-family: ADELIA
 .fileDrawer {
   height: 100vh;
   white-space: nowrap;
+  /* flex-shrink:0;
+  flex-basis: 160px;
+  flex-grow: 1; */
 }
+
+.rightView {
+  /* flex-basis: 80%; */
+}
+
+/* Colors */
 
 .titlebar {
   background-color: #191919;
