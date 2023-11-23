@@ -13,11 +13,11 @@
     </div>
     <div class="relative pt-3 flex justify-between mt-auto mb-3 mx-3">
       <div>
-        <IconSettings :size="20"/>
+        <IconSettings @click="settingsToggle = !settingsToggle" :size="20"/>
       </div>
       <Toast :trigger="saved_file" />
     </div>
-    <div class="fileDrawer_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-l border-t border-b border-neutral-700 rounded-l-md">
+    <div v-if="settingsToggle" class="fileDrawer_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-l border-t border-b border-neutral-700 rounded-l-md">
       <Settings />
     </div>
   </div>
@@ -31,7 +31,7 @@ import Toast from '@/components/FileDrawer/Toast.vue'
 import Settings from '@/views/Settings.vue'
 // @ts-ignore
 import IconSettings from 'vue-material-design-icons/Cog.vue';
-import { useRoute } from 'vue-router'
+// import { useRoute } from 'vue-router'
 import { useFiles } from '@/stores/use-files'
 import { useSettings } from '@/stores/use-settings'
 // @ts-ignore
@@ -39,7 +39,7 @@ import Text from 'vue-material-design-icons/TextLong.vue'
 import FileClick from '../components/FileDrawer/FileClick.vue';
 import { type FileType } from '@/types/FileType';
 
-const route = useRoute()
+// const route = useRoute()
 // const pathDir = ref<string>('/home/dav/test')
 const filesAndDir = ref<FileType[] | []>([])
 const files = useFiles()
@@ -48,6 +48,7 @@ const settings = useSettings()
 const saved_file = computed(() => files.getSavedFile)
 const openedFiles = computed( () => files.getOpenFiles)
 const baseDir = computed( () => settings.getBaseDir)
+const settingsToggle = ref(false)
 
 watch(baseDir, async (value) => {
   const content = await readDir(value as string)
@@ -75,18 +76,18 @@ onMounted( async () => {
   }
 })
 
-const settignsLink = computed( () => {
-  if(route.path == '/') {
-    return {
-      to: '/settings',
-      name: 'settings'
-    }
-  }
-  return {
-      to: '/',
-      name: 'back to files'
-    }
-})
+// const settignsLink = computed( () => {
+//   if(route.path == '/') {
+//     return {
+//       to: '/settings',
+//       name: 'settings'
+//     }
+//   }
+//   return {
+//       to: '/',
+//       name: 'back to files'
+//     }
+// })
 
 </script>
 

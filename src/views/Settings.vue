@@ -1,9 +1,9 @@
 <template>
-  <div class="px-12 overflow-y-scroll">
+  <div class="pt-4 px-12 overflow-y-scroll">
     <div>
-      <!-- <router-link class="mt-auto" to="/"><Left /></router-link> -->
+      <Left />
     </div>
-    <div class="flex flex-col [&>input]:text-neutral-800 [&>select]:text-neutral-800 [&>select]:mb-2 [&>*]:w-64">
+    <div class="flex flex-col [&>input]:text-neutral-800 [&>select]:text-neutral-800 [&>select]:mb-2 [&>*]:w-full">
 
       <label class="mt-6">Base Dir</label>
       <button class="border border-neutral-500" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
@@ -12,13 +12,13 @@
       <button class="border border-neutral-500" @click="readFontDir">{{baseFontsDir ?? 'no dir selected'}}</button> -->
 
       <label class="mt-6">App Font</label>
-      <select v-if="baseFontsDir" v-model="selectedAppFont" @change="selectFont($event as InputFileEvent, 'app')">
-        <option v-for="(font, i) in fontFamilies" :key="i" :path="font.path" :value="font.name">{{font.name}}</option>
+      <select v-if="baseFontsDir" v-model="selectedAppFont" @change="selectFont('app')">
+        <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
       </select>
       <p v-else>Please select your fonts folder</p>
 
       <label class="mt-6">Editor Font</label>
-      <select v-model="selectedEditorFont" @change="selectFont($event as InputFileEvent, 'editor')">
+      <select v-model="selectedEditorFont" @change="selectFont('editor')">
         <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
       </select>
 
@@ -31,7 +31,6 @@
         :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid orange' : ''}`" 
         @click="selectTextColors(color.value)"
         />
-
       </div>
       <!-- <select v-model="selectedTextColors" @change="selectTextColors($event as InputFileEvent)">
         <option v-for="(color, i) in textColors" :key="i" :value="color.value">
@@ -71,7 +70,7 @@
 
 <script setup lang="ts">
 import { open } from '@tauri-apps/api/dialog'
-import { computed, onMounted, ref, toRef} from 'vue'
+import { computed, ref, toRef} from 'vue'
 import { useSettings } from '@/stores/use-settings'
 // import { relaunch } from '@tauri-apps/api/process'
 // @ts-ignore
@@ -135,7 +134,7 @@ interface InputFileEvent extends Event {
     target: HTMLInputElement
 }
 
-const selectFont = (e: InputFileEvent, type:string) => {
+const selectFont = (type:string) => {
 
   // let path = ''
   // const name = selectedAppFont.value
