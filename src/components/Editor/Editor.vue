@@ -165,6 +165,7 @@ onBeforeUnmount( () => {
   max-height: calc(100vh - 111px);
 }
 .tiptap  {
+  height: 100vh;
   overflow-y: scroll;
   margin: 30px auto;
   padding-right: 40px;

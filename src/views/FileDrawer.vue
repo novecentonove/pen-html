@@ -7,7 +7,7 @@
         <li class="cursor-pointer pl-2 mb-2 flex items-center"><Text :size="12" class="mr-1" /><FileClick :file="file"/></li>
       </ul>
     </div>
-    <div class="h-full p-2 leading-7 overflow-x-scroll">
+    <div class="h-full pl-2 pt-2 leading-7 overflow-x-scroll">
       <p class="pb-[6px] border-b border-neutral-600"></p>
       <FileList :files="filesAndDir"/>
     </div>
