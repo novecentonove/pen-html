@@ -1,4 +1,5 @@
 <template>
+  {{ getNotSavedFiles }}
   <div class="main main_color h-screen text_color overflow-x-scroll" @mouseup="endDragging">
     <div class="flex">
       
@@ -17,7 +18,7 @@
           <div class="titlebar-button" @click="appWindow.toggleMaximize()">
             <WindowMaximize :size="15" />
           </div>
-          <div class="titlebar-button" @click="appWindow.close()">
+          <div class="titlebar-button" @click="handleClose">
             <WindowClose :size="15" />
           </div>
         </div>
@@ -45,6 +46,7 @@ font-family: ADELIA
   import { appWindow } from '@tauri-apps/api/window'
   import { computed, onMounted, ref } from 'vue'
   import { useSettings } from '@/stores/use-settings'
+  import { useFiles } from '@/stores/use-files'
  // @ts-ignore
   import WindowMinimize from 'vue-material-design-icons/WindowMinimize.vue';
   // @ts-ignore
@@ -54,7 +56,9 @@ font-family: ADELIA
   import HomeTabs from '@/views/HomeTabs.vue'
 
   const settings = useSettings()
+  const files = useFiles()
 
+  const getNotSavedFiles = computed( () => files.getNotSavedFiles)
   const app_font = computed( ()=> settings.getAppFont)
   const editor_font = computed( ()=> settings.getEditorFont)
   const text_color = computed( ()=> settings.getFontColor)
@@ -81,6 +85,14 @@ font-family: ADELIA
     e.cancelBubble=true;
     e.returnValue=false;
     return false;
+  }
+
+  const handleClose = () => {
+    if(files.getNotSavedFiles.length){
+      alert('attenzione ai file') // FARE UN TOAST GENERICO?
+    } else {
+      appWindow.close()
+    }
   }
 
   onMounted( () => {

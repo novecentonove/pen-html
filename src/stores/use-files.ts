@@ -4,9 +4,10 @@ import { type FileType } from '@/types/FileType'
 
 export type RootState = {
   openFiles: Omit<FileType, 'children'>[]
-  selectedPath: string,
+  selectedPath: string
   clickDrawerFile: Omit<FileType, 'children'>[]
-  savedFile: 0
+  savedFile: number,
+  notSavedFiles: string[]
 };
 
 export const useFiles = defineStore('files', {
@@ -14,7 +15,8 @@ export const useFiles = defineStore('files', {
     openFiles: [],
     selectedPath: '',
     clickDrawerFile: [],
-    savedFile: 0
+    savedFile: 0,
+    notSavedFiles: []
   } as RootState),
 
   persist: true,
@@ -22,8 +24,9 @@ export const useFiles = defineStore('files', {
   getters: {
     getOpenFiles: (state) => state.openFiles,
     getClickDrawerFile: (state) => state.clickDrawerFile,
-    getSavedFile: (state) => state.savedFile,
+    getFileIsSaved: (state) => state.savedFile,
     getSelectedPath: (state) => state.selectedPath,
+    getNotSavedFiles: (state) => state.notSavedFiles,
   },
 
   actions: {
@@ -53,8 +56,33 @@ export const useFiles = defineStore('files', {
       }
     },
 
-    savedFileTrigger(){
+    fileIsSafeTrigger(){
       this.savedFile++
+    },
+
+    setNotSavedFiles(arr: string[]){
+      this.notSavedFiles = arr
+    },
+
+    toggleUnsavedFiles(val: {path: string, savedFile: boolean}){
+      const files = this.getNotSavedFiles
+      const savedFile = val.savedFile
+      const path = val.path
+      const exists = files.includes(path);
+
+      console.log(exists, savedFile)
+      if(savedFile && exists){
+        const res = files.filter(el => el !== path)
+        this.setNotSavedFiles(res)
+      }
+
+      if(val.savedFile && !exists){
+        this.getNotSavedFiles.push(path)
+      }
+
+      if(!val.savedFile && !exists){
+        this.getNotSavedFiles.push(path)
+      }
     }
   },
 })

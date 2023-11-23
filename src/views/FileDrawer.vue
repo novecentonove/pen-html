@@ -15,7 +15,7 @@
       <div>
         <IconSettings @click="settingsToggle = !settingsToggle" :size="20"/>
       </div>
-      <Toast :trigger="saved_file" />
+      <Toast :trigger="file_is_saved" />
     </div>
     <div v-if="settingsToggle" class="fileDrawer_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-l border-t border-b border-neutral-700 rounded-l-md">
       <Settings />
@@ -45,7 +45,7 @@ const filesAndDir = ref<FileType[] | []>([])
 const files = useFiles()
 const settings = useSettings()
 
-const saved_file = computed(() => files.getSavedFile)
+const file_is_saved = computed(() => files.getFileIsSaved)
 const openedFiles = computed( () => files.getOpenFiles)
 const baseDir = computed( () => settings.getBaseDir)
 const settingsToggle = ref(false)
@@ -65,8 +65,7 @@ const getLStructureDir = async (content: any) => {
         file.children = (inside)
       }
     }
-    content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
-    return content
+    return content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
 }
 
 onMounted( async () => {

@@ -1,6 +1,6 @@
 <template>
   <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
-  <span v-if="!fileIsTheSame" class="pr-1">&#9679;</span>
+  <span v-if="!saved" class="pr-1">&#9679;</span>
 </Teleport>
 
   <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
@@ -52,7 +52,7 @@ const props = defineProps<Props>()
 const emit = defineEmits(['update:modelValue'])
 const isSame = <Ref>ref(null)
 const editorIsReady = ref(false)
-const fileIsTheSame = ref(true)
+const saved = ref(true)
 const snakeCasePath = computed( () => snakeCase(props.path))
 let lastFileContent = ref('<p></p>')
 
@@ -77,10 +77,10 @@ const saveFile = async () => {
         path: props.path,
       }
     )
-    files.savedFileTrigger()
+    files.fileIsSafeTrigger()
     if(editor){
       lastFileContent.value = editor.getHTML()
-      fileIsTheSame.value = true
+      saved.value = true
     }
   } catch (e) {
     console.log(e)
@@ -98,10 +98,10 @@ const doFocus = () => {
 watch(() => props.modelValue, (value: {}) => {
   if(editor){
     const htmlEditor = editor.getHTML() 
-    fileIsTheSame.value = lastFileContent.value == htmlEditor
+    saved.value = lastFileContent.value == htmlEditor
 
-    // fileIsTheSame SALVARLO IN FILES PER RIPRENDERLO QUANDO -CHIUDI L'APPLICAZIONE
     // HTML
+    // ??
     isSame.value = htmlEditor === value
     // JSON
     // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
@@ -119,6 +119,10 @@ watch(editorIsReady, (value: boolean) => {
         lastFileContent.value = editor.getHTML()
       }
     }, 2000);
+})
+
+watch(saved, (bool) => {
+    files.toggleUnsavedFiles({path: props.path, savedFile: bool})
 })
 
 onMounted( () => {
