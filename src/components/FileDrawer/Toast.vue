@@ -1,6 +1,6 @@
 <template>
   <transition name="saved_file"> 
-    <div class="absolute right-1 bottom-0 -mb-0.5 text-neutral-800 px-2 bg-orange-800 rounded-md" v-if="show">saved!</div>
+    <div v-if="show" class="absolute right-1 bottom-0 text-neutral-800 px-2 bg-orange-800 rounded-md">saved!</div>
   </transition> 
 </template>
 
@@ -25,16 +25,16 @@ watch(() => props.trigger, () => {
 
 <style>
 .saved_file-enter-active {
-  transition: all 0.5s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .saved_file-leave-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .saved_file-enter-from,
 .saved_file-leave-to {
-  transform: translatey(10px);
+  transform: translatey(20px);
   opacity: 0;
 }
 .toast_saved {

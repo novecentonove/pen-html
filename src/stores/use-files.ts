@@ -47,13 +47,18 @@ export const useFiles = defineStore('files', {
     },
 
     closeTab(path: string){
-      this.openFiles = this.openFiles.filter( tab => tab.path !== path)
-
+      console.log('files.closeTab')
       if(this.getOpenFiles.length){
         this.setSelectedPath(this.getOpenFiles[this.getOpenFiles.length-1].path)
       } else {
         this.setSelectedPath('')
       }
+
+      // remove from unSavedFile
+      this.removeFromNotSavedFile(path)
+      
+      // remove from open files
+      this.openFiles = this.openFiles.filter( tab => tab.path !== path)
     },
 
     fileIsSafeTrigger(){
@@ -64,16 +69,21 @@ export const useFiles = defineStore('files', {
       this.notSavedFiles = arr
     },
 
+    removeFromNotSavedFile(path: string){
+      const files = this.getNotSavedFiles
+      const res = files.filter(el => el !== path)
+      this.setNotSavedFiles(res)
+      console.log('remove')
+    },
+
     toggleUnsavedFiles(val: {path: string, savedFile: boolean}){
       const files = this.getNotSavedFiles
       const savedFile = val.savedFile
       const path = val.path
       const exists = files.includes(path);
 
-      console.log(exists, savedFile)
       if(savedFile && exists){
-        const res = files.filter(el => el !== path)
-        this.setNotSavedFiles(res)
+        this.removeFromNotSavedFile(path)
       }
 
       if(val.savedFile && !exists){

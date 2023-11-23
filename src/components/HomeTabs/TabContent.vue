@@ -1,9 +1,11 @@
 <template>
   <div v-show="path == selectedPath">
-    <Editor v-if="content" 
-    v-model="content" 
-    :name="name" 
-    :path="path" />
+    <KeepAlive>
+      <Editor v-if="content" 
+        v-model="content" 
+        :name="name" 
+        :path="path" />
+    </KeepAlive>
   </div>
 </template>
 
