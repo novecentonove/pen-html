@@ -1,6 +1,6 @@
 <template>
 <Teleport to="body">
-  <div v-if="dialog" class="absolute top-0 dialog text_color px-12 py-3 rounded-md">
+  <dialog ref="dialog" class="absolute top-0 dialog text_color px-12 py-3 rounded-md">
     <div>
       <p class="mb-5 text-center"><span class="text-red-900">{{ fileToClose.name }} </span> is not saved. <br>Do you want to save it?<strong id="number"></strong></p>
       <div class="dialog_b flex justify-between">
@@ -9,7 +9,7 @@
         <button @click="closeTab('cancel')" class="bg-[#303030]" ref="default_button_dialog">Cancel</button>
       </div>
     </div>
-  </div>
+  </dialog>
 </Teleport>
 </template>
 <script setup lang="ts">
@@ -26,7 +26,7 @@ type Props = {
 
 const files = useFiles()
 const props = defineProps<Props>()
-const dialog = ref(false)
+const dialog = ref(null)
 
 // const showDialog = ref(false)
 const default_button_dialog = ref(null)
@@ -53,9 +53,9 @@ console.log('closeTab not saved', props.trigger)
       // @ts-ignore
       if(isNotSaved){
           // @ts-ignore
-          dialog.value = true
+          dialog.value.showModal()
           // @ts-ignore
-          // default_button_dialog.value.focus() // TODO
+          default_button_dialog.value.focus()
 
       } else {
         files.closeTab(pathToClose) 
@@ -66,18 +66,18 @@ console.log('closeTab not saved', props.trigger)
       
       files.closeTab(pathToClose) 
       // @ts-ignore
-      dialog.value = false
+      dialog.value.close()
       emit('fileDone', 'ok')
       break;
       return
     case 'cancel':
       // @ts-ignore
-      dialog.value = false
+      dialog.value.close()
       break;
       return
     default:
       // @ts-ignore
-      dialog.value = false
+      dialog.value.close()
     break;
     return
   }

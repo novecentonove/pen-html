@@ -6,7 +6,7 @@
         <div class="absolute h-[80%] w-2 right-0 px-1" @mousedown="startDragging" style="cursor: col-resize" />
       </FileDrawer>
 
-      <div id="rightV" class="rightView grow">
+      <div id="rightV" class="grow">
         <div data-tauri-drag-region class="titlebar text_color">
           <div class="mx-auto pt-1">
             <p class="text-xs pt-0.5">pen</p>
@@ -24,9 +24,9 @@
 
         <HomeTabs class="pb-12"/>
         
-        <!-- <Teleport to="body"> -->
+        <Teleport to="body">
           <NotSavedDialog :file-to-close="file" :trigger="trigger" @fileDone="fileDone" />
-        <!-- </Teleport> -->
+        </Teleport>
 
       </div>
     </div>
@@ -90,8 +90,8 @@
   const pauseEvent = (e: MouseEvent) => {
     if(e.stopPropagation) e.stopPropagation();
     if(e.preventDefault) e.preventDefault();
-    e.cancelBubble=true;
-    e.returnValue=false;
+    // e.cancelBubble=true;
+    // e.returnValue=false;
     return false;
   }
 
@@ -155,17 +155,9 @@
 .fileDrawer {
   height: 100vh;
   white-space: nowrap;
-  /* flex-shrink:0;
-  flex-basis: 160px;
-  flex-grow: 1; */
-}
-
-.rightView {
-  /* flex-basis: 80%; */
 }
 
 /* Colors */
-
 .titlebar {
   background-color: #191919;
 }
@@ -182,16 +174,4 @@
   background-color: #202020;
 }
 
-/*
-initiols: 
-
-fileDrawer #21252b;
-main #282c34;
-
-fileDrawer #1a181f
-
-fileDrawer #0f0f0f
-main #171717;
-textcolor: #aec3d1
- */
 </style>
