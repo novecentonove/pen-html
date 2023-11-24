@@ -95,8 +95,7 @@
     return false;
   }
 
-  const fileDone = (val: any) => {
-    console.log('filedone', val)
+  const fileDone = () => {
     const notSaved = files.getNotSavedFiles
     if(notSaved.length){
       handleClose()
@@ -106,7 +105,6 @@
   }
     
   const handleClose = () => {
-    console.log('handleClose')
     const notSaved = files.getNotSavedFiles
     if(notSaved.length){
         file.value = {name: 'TODO', path: notSaved[0]}

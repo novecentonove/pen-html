@@ -158,7 +158,6 @@ const selectFont = (type:string) => {
       settings.setEditorFont(selectedEditorFont.value)
       // loadFonts({name, path})
       document.documentElement.style.setProperty('--editor_font', selectedEditorFont.value)
-      console.log(name)
       break;
   }
 }

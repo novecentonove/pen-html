@@ -37,8 +37,6 @@ watch(() => props.trigger, () => {
 })
 
 const closeTab = (mode: string) => {
-console.log('closeTab not saved', props.trigger)
-
   const pathToClose = props.fileToClose.path
   
   if(getNotSavedFiles.value.length < 0){
@@ -54,14 +52,13 @@ console.log('closeTab not saved', props.trigger)
       if(isNotSaved){
           // @ts-ignore
           dialog.value.showModal()
+          files.setSelectedPath(props.fileToClose.path)
           // @ts-ignore
           default_button_dialog.value.focus()
-
       } else {
         files.closeTab(pathToClose) 
       }
       break
-      return
     case 'noSave':
       
       files.closeTab(pathToClose) 
@@ -69,17 +66,14 @@ console.log('closeTab not saved', props.trigger)
       dialog.value.close()
       emit('fileDone', 'ok')
       break;
-      return
     case 'cancel':
       // @ts-ignore
       dialog.value.close()
       break;
-      return
     default:
       // @ts-ignore
       dialog.value.close()
     break;
-    return
   }
 
 }

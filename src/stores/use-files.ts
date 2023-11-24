@@ -47,7 +47,6 @@ export const useFiles = defineStore('files', {
     },
 
     closeTab(path: string){
-      console.log('files.closeTab')
       if(this.getOpenFiles.length){
         this.setSelectedPath(this.getOpenFiles[this.getOpenFiles.length-1].path)
       } else {
@@ -73,7 +72,6 @@ export const useFiles = defineStore('files', {
       const files = this.getNotSavedFiles
       const res = files.filter(el => el !== path)
       this.setNotSavedFiles(res)
-      console.log('remove')
     },
 
     toggleUnsavedFiles(val: {path: string, savedFile: boolean}){
