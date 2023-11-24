@@ -26,26 +26,20 @@
 </template>
 
 <script setup lang="ts">
-import StarterKit from '@tiptap/starter-kit'
-import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
 import { type Ref, onBeforeUnmount, onMounted, ref, watch, computed } from 'vue'
-import { writeFile } from '@tauri-apps/api/fs'
-import EditorButtons from './EditorButtons.vue'
-import { useFiles } from '../../stores/use-files'
 // @ts-ignore
 import { snakeCase} from 'lodash'
+import { useFiles } from '../../stores/use-files'
+import EditorButtons from './EditorButtons.vue'
+import { writeFile } from '@tauri-apps/api/fs'
+import StarterKit from '@tiptap/starter-kit'
+import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
 import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
-// import CodeBlock from '@tiptap/extension-code-block'
 
 Color.configure({
   types: ['textStyle'],
 })
-
-// CodeBlock.configure({
-//   languageClassPrefix: 'language-php',
-// })
-
 
 type Props = {
   modelValue: string,

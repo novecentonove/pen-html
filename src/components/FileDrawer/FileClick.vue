@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { type FileType } from '../../types/FileType';
+import { type FileType } from '@/types/FileType';
 import { useFiles } from '@/stores/use-files'
 
 const files = useFiles()
@@ -12,6 +12,7 @@ type Props = {
   file:  FileType | null,
   onlySelect?:  boolean,
 }
+
 const props = defineProps<Props>()
 
 const openFile = async (file: FileType | null) => {

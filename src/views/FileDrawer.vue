@@ -28,77 +28,72 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
-import { readDir } from '@tauri-apps/api/fs';
-import FileList from '@/components/FileDrawer/FileList.vue'
-import Toast from '@/components/FileDrawer/Toast.vue'
-import Settings from '@/views/Settings.vue'
-// @ts-ignore
-import IconSettings from 'vue-material-design-icons/Cog.vue';
-// import { useRoute } from 'vue-router'
-import { useFiles } from '@/stores/use-files'
-import { useSettings } from '@/stores/use-settings'
-// @ts-ignore
-import Text from 'vue-material-design-icons/TextLong.vue'
-import FileClick from '../components/FileDrawer/FileClick.vue';
-import { type FileType } from '@/types/FileType';
-import { onClickOutside } from '@vueuse/core'
+  import { computed, onMounted, ref, watch } from 'vue'
+  import { useFiles } from '@/stores/use-files'
+  import { useSettings } from '@/stores/use-settings'
+  import FileList from '@/components/FileDrawer/FileList.vue'
+  import Toast from '@/components/FileDrawer/Toast.vue'
+  import Settings from '@/views/Settings.vue'
+  import FileClick from '../components/FileDrawer/FileClick.vue';
+  // @ts-ignore
+  import Text from 'vue-material-design-icons/TextLong.vue'
+  // @ts-ignore
+  import IconSettings from 'vue-material-design-icons/Cog.vue';
+  import { readDir } from '@tauri-apps/api/fs';
+  import { type FileType } from '@/types/FileType';
+  import { onClickOutside } from '@vueuse/core'
 
-// const route = useRoute()
-// const pathDir = ref<string>('/home/dav/test')
-const filesAndDir = ref<FileType[] | []>([])
-const files = useFiles()
-const settings = useSettings()
-const settingsRef = ref(null)
+  // const route = useRoute()
+  // const pathDir = ref<string>('/home/dav/test')
+  const filesAndDir = ref<FileType[] | []>([])
+  const files = useFiles()
+  const settings = useSettings()
+  const settingsRef = ref(null)
 
-const file_is_saved = computed(() => files.getFileIsSaved)
-const openedFiles = computed( () => files.getOpenFiles)
-const baseDir = computed( () => settings.getBaseDir)
-const settingsToggle = ref(false)
+  const file_is_saved = computed(() => files.getFileIsSaved)
+  const openedFiles = computed( () => files.getOpenFiles)
+  const baseDir = computed( () => settings.getBaseDir)
+  const settingsToggle = ref(false)
 
-watch(baseDir, async (value) => {
-  const content = await readDir(value as string)
-  filesAndDir.value = await getLStructureDir(content)
-})
-
-// recursive get structure
-// TODO : use FileType to any
-const getLStructureDir = async (content: any) => {
-  for (const file of content) {
-      if(typeof file.children === 'object'){
-        const inside = await readDir((file.path as string))
-        getLStructureDir(inside)
-        file.children = (inside)
-      }
-    }
-    return content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
-}
-
-const closeSettings = () => settingsToggle.value = false
-onClickOutside(settingsRef, closeSettings)
-
-onMounted( async () => {
-  if(baseDir.value){
-    const content = await readDir(baseDir.value as string)
+  watch(baseDir, async (value) => {
+    const content = await readDir(value as string)
     filesAndDir.value = await getLStructureDir(content)
-  }
-})
+  })
 
-// const settignsLink = computed( () => {
-//   if(route.path == '/') {
-//     return {
-//       to: '/settings',
-//       name: 'settings'
-//     }
-//   }
-//   return {
-//       to: '/',
-//       name: 'back to files'
-//     }
-// })
+  // recursive get structure
+  // TODO : use FileType to any
+  const getLStructureDir = async (content: any) => {
+    for (const file of content) {
+        if(typeof file.children === 'object'){
+          const inside = await readDir((file.path as string))
+          getLStructureDir(inside)
+          file.children = (inside)
+        }
+      }
+      return content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
+  }
+
+  const closeSettings = () => settingsToggle.value = false
+  onClickOutside(settingsRef, closeSettings)
+
+  onMounted( async () => {
+    if(baseDir.value){
+      const content = await readDir(baseDir.value as string)
+      filesAndDir.value = await getLStructureDir(content)
+    }
+  })
+
+  // const settignsLink = computed( () => {
+  //   if(route.path == '/') {
+  //     return {
+  //       to: '/settings',
+  //       name: 'settings'
+  //     }
+  //   }
+  //   return {
+  //       to: '/',
+  //       name: 'back to files'
+  //     }
+  // })
 
 </script>
-
-<style>
-
-</style>

@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-  import { useFiles } from '@/stores/use-files'
   import { computed } from 'vue'
+  import { useFiles } from '@/stores/use-files'
   import TabContent from '@/components/HomeTabs/TabContent.vue'
   import TabTitle from '@/components/HomeTabs/TabTitle.vue'
 
@@ -24,31 +24,29 @@
 </script>
 
 <style>
+  .list-enter-from{
+    opacity: 0;
+  }
+  .list-enter-to{
+    opacity: 1;
+  }
+  .list-enter-active{
+    transition: all 0.3s ease-out;
+    position: absolute
+  }
+  .list-leave-from{
+    opacity: 1;
+  }
+  .list-leave-to{
+    opacity: 0;
+  }
+  .list-leave-active{
+    transition: all 0.3s ease-out;
+    position: absolute /* DA USARE PER LIST MOVE */
+  }
 
-.list-enter-from{
-  opacity: 0;
-}
-.list-enter-to{
-  opacity: 1;
-}
-.list-enter-active{
-  transition: all 0.3s ease-out;
-  position: absolute
-}
-.list-leave-from{
-  opacity: 1;
-}
-.list-leave-to{
-  opacity: 0;
-}
-.list-leave-active{
-  transition: all 0.3s ease-out;
-  position: absolute /* DA USARE PER LIST MOVE */
-}
-
-/* spostamento da uno stato e l'altro*/
-.list-move{
-  transition: all 0.3s ease-out;
-}
-
+  /* spostamento da uno stato e l'altro*/
+  .list-move{
+    transition: all 0.3s ease-out;
+  }
 </style>

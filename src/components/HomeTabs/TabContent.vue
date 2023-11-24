@@ -10,20 +10,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, toRef } from 'vue'
-import { readTextFile } from '@tauri-apps/api/fs'
-import Editor from '@/components/Editor/Editor.vue'
-import { useFiles } from '@/stores/use-files'
-import { FileType } from '@/types/FileType'
+  import { computed, onMounted, ref, toRef } from 'vue'
+  import { useFiles } from '@/stores/use-files'
+  import { FileType } from '@/types/FileType'
+  import Editor from '@/components/Editor/Editor.vue'
+  import { readTextFile } from '@tauri-apps/api/fs'
 
-const props = defineProps<FileType>()
-const files = useFiles()
-const path = toRef(props.path)
-const selectedPath = computed( () => files.getSelectedPath)
-const content = ref('')
+  const props = defineProps<FileType>()
+  const files = useFiles()
+  const path = toRef(props.path)
+  const selectedPath = computed( () => files.getSelectedPath)
+  const content = ref('')
 
-onMounted( async () => {
-  content.value = await readTextFile(props.path as string)
-})
+  onMounted( async () => {
+    content.value = await readTextFile(props.path as string)
+  })
 
 </script>

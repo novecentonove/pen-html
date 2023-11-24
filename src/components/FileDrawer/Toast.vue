@@ -5,41 +5,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+  import { ref, watch } from 'vue';
 
+  type Props = {
+    trigger: number,
+  }
 
-type Props = {
-  trigger: number,
-}
-const props = defineProps<Props>()
+  const props = defineProps<Props>()
 
-const show = ref(false)
+  const show = ref(false)
 
-watch(() => props.trigger, () => {
-  show.value = true
-  setTimeout(() => {
-    show.value = false
-  }, 2000);
-})
+  watch(() => props.trigger, () => {
+    show.value = true
+    setTimeout(() => {
+      show.value = false
+    }, 2000);
+  })
 </script>
 
 <style>
-.saved_file-enter-active {
-  transition: all 0.2s ease-in;
-}
+  .saved_file-enter-active {
+    transition: all 0.2s ease-in;
+  }
 
-.saved_file-leave-active {
-  transition: all 0.3s ease-out;
-}
+  .saved_file-leave-active {
+    transition: all 0.3s ease-out;
+  }
 
-.saved_file-enter-from,
-.saved_file-leave-to {
-  transform: translateY(10px);
-  opacity: 0;
-}
-.toast_saved {
-  background-color: rgb(161, 116, 20);
-  padding: 0 5px;
-  border-radius: 5px;
-}
+  .saved_file-enter-from,
+  .saved_file-leave-to {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  .toast_saved {
+    background-color: rgb(161, 116, 20);
+    padding: 0 5px;
+    border-radius: 5px;
+  }
 </style>

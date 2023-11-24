@@ -34,17 +34,6 @@
 </template>
 
 <script setup lang="ts">
-  /**
-  USARE STYLE binding per i font?
-  veder anche per locale:
-  @font-face {
-    font-family: "ADELIA";
-    src: url("../public/fonts/ADELIA.otf");
-  }
-  font-family: ADELIA
-  */
-  // import { RouterView } from 'vue-router'
-
   import FileDrawer from '@/views/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
   import { computed, onMounted, ref } from 'vue'

@@ -89,76 +89,72 @@
 </template>
 
 <script setup lang="ts">
-// @ts-ignore
-import IconBold from 'vue-material-design-icons/FormatBold.vue';
-// @ts-ignore
-import IconItalic from 'vue-material-design-icons/FormatItalic.vue';
-// @ts-ignore
-import IconStrike from 'vue-material-design-icons/FormatStrikethroughVariant.vue';
-// @ts-ignore
-import IconCodeBlock from 'vue-material-design-icons/CodeBraces.vue';
-// @ts-ignore
-import IconCode from 'vue-material-design-icons/CodeBrackets.vue';
-// @ts-ignore
-import IconOl from 'vue-material-design-icons/FormatListNumbered.vue';
-// @ts-ignore
-import IconUl from 'vue-material-design-icons/FormatListBulleted.vue';
-// @ts-ignore
-import IconQuote from 'vue-material-design-icons/FormatQuoteOpen.vue';
-// @ts-ignore
-import IconClear from 'vue-material-design-icons/ClipboardOutline.vue';
-// import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue';
-// import Drag from 'vue-material-design-icons/Drag.vue';
+  // @ts-ignore
+  import IconBold from 'vue-material-design-icons/FormatBold.vue';
+  // @ts-ignore
+  import IconItalic from 'vue-material-design-icons/FormatItalic.vue';
+  // @ts-ignore
+  import IconStrike from 'vue-material-design-icons/FormatStrikethroughVariant.vue';
+  // @ts-ignore
+  import IconCodeBlock from 'vue-material-design-icons/CodeBraces.vue';
+  // @ts-ignore
+  import IconCode from 'vue-material-design-icons/CodeBrackets.vue';
+  // @ts-ignore
+  import IconOl from 'vue-material-design-icons/FormatListNumbered.vue';
+  // @ts-ignore
+  import IconUl from 'vue-material-design-icons/FormatListBulleted.vue';
+  // @ts-ignore
+  import IconQuote from 'vue-material-design-icons/FormatQuoteOpen.vue';
+  // @ts-ignore
+  import IconClear from 'vue-material-design-icons/ClipboardOutline.vue';
+  // import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue';
+  // import Drag from 'vue-material-design-icons/Drag.vue';
+  // @ts-ignore
+  import IconRight from 'vue-material-design-icons/ChevronRight.vue';
+  import { Editor, } from '@tiptap/vue-3'
 
-// @ts-ignore
-import IconRight from 'vue-material-design-icons/ChevronRight.vue';
-import { Editor, } from '@tiptap/vue-3'
-// import { ref } from 'vue';
+  type EditorVar = Editor | null
 
-type EditorVar = Editor | null
+  type Props = { 
+    editor:  EditorVar | null
+  }
 
-type Props = { 
-  editor:  EditorVar | null
-}
-const props = defineProps<Props>()
-const editor = props.editor
-const size = 18
+  const props = defineProps<Props>()
+  const editor = props.editor
+  const size = 18
 
-// const showExtraButton = ref(false)
-
-const colors: string[] = ['#e2c42c', '#2ca1e2', '#988bd5'];
+  const colors: string[] = ['#e2c42c', '#2ca1e2', '#988bd5'];
 </script>
 
 <style scoped>
+  button {
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+  }
+  button:hover {
+    background-color: #524e4e;
+  }
+  .buttons_bar{
+    /* min-width: 405px; */
+    background-color: #131313;
+    border: 1px solid #3b3b3b;
+  }
+  .is-active{
+    background-color: #524e4e;
+    border-radius: .2rem;
+  }
 
-button {
-  padding: 0.2rem;
-  border-radius: 0.2rem;
-}
-button:hover {
-  background-color: #524e4e;
-}
-.buttons_bar{
-  /* min-width: 405px; */
-  background-color: #131313;
-  border: 1px solid #3b3b3b;
-}
-.is-active{
-  background-color: #524e4e;
-  border-radius: .2rem;
-}
+  .slide_right-enter-active {
+    transition: all 0.2s;
+  }
 
-.slide_right-enter-active {
-  transition: all 0.2s;
-}
+  .slide_right-leave-active {
+    transition: all 0.2s;
+  }
 
-.slide_right-leave-active {
-  transition: all 0.2s;
-}
-
-.slide_right-enter-from,
-.slide_right-leave-to {
-  transform: translatex(-100%);
-  opacity: 0;
-}
+  .slide_right-enter-from,
+  .slide_right-leave-to {
+    transform: translatex(-100%);
+    opacity: 0;
+  }
 </style>

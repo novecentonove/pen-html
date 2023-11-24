@@ -92,5 +92,5 @@ export const useFiles = defineStore('files', {
         this.getNotSavedFiles.push(path)
       }
     }
-  },
+  }
 })

@@ -69,38 +69,38 @@
 </template>
 
 <script setup lang="ts">
-import { open } from '@tauri-apps/api/dialog'
-import { computed, ref, toRef} from 'vue'
-import { useSettings } from '@/stores/use-settings'
-// import { relaunch } from '@tauri-apps/api/process'
-// @ts-ignore
-import Left from 'vue-material-design-icons/ChevronLeft.vue'
-import { readDir } from '@tauri-apps/api/fs';
+  import { open } from '@tauri-apps/api/dialog'
+  import { computed, ref, toRef} from 'vue'
+  import { useSettings } from '@/stores/use-settings'
+  // import { relaunch } from '@tauri-apps/api/process'
+  // @ts-ignore
+  import Left from 'vue-material-design-icons/ChevronLeft.vue'
+  import { readDir } from '@tauri-apps/api/fs';
 
-const settings = useSettings()
-const selectedAppFont = toRef(settings.getAppFont)
-const selectedEditorFont = toRef(settings.getEditorFont)
-const selectedTextColors = computed( () => settings.getFontColor)
-const selectedFontSize = toRef(settings.getEditorFontSize)
-const baseFilesDir = toRef(settings.getBaseDir)
-const baseFontsDir = toRef(settings.getBaseFontDir)
-// const baseFontsLists = ref([])
+  const settings = useSettings()
+  const selectedAppFont = toRef(settings.getAppFont)
+  const selectedEditorFont = toRef(settings.getEditorFont)
+  const selectedTextColors = computed( () => settings.getFontColor)
+  const selectedFontSize = toRef(settings.getEditorFontSize)
+  const baseFilesDir = toRef(settings.getBaseDir)
+  const baseFontsDir = toRef(settings.getBaseFontDir)
+  // const baseFontsLists = ref([])
 
-// const extractFontFromDir = async (dir) => {
-//   const res = await readDir(dir as string)
-//   res.forEach(el => {
-//     // console.log(el)
-//     if(el.children != undefined){
-//       extractFontFromDir(el.path)
-//     } else {
-//       const extension = el.name.split('.').pop()
-//       const valid = ['ttf'];
-//       if(extension.includes(valid)){
-//         fontFamilies.value.push(el)
-//       }
-//     }
-//   });
-// }
+  // const extractFontFromDir = async (dir) => {
+  //   const res = await readDir(dir as string)
+  //   res.forEach(el => {
+  //     // console.log(el)
+  //     if(el.children != undefined){
+  //       extractFontFromDir(el.path)
+  //     } else {
+  //       const extension = el.name.split('.').pop()
+  //       const valid = ['ttf'];
+  //       if(extension.includes(valid)){
+  //         fontFamilies.value.push(el)
+  //       }
+  //     }
+  //   });
+  // }
 
 
 const fontFamilies = ref([
@@ -254,6 +254,18 @@ const getLStructureDir = async (content: any) => {
 //     console.error(err.name, err.message);
 //   }
 // }
+
+
+  /**
+  USARE STYLE binding per i font?
+  veder anche per locale:
+  @font-face {
+    font-family: "ADELIA";
+    src: url("../public/fonts/ADELIA.otf");
+  }
+  font-family: ADELIA
+  */
+  // import { RouterView } from 'vue-router'
 
 
 </script>

@@ -12,72 +12,70 @@
     </dialog>
   </Teleport>
 </template>
+
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import { useFiles } from '@/stores/use-files'
-import { FileType } from '@/types/FileType';
+  import { computed, ref, watch } from 'vue';
+  import { useFiles } from '@/stores/use-files'
+  import { FileType } from '@/types/FileType';
 
-const emit = defineEmits(['fileDone'])
+  const emit = defineEmits(['fileDone'])
 
-type Props = {
-  fileToClose: FileType
-  trigger: number
-}
-
-const files = useFiles()
-const props = defineProps<Props>()
-const dialog = ref(null)
-
-// const showDialog = ref(false)
-const default_button_dialog = ref(null)
-const getNotSavedFiles = computed( () => files.getNotSavedFiles)
-
-watch(() => props.trigger, () => {
-  closeTab('check')
-})
-
-const closeTab = (mode: string) => {
-  const pathToClose = props.fileToClose.path
-  
-  if(getNotSavedFiles.value.length < 0){
-    files.closeTab(pathToClose)
-    return
+  type Props = {
+    fileToClose: FileType
+    trigger: number
   }
 
-  const isNotSaved = getNotSavedFiles.value.includes(props.fileToClose.path)
+  const files = useFiles()
+  const props = defineProps<Props>()
+  const dialog = ref(null)
 
-  switch (mode) {
-    case 'check':
-      // @ts-ignore
-      if(isNotSaved){
-          // @ts-ignore
-          dialog.value.showModal()
-          files.setSelectedPath(props.fileToClose.path)
-          // @ts-ignore
-          default_button_dialog.value.focus()
-      } else {
+  // const showDialog = ref(false)
+  const default_button_dialog = ref(null)
+  const getNotSavedFiles = computed( () => files.getNotSavedFiles)
+
+  watch(() => props.trigger, () => {
+    closeTab('check')
+  })
+
+  const closeTab = (mode: string) => {
+    const pathToClose = props.fileToClose.path
+    
+    if(getNotSavedFiles.value.length < 0){
+      files.closeTab(pathToClose)
+      return
+    }
+
+    const isNotSaved = getNotSavedFiles.value.includes(props.fileToClose.path)
+
+    switch (mode) {
+      case 'check':
+        // @ts-ignore
+        if(isNotSaved){
+            // @ts-ignore
+            dialog.value.showModal()
+            files.setSelectedPath(props.fileToClose.path)
+            // @ts-ignore
+            default_button_dialog.value.focus()
+        } else {
+          files.closeTab(pathToClose) 
+        }
+        break
+      case 'noSave':
+        
         files.closeTab(pathToClose) 
-      }
-      break
-    case 'noSave':
-      
-      files.closeTab(pathToClose) 
-      // @ts-ignore
-      dialog.value.close()
-      emit('fileDone', 'ok')
+        // @ts-ignore
+        dialog.value.close()
+        emit('fileDone', 'ok')
+        break;
+      case 'cancel':
+        // @ts-ignore
+        dialog.value.close()
+        break;
+      default:
+        // @ts-ignore
+        dialog.value.close()
       break;
-    case 'cancel':
-      // @ts-ignore
-      dialog.value.close()
-      break;
-    default:
-      // @ts-ignore
-      dialog.value.close()
-    break;
+    }
+
   }
-
-}
-
-
-
 </script>

@@ -16,54 +16,54 @@
 </template>
 
 <script setup lang="ts">
-import XMarkIcon from "@/components/Icons/XMarkIcon.vue"
-import { FileType } from '@/types/FileType';
-import { useFiles } from '@/stores/use-files'
-import { computed, ref } from 'vue'
-// @ts-ignore
-import { snakeCase } from 'lodash'
-import NotSavedDialog from "./NotSavedDialog.vue";
+  import { computed, ref } from 'vue'
+  import XMarkIcon from "@/components/Icons/XMarkIcon.vue"
+  import NotSavedDialog from "./NotSavedDialog.vue"
+  import { FileType } from '@/types/FileType'
+  import { useFiles } from '@/stores/use-files'
+  // @ts-ignore
+  import { snakeCase } from 'lodash'
+  
+  type Props = {
+    file: FileType
+  }
 
-type Props = {
-  file: FileType
-}
+  const props = defineProps<Props>()
 
-const props = defineProps<Props>()
+  const files = useFiles()
+  const selectedPath = computed( () => files.getSelectedPath)
+  const trigger = ref(0)
 
-const files = useFiles()
-const selectedPath = computed( () => files.getSelectedPath)
-const trigger = ref(0)
+  const openFile = async (file: FileType | null) => {
+    if(file){
+      const allowedExt = ['html'];
+      const ext = file.name.split('.').pop();
 
-const openFile = async (file: FileType | null) => {
-  if(file){
-    const allowedExt = ['html'];
-    const ext = file.name.split('.').pop();
-
-    if(allowedExt.includes(ext ?? '')) {
-      files.setSelectedPath(file.path)
+      if(allowedExt.includes(ext ?? '')) {
+        files.setSelectedPath(file.path)
+      }
     }
   }
-}
 
-const closeTab = () => {
-  trigger.value++
-}
+  const closeTab = () => {
+    trigger.value++
+  }
 
-const snakeCasePath = (path: string) => {
-  return snakeCase(path)
-}
+  const snakeCasePath = (path: string) => {
+    return snakeCase(path)
+  }
 </script>
 
 <style>
-.dialog {
-  min-width: 425px;
-  max-width: 600px;
-}
-.dialog_b button{
-  width: 100%;
-    padding: 10px 10px;
-    margin: 0 8px;
-    border-radius: 5px;
-    /* background-color: #303030; */
-}
+  .dialog {
+    min-width: 425px;
+    max-width: 600px;
+  }
+  .dialog_b button{
+    width: 100%;
+      padding: 10px 10px;
+      margin: 0 8px;
+      border-radius: 5px;
+      /* background-color: #303030; */
+  }
 </style>
