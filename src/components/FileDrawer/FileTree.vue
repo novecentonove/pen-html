@@ -1,5 +1,5 @@
 <template>
-  <li v-if="props.children" :style="indent" class="cursor-pointer flex items-center" @click="toggleChildren">
+  <li v-if="props.children" :style="indent" class="cursor-pointer flex items-center" @click="toggleChildren()">
     <Folder :size="12" class="mr-1" />{{ props.file.name }}
   </li>
 
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed } from 'vue';
   import { type FileType } from '@/types/FileType'
   import FileTree from './FileTree.vue'
   import FileClick from './FileClick.vue'
@@ -23,6 +23,7 @@
   import Folder from 'vue-material-design-icons/Folder.vue';
   // @ts-ignore
   import Text from 'vue-material-design-icons/TextLong.vue';
+  import { useToggle } from '@vueuse/core'
 
   const props = defineProps<{
     children?:FileType[]
@@ -31,9 +32,10 @@
   }>();
 
   const indent = computed( () => `transform: translate(${props.depth * 10}px)` )
-  const showChildren = ref(false)
+  // const showChildren = ref(false)
 
-  const toggleChildren = () => {
-    showChildren.value = !showChildren.value
-  }
+  const [showChildren, toggleChildren] = useToggle()
+  // const toggleChildren = () => {
+  //   showChildren.value = !showChildren.value
+  // }
 </script>

@@ -14,13 +14,13 @@
       </div>
       <div class="relative flex mt-auto mb-3 justify-between">
         <div>
-          <IconSettings @click="settingsToggle = !settingsToggle" :size="20"/>
+          <IconSettings @click="toggleSettings()" :size="20"/>
         </div>
         <Toast :trigger="file_is_saved" />
       </div>
     </div>
 
-    <div ref="settingsRef" v-if="settingsToggle" class="fileDrawer_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-l border-t border-b border-neutral-700">
+    <div ref="settingsRef" v-if="showSettings" class="fileDrawer_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-l border-t border-b border-neutral-700">
       <Settings />
     </div>
 
@@ -42,7 +42,7 @@
   import { readDir } from '@tauri-apps/api/fs';
   import { type FileType } from '@/types/FileType';
   import { onClickOutside } from '@vueuse/core'
-
+  import { useToggle } from '@vueuse/core'
   // const route = useRoute()
   // const pathDir = ref<string>('/home/dav/test')
   const filesAndDir = ref<FileType[] | []>([])
@@ -53,7 +53,11 @@
   const file_is_saved = computed(() => files.getFileIsSaved)
   const openedFiles = computed( () => files.getOpenFiles)
   const baseDir = computed( () => settings.getBaseDir)
-  const settingsToggle = ref(false)
+
+  const [showSettings, toggleSettings] = useToggle()
+
+  const closeSettings = () => showSettings.value = false
+  onClickOutside(settingsRef, closeSettings)
 
   watch(baseDir, async (value) => {
     const content = await readDir(value as string)
@@ -72,9 +76,6 @@
       }
       return content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
   }
-
-  const closeSettings = () => settingsToggle.value = false
-  onClickOutside(settingsRef, closeSettings)
 
   onMounted( async () => {
     if(baseDir.value){
