@@ -1,8 +1,8 @@
 <template>
   <div class="pt-4 px-12 overflow-y-scroll">
-    <div>
+    <!-- <div>
       <Left />
-    </div>
+    </div> -->
     <div class="flex flex-col [&>input]:text-neutral-800 [&>select]:text-neutral-800 [&>select]:mb-2 [&>*]:w-full">
 
       <label class="mt-6">Base Dir</label>

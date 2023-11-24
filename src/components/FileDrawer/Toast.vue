@@ -1,6 +1,6 @@
 <template>
   <transition name="saved_file"> 
-    <div v-if="show" class="absolute right-3 bottom-0 text-neutral-800 px-2 bg-orange-800 rounded-md">saved!</div>
+    <div v-if="show" class="absolute right-3 bottom-[1px] text-neutral-800 px-2 bg-orange-800 rounded-md">saved!</div>
   </transition> 
 </template>
 
@@ -34,7 +34,7 @@ watch(() => props.trigger, () => {
 
 .saved_file-enter-from,
 .saved_file-leave-to {
-  transform: translatey(20px);
+  transform: translateY(10px);
   opacity: 0;
 }
 .toast_saved {

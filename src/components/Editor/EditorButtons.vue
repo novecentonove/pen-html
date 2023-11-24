@@ -113,7 +113,7 @@ import IconClear from 'vue-material-design-icons/ClipboardOutline.vue';
 // @ts-ignore
 import IconRight from 'vue-material-design-icons/ChevronRight.vue';
 import { Editor, } from '@tiptap/vue-3'
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
 type EditorVar = Editor | null
 
@@ -124,7 +124,7 @@ const props = defineProps<Props>()
 const editor = props.editor
 const size = 18
 
-const showExtraButton = ref(false)
+// const showExtraButton = ref(false)
 
 const colors: string[] = ['#e2c42c', '#2ca1e2', '#988bd5'];
 </script>

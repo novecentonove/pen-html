@@ -36,10 +36,16 @@ import { useFiles } from '../../stores/use-files'
 import { snakeCase} from 'lodash'
 import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
+// import CodeBlock from '@tiptap/extension-code-block'
 
 Color.configure({
   types: ['textStyle'],
 })
+
+// CodeBlock.configure({
+//   languageClassPrefix: 'language-php',
+// })
+
 
 type Props = {
   modelValue: string,

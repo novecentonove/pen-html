@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div v-if="settingsToggle" class="fileDrawer_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-l border-t border-b border-neutral-700 rounded-l-md">
+    <div ref="settingsRef" v-if="settingsToggle" class="fileDrawer_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-l border-t border-b border-neutral-700">
       <Settings />
     </div>
 
@@ -42,12 +42,14 @@ import { useSettings } from '@/stores/use-settings'
 import Text from 'vue-material-design-icons/TextLong.vue'
 import FileClick from '../components/FileDrawer/FileClick.vue';
 import { type FileType } from '@/types/FileType';
+import { onClickOutside } from '@vueuse/core'
 
 // const route = useRoute()
 // const pathDir = ref<string>('/home/dav/test')
 const filesAndDir = ref<FileType[] | []>([])
 const files = useFiles()
 const settings = useSettings()
+const settingsRef = ref(null)
 
 const file_is_saved = computed(() => files.getFileIsSaved)
 const openedFiles = computed( () => files.getOpenFiles)
@@ -71,6 +73,9 @@ const getLStructureDir = async (content: any) => {
     }
     return content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
 }
+
+const closeSettings = () => settingsToggle.value = false
+onClickOutside(settingsRef, closeSettings)
 
 onMounted( async () => {
   if(baseDir.value){
