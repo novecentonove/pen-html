@@ -47,6 +47,11 @@
         <option v-for="(font, i) in fontFamilies" :key="i" :path="font.path" :value="font.name">{{font.name}}</option>
       </select> -->
 
+      <label class="mt-12">Theme</label>
+      <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
+        <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
+      </select>
+
     </div>
 
 
@@ -70,13 +75,15 @@
 
 <script setup lang="ts">
   import { open } from '@tauri-apps/api/dialog'
-  import { computed, ref, toRef} from 'vue'
+  import { computed, toRef} from 'vue'
   import { useSettings } from '@/stores/use-settings'
   // import { relaunch } from '@tauri-apps/api/process'
   // @ts-ignore
   import Left from 'vue-material-design-icons/ChevronLeft.vue'
   import { readDir } from '@tauri-apps/api/fs';
-
+    // @ts-ignore
+  import { themeSettings } from '@/utils/themeSettings.js'
+  
   const settings = useSettings()
   const selectedAppFont = toRef(settings.getAppFont)
   const selectedEditorFont = toRef(settings.getEditorFont)
@@ -84,6 +91,9 @@
   const selectedFontSize = toRef(settings.getEditorFontSize)
   const baseFilesDir = toRef(settings.getBaseDir)
   const baseFontsDir = toRef(settings.getBaseFontDir)
+  const selectedTheme = toRef(settings.getTheme)
+
+  
   // const baseFontsLists = ref([])
 
   // const extractFontFromDir = async (dir) => {
@@ -102,8 +112,10 @@
   //   });
   // }
 
+// spostare in use-settings
 
-const fontFamilies = ref([
+
+const fontFamilies = [
   {
     name: 'Consolas',
   },
@@ -117,21 +129,25 @@ const fontFamilies = ref([
     name: 'Segoe UI',
   },
   
-])
+]
 
-const textColors = ref(
-  [
+const textColors = [
   { name: 'White', value: '#fff' },
   { name: 'Light Gray', value: '#d3d3d3' },
   { name: 'Gray', value: '#b0b0b0' },
   { name: 'Stormy Sky', value: '#909090' },
   { name: 'Cold', value: '#9fa7b6' },
   { name: 'Warm', value: '#bbb5a4' }
-])
+]
 
 // const reload = async () => await relaunch()
 interface InputFileEvent extends Event {
     target: HTMLInputElement
+}
+
+const selectTheme = () => {
+  settings.setTheme(selectedTheme.value)
+  settings.applyTheme()
 }
 
 const selectFont = (type:string) => {
@@ -143,8 +159,6 @@ const selectFont = (type:string) => {
   //   // @ts-ignore
   //   path = (e.target.options[e.target.options.selectedIndex].getAttribute('path'))
   // }
-
-  
 
   switch (type) {
     case 'app':
@@ -171,7 +185,6 @@ const selectFont = (type:string) => {
 //   await ff.load();
 //   document.fonts.add(ff);
 // }
-
 
 const selectTextColors = (color: string) => {
   console.log(color)

@@ -1,23 +1,23 @@
 <template>
-  <div class="main main_color h-screen text_color overflow-x-scroll" @mouseup="endDragging">
+  <div class="main main_color view_color h-screen text_color overflow-x-scroll" @mouseup="endDragging">
     <div class="flex">
       
-      <FileDrawer id="fileD" class="fileDrawer fileDrawer_color flex-shrink-0" :style="`width: ${leftW}px`" >
+      <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0" :style="`width: ${leftW}px`" >
         <div class="absolute h-[70%] w-2 right-0 bottom-0 px-1" @mousedown="startDragging" style="cursor: col-resize" />
       </FileDrawer>
 
       <div id="rightV" class="grow">
-        <div data-tauri-drag-region class="titlebar text_color">
+        <div data-tauri-drag-region class="titlebar view_color text_color">
           <div class="mx-auto pt-1">
             <p class="text-xs pt-0.5 text-neutral-700">pen</p>
           </div>
-          <div class="titlebar-button" @click="appWindow.minimize()">
+          <div class="titlebar_button" @click="appWindow.minimize()">
             <WindowMinimize :size="15" />
           </div>
-          <div class="titlebar-button" @click="appWindow.toggleMaximize()">
+          <div class="titlebar_button" @click="appWindow.toggleMaximize()">
             <WindowMaximize :size="15" />
           </div>
-          <div class="titlebar-button" @click="handleClose">
+          <div class="titlebar_button" @click="handleClose">
             <WindowClose :size="15" />
           </div>
         </div>
@@ -40,14 +40,16 @@
   import { useSettings } from '@/stores/use-settings'
   import { useFiles } from '@/stores/use-files'
  // @ts-ignore
-  import WindowMinimize from 'vue-material-design-icons/WindowMinimize.vue';
+  import WindowMinimize from 'vue-material-design-icons/WindowMinimize.vue'
   // @ts-ignore
-  import WindowMaximize from 'vue-material-design-icons/WindowMaximize.vue';
+  import WindowMaximize from 'vue-material-design-icons/WindowMaximize.vue'
   // @ts-ignore
-  import WindowClose from 'vue-material-design-icons/WindowClose.vue';
+  import WindowClose from 'vue-material-design-icons/WindowClose.vue'
   import HomeTabs from '@/views/HomeTabs.vue'
-  import NotSavedDialog from './components/HomeTabs/NotSavedDialog.vue';
-  import { FileType } from '@/types/FileType';
+  import NotSavedDialog from './components/HomeTabs/NotSavedDialog.vue'
+  import { FileType } from '@/types/FileType'
+    // @ts-ignore
+  import { themeSettings } from '@/utils/themeSettings.js'
 
   const settings = useSettings()
   const files = useFiles()
@@ -109,6 +111,9 @@
     document.documentElement.style.setProperty('--editor_font', editor_font.value)
     document.documentElement.style.setProperty('--text_color', text_color.value)
     document.documentElement.style.setProperty('--editor_font_size', `${editor_font_size.value}px`)
+
+    settings.applyTheme()
+
   })
  
 
@@ -123,7 +128,7 @@
   justify-content: flex-end;
 }
 
-.titlebar-button {
+.titlebar_button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,7 +136,7 @@
   height: 30px;
 }
 
-.titlebar-button:hover {
+.titlebar_button:hover {
   background-color: black;
 }
 
@@ -145,20 +150,20 @@
 }
 
 /* Colors */
-.titlebar {
+/* .titlebar {
   background-color: #191919;
-}
+} */
 
-.fileDrawer_color {
+/* .fileDrawer_color {
   background-color: #202020;
-}
+} */
 
-.main_color{
+/* .main_color{
   background-color: #191919;
-}
+} */ 
 
-.dialog {
+/* .dialog {
   background-color: #202020;
-}
+} */
 
 </style>

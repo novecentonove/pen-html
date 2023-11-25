@@ -2,12 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 
+# placeholder
 :root{
   --app_font: 'Arial'
   --editor_font: 'Arial'
   --text_color: '#fff'
-  --editor_font_size: '16px'
-}
+  --editor_font_size: '15px'
+
+  --left_panel_color: '#202020';
+  --view_color: '#191919';
+  --settings_panel_color:'#202020';
+  --border_color: '#525252';
+} */
 
 .app_font {
   font-family: var(--app_font);
@@ -24,6 +31,29 @@
 .editor_font_size{
   font-size: var(--editor_font_size);
 }
+
+/* themes */
+
+.left_panel_color{
+  background-color: var(--left_panel_color);
+}
+
+.view_color{
+  background-color: var(--view_color);
+}
+
+.settings_panel_color{
+  background-color: var(--settings_panel_color);
+}
+
+.border_color{
+  border-color: var(--border_color);
+}
+
+.dialog{
+  background-color: var(--left_panel_color);
+}
+
 /* overwrite css*/
 ol, ul, menu{
   list-style-type: inherit;

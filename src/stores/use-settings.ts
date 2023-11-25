@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+// @ts-ignore
+import { themeSettings } from '@/utils/themeSettings.js'
 
 export const useSettings = defineStore('settings', {
   state: () => ({ 
@@ -8,6 +10,7 @@ export const useSettings = defineStore('settings', {
     editorFontSize: 16,
     basedir: '/home/dav/test',
     baseFontDir: '',
+    theme: 'default'
   }),
 
   persist: true,
@@ -18,7 +21,8 @@ export const useSettings = defineStore('settings', {
     getFontColor: (state) => state.fontColor,
     getEditorFontSize: (state) => state.editorFontSize,
     getBaseDir: (state) => state.basedir,
-    getBaseFontDir: (state) => state.baseFontDir
+    getBaseFontDir: (state) => state.baseFontDir,
+    getTheme: (state) => state.theme,
   },
 
   actions: {
@@ -40,6 +44,18 @@ export const useSettings = defineStore('settings', {
     setBaseFontDir(path: string){
       this.baseFontDir = path
     },
+    setTheme(theme: string){
+      this.theme = theme
+    },
+    applyTheme(){
+  
+      const theme = themeSettings.filter((el: any) => el.name === this.getTheme)[0]
+    
+      document.documentElement.style.setProperty('--left_panel_color', theme.colors.left_panel)
+      document.documentElement.style.setProperty('--view_color', theme.colors.view)
+      document.documentElement.style.setProperty('--settings_panel_color', theme.colors.settings_panel)
+      document.documentElement.style.setProperty('--border_color', theme.colors.border)
+    }
   }
   
 })
