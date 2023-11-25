@@ -3,32 +3,32 @@
     <!-- <div>
       <Left />
     </div> -->
-    <div class="flex flex-col [&>input]:text-neutral-800 [&>select]:text-neutral-800 [&>select]:mb-2 [&>*]:w-full">
+    <div class="settings flex flex-col [&>select]:mb-2 [&>*]:w-full">
 
-      <label class="mt-6">Base Dir</label>
-      <button class="border border-neutral-500" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
+      <label class="mt-6">Base Directory</label>
+      <button class="border h-12 border-neutral-500" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
 
       <!-- <label class="mt-6">Base Font Dir</label>
       <button class="border border-neutral-500" @click="readFontDir">{{baseFontsDir ?? 'no dir selected'}}</button> -->
 
-      <label class="mt-6">App Font</label>
+      <label class="mtop">App Font</label>
       <select v-if="baseFontsDir" v-model="selectedAppFont" @change="selectFont('app')">
         <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
       </select>
       <p v-else>Please select your fonts folder</p>
 
-      <label class="mt-6">Editor Font</label>
+      <label class="mtop">Editor Font</label>
       <select v-model="selectedEditorFont" @change="selectFont('editor')">
         <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
       </select>
 
-      <label class="mt-6">Text color</label>
-      <div class="flex gap-4">
+      <label class="mtop">Text color</label>
+      <div class="flex justify-between">
         <div v-for="(color, i) in textColors" 
         :title="color.name" 
         :key="i" 
-        class="w-8 h-8" 
-        :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid orange' : ''}`" 
+        class="w-10 h-10" 
+        :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
         @click="selectTextColors(color.value)"
         />
       </div>
@@ -39,7 +39,7 @@
         </option>
       </select> -->
 
-      <label class="mt-6">Font size</label>
+      <label class="mtop">Font size</label>
       <input type="number" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
 
       <!-- <label class="mt-6">App Font test</label>
@@ -47,7 +47,7 @@
         <option v-for="(font, i) in fontFamilies" :key="i" :path="font.path" :value="font.name">{{font.name}}</option>
       </select> -->
 
-      <label class="mt-12">Theme</label>
+      <label class="mtop">Theme</label>
       <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
         <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
       </select>
@@ -282,3 +282,17 @@ const getLStructureDir = async (content: any) => {
 
 
 </script>
+
+
+<style>
+.settings input,
+.settings select {
+  color: #292929;
+  height: 30px;
+  padding-left: 3px;
+  border-radius: 0.2em;
+}
+.settings .mtop {
+  margin-top: 30px;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <dialog ref="dialog" class="absolute top-0 dialog text_color px-12 py-3 rounded-md">
+    <dialog ref="dialog" class="absolute top-0 dialog text_color px-12 py-8 rounded-md">
       <div>
         <p class="mb-5 text-center"><span class="text-red-900">{{ fileToClose.name }} </span> is not saved. <br>Do you want to save it?<strong id="number"></strong></p>
         <div class="dialog_b flex justify-between">

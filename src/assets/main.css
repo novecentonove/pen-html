@@ -14,6 +14,7 @@
   --view_color: '#191919';
   --settings_panel_color:'#202020';
   --border_color: '#525252';
+  --markdown_pre_color: '#131313'
 } */
 
 .app_font {
@@ -52,6 +53,11 @@
 
 .dialog{
   background-color: var(--left_panel_color);
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  background-color: var(--markdown_pre_color);
 }
 
 /* overwrite css*/

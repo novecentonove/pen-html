@@ -1,5 +1,5 @@
 <template>
-  <div class="relative pt-[36px] flex flex-col app_font text-sm">
+  <div class="relative w-full pt-[36px] flex flex-col app_font text-sm">
      <slot />
      <div class="flex flex-col h-full pl-4">
       <div v-if="openedFiles.length">
@@ -9,7 +9,7 @@
         </ul>
       </div>
       <div class="h-full pt-2 leading-7 overflow-x-scroll">
-        <p class="pb-[6px] border-b border_color"></p>
+        <p class="pb-[6px] mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
       </div>
       <div class="relative flex mt-auto mb-3 justify-between">

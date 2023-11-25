@@ -48,14 +48,13 @@ export const useSettings = defineStore('settings', {
       this.theme = theme
     },
     applyTheme(){
-  
       const theme = themeSettings.filter((el: any) => el.name === this.getTheme)[0]
-    
-      document.documentElement.style.setProperty('--left_panel_color', theme.colors.left_panel)
-      document.documentElement.style.setProperty('--view_color', theme.colors.view)
-      document.documentElement.style.setProperty('--settings_panel_color', theme.colors.settings_panel)
-      document.documentElement.style.setProperty('--border_color', theme.colors.border)
+      
+      document.documentElement.style.setProperty('--left_panel_color', theme?.colors?.left_panel || '#202020')
+      document.documentElement.style.setProperty('--view_color', theme?.colors?.view || '#191919')
+      document.documentElement.style.setProperty('--settings_panel_color', theme?.colors?.settings_panel || '#202020')
+      document.documentElement.style.setProperty('--border_color', theme?.colors?.border || '#525252')
+      document.documentElement.style.setProperty('--markdown_pre_color', theme?.colors?.pre || '#131313')
     }
   }
-  
 })
