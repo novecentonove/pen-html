@@ -3,7 +3,7 @@
     <!-- <div>
       <Left />
     </div> -->
-    <div class="settings flex flex-col [&>select]:mb-2 [&>*]:w-full">
+    <div class="settings font_colors flex flex-col">
 
       <label class="mt-6">Base Directory</label>
       <button class="border h-12 border-neutral-500" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
@@ -287,10 +287,10 @@ const getLStructureDir = async (content: any) => {
 <style>
 .settings input,
 .settings select {
-  color: #292929;
   height: 30px;
   padding-left: 3px;
   border-radius: 0.2em;
+  background-color: rgb(32, 32, 32);
 }
 .settings .mtop {
   margin-top: 30px;
