@@ -19,7 +19,7 @@
   import { computed, ref } from 'vue'
   import XMarkIcon from "@/components/Icons/XMarkIcon.vue"
   import NotSavedDialog from "./NotSavedDialog.vue"
-  import { FileType } from '@/types/FileType'
+   import { type FileType } from '@/types/FileType'
   import { useFiles } from '@/stores/use-files'
   // @ts-ignore
   import { snakeCase } from 'lodash'

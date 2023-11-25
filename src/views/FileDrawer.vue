@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full pt-[36px] flex flex-col app_font text-sm">
+  <div class="relative w-full pt-[36px] flex flex-col app_font text-sm  overflow-x-scroll">
      <slot />
      <div class="flex flex-col h-full pl-4">
       <div v-if="openedFiles.length">
@@ -8,7 +8,7 @@
           <li class="cursor-pointer pl-2 mb-2 flex items-center"><Text :size="12" class="mr-1" /><FileClick :file="file"/></li>
         </ul>
       </div>
-      <div class="h-full pt-2 leading-7 overflow-x-scroll">
+      <div class="h-full pt-2 leading-7">
         <p class="pb-[6px] mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
       </div>

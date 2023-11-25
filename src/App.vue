@@ -47,7 +47,7 @@
   import WindowClose from 'vue-material-design-icons/WindowClose.vue'
   import HomeTabs from '@/views/HomeTabs.vue'
   import NotSavedDialog from './components/HomeTabs/NotSavedDialog.vue'
-  import { FileType } from '@/types/FileType'
+  import { type FileType } from '@/types/FileType'
     // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
 

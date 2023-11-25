@@ -12,7 +12,7 @@
 <script setup lang="ts">
   import { computed, onMounted, ref, toRef } from 'vue'
   import { useFiles } from '@/stores/use-files'
-  import { FileType } from '@/types/FileType'
+   import { type FileType } from '@/types/FileType'
   import Editor from '@/components/Editor/Editor.vue'
   import { readTextFile } from '@tauri-apps/api/fs'
 

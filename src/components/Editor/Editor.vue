@@ -164,6 +164,7 @@ onBeforeUnmount( () => {
 .wrapper_editor, .tiptap {
   max-height: calc(100vh - 111px);
 }
+
 .tiptap  {
   height: 100vh;
   overflow-y: scroll;
