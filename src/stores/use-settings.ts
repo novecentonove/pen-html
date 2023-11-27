@@ -47,6 +47,12 @@ export const useSettings = defineStore('settings', {
     setTheme(theme: string){
       this.theme = theme
     },
+    applySettings(){
+      document.documentElement.style.setProperty('--app_font', this.appFont)
+      document.documentElement.style.setProperty('--editor_font', this.editorFont)
+      document.documentElement.style.setProperty('--text_color', this.fontColor)
+      document.documentElement.style.setProperty('--editor_font_size', `${this.editorFontSize}px`)
+    },
     applyTheme(){
       const theme = themeSettings.filter((el: any) => el.name === this.getTheme)[0]
       

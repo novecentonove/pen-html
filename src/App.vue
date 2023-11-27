@@ -36,7 +36,7 @@
 <script setup lang="ts">
   import FileDrawer from '@/views/FileDrawer.vue';
   import { appWindow } from '@tauri-apps/api/window'
-  import { computed, onMounted, ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { useSettings } from '@/stores/use-settings'
   import { useFiles } from '@/stores/use-files'
  // @ts-ignore
@@ -53,11 +53,6 @@
 
   const settings = useSettings()
   const files = useFiles()
-
-  const app_font = computed( ()=> settings.getAppFont)
-  const editor_font = computed( ()=> settings.getEditorFont)
-  const text_color = computed( ()=> settings.getFontColor)
-  const editor_font_size = computed( ()=> settings.getEditorFontSize)
   const leftW = ref(160)
 
   // Check not saved
@@ -106,14 +101,8 @@
   }
 
   onMounted( () => {
-    // set fonts
-    document.documentElement.style.setProperty('--app_font', app_font.value)
-    document.documentElement.style.setProperty('--editor_font', editor_font.value)
-    document.documentElement.style.setProperty('--text_color', text_color.value)
-    document.documentElement.style.setProperty('--editor_font_size', `${editor_font_size.value}px`)
-
+    settings.applySettings()
     settings.applyTheme()
-
   })
  
 
