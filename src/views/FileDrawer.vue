@@ -13,8 +13,10 @@
         <FileList :files="filesAndDir"/>
       </div>
       <div class="relative flex mt-auto mb-3 justify-between">
-        <div>
-          <IconSettings @click="toggleSettings()" :size="20"/>
+        <div class="cursor-pointer">
+          <!-- see onClickOutside-->
+          <IconSettings v-if="showSettings" :size="20"/>
+          <IconSettings v-else @click="toggleSettings()" :size="20"/>
         </div>
         <Toast :trigger="file_is_saved" />
       </div>

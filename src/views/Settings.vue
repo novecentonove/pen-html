@@ -6,7 +6,7 @@
     <div class="settings font_colors flex flex-col">
 
       <label class="mt-6">Base Directory</label>
-      <button class="border h-12 border-neutral-500" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
+      <button class="border h-12 border-neutral-500 cursor-pointer" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
 
       <!-- <label class="mt-6">Base Font Dir</label>
       <button class="border border-neutral-500" @click="readFontDir">{{baseFontsDir ?? 'no dir selected'}}</button> -->
