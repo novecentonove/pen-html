@@ -165,25 +165,18 @@ onBeforeUnmount( () => {
   max-height: calc(100vh - 111px);
 }
 
+@media screen and (min-width: 1001px) {
+  .tiptap {
+    max-width: 80%;
+  }
+}
+
 .tiptap  {
   height: 100vh;
   overflow-y: scroll;
   margin: 30px auto;
   padding-right: 40px;
   word-break: break-word;
-}
-
-@media screen and (max-width: 1000px){
-  .tiptap {
-    margin: 30px 0;
-    padding-right: 5%;
-  }
-}
-
-@media screen and (min-width: 1001px) {
-  .tiptap {
-    max-width: 80%;
-  }
 }
 
 </style>

@@ -48,8 +48,7 @@
   import { type FileType } from '@/types/FileType';
   import { onClickOutside } from '@vueuse/core'
   import { useToggle } from '@vueuse/core'
-  // const route = useRoute()
-  // const pathDir = ref<string>('/home/dav/test')
+
   const filesAndDir = ref<FileType[] | []>([])
   const files = useFiles()
   const settings = useSettings()
@@ -69,8 +68,7 @@
     filesAndDir.value = await getLStructureDir(content)
   })
 
-  // recursive get structure
-  // TODO : use FileType to any
+  // recursive get structure // TODO : use FileType to any
   const getLStructureDir = async (content: any) => {
     for (const file of content) {
         if(typeof file.children === 'object'){
@@ -94,11 +92,18 @@
     }
   }
   
-  onMounted( async () => {
+  const loadBaseDir = async () => {
+    console.log('load dir')
     if(baseDir.value){
       const content = await readDir(baseDir.value as string)
       filesAndDir.value = await getLStructureDir(content)
     }
+  } 
+
+  onMounted( () => {
+    loadBaseDir()
+
+    setInterval(loadBaseDir, 1000*60*5)
   })
 
 </script>
@@ -107,6 +112,7 @@
 .open_dir{
   cursor: pointer;
   margin-top: 10px;
+  margin-bottom: 10px;
   width: 20px;
   height: 8px;
   background-color: var(--left_panel_color);
