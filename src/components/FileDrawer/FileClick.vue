@@ -6,7 +6,6 @@
 import { type FileType } from '@/types/FileType';
 import { useFiles } from '@/stores/use-files'
 
-const files = useFiles()
 
 type Props = { 
   file:  FileType | null,
@@ -15,7 +14,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
+const files = useFiles()
+
 const openFile = async (file: FileType | null) => {
+
   if(file){
     const allowedExt = ['html'];
     const ext = file.name.split('.').pop();
@@ -28,4 +30,6 @@ const openFile = async (file: FileType | null) => {
     }
   }
 }
+
+
 </script>

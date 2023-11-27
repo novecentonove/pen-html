@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full pt-[36px] flex flex-col app_font text-sm  overflow-x-scroll">
+  <div id="out_click" class="relative w-full pt-[36px] flex flex-col app_font text-sm  overflow-x-scroll">
      <slot />
      <div class="flex flex-col h-full pl-4">
       <div v-if="openedFiles.length">
@@ -11,7 +11,9 @@
       <div class="h-full pt-2 leading-7">
         <p class="pb-[6px] mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
+        <div @click="openDir" class="open_dir"></div>
       </div>
+      
       <div class="relative flex mt-auto mb-3 justify-between">
         <div class="cursor-pointer">
           <!-- see onClickOutside-->
@@ -36,12 +38,13 @@
   import FileList from '@/components/FileDrawer/FileList.vue'
   import Toast from '@/components/FileDrawer/Toast.vue'
   import Settings from '@/views/Settings.vue'
-  import FileClick from '../components/FileDrawer/FileClick.vue';
+  import FileClick from '../components/FileDrawer/FileClick.vue'
   // @ts-ignore
   import Text from 'vue-material-design-icons/TextLong.vue'
   // @ts-ignore
-  import IconSettings from 'vue-material-design-icons/Cog.vue';
-  import { readDir } from '@tauri-apps/api/fs';
+  import IconSettings from 'vue-material-design-icons/Cog.vue'
+  import { readDir } from '@tauri-apps/api/fs'
+  import { open } from '@tauri-apps/api/shell'
   import { type FileType } from '@/types/FileType';
   import { onClickOutside } from '@vueuse/core'
   import { useToggle } from '@vueuse/core'
@@ -79,6 +82,18 @@
       return content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
   }
 
+  const openDir = async () => {
+    const path = settings.getBaseDir
+    console.log(path)
+    if(path){
+      try{
+        await open(path as string)
+      } catch(e){
+        console.log(e)
+      }
+    }
+  }
+  
   onMounted( async () => {
     if(baseDir.value){
       const content = await readDir(baseDir.value as string)
@@ -86,17 +101,16 @@
     }
   })
 
-  // const settignsLink = computed( () => {
-  //   if(route.path == '/') {
-  //     return {
-  //       to: '/settings',
-  //       name: 'settings'
-  //     }
-  //   }
-  //   return {
-  //       to: '/',
-  //       name: 'back to files'
-  //     }
-  // })
-
 </script>
+
+<style>
+.open_dir{
+  cursor: pointer;
+  margin-top: 10px;
+  width: 20px;
+  height: 8px;
+  background-color: var(--left_panel_color);
+  border-radius: 4px;
+  filter: brightness(150%);
+}
+</style>

@@ -138,21 +138,4 @@
   white-space: nowrap;
 }
 
-/* Colors */
-/* .titlebar {
-  background-color: #191919;
-} */
-
-/* .fileDrawer_color {
-  background-color: #202020;
-} */
-
-/* .main_color{
-  background-color: #191919;
-} */ 
-
-/* .dialog {
-  background-color: #202020;
-} */
-
 </style>

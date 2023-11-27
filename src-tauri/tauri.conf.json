@@ -45,6 +45,11 @@
       "path": {
         "all": true
       },
+      "shell": {
+        "execute": true,
+        "sidecar": true,
+        "open": "^"
+      },
       "process": {
         "relaunch": true
       }
