@@ -21,11 +21,11 @@ export const themeSettings = [
     }
   },
   {
-    name: 'dark enough',
+    name: 'blackboard',
     colors: {
-      'left_panel': 'black',
+      'left_panel': '#080c0e',
       'view': '#080c0e',
-      'settings_panel': 'black',
+      'settings_panel': '#080c0e',
       'border' : '#616100',
       'pre': 'black'
     }
