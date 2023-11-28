@@ -36,9 +36,24 @@ import StarterKit from '@tiptap/starter-kit'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
 import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
+import { Extension } from '@tiptap/core'
 
 Color.configure({
   types: ['textStyle'],
+})
+
+const CodeBlockTab = Extension.create({
+  name: 'CodeBlockTab',
+  addKeyboardShortcuts() {
+    return {
+      Tab: () => {
+        if (editor?.isActive("codeBlock")) {
+          return editor.commands.insertContent("\t")
+        }
+        return true
+      }
+    }
+  }
 })
 
 type Props = {
@@ -132,12 +147,16 @@ onMounted( () => {
         BubbleMenu,
         StarterKit,
         TextStyle,
-        Color
+        Color,
+        CodeBlockTab
       ],
       editorProps: {
         attributes: {
           class: 'prose dark:prose-invert prose-sm sm:prose-base m-5 focus:outline-none',
         },
+      },
+      parseOptions: {
+          preserveWhitespace: 'full'
       },
       content: props.modelValue,
       onUpdate: () => {
@@ -163,6 +182,8 @@ onBeforeUnmount( () => {
 <style>
 .wrapper_editor, .tiptap {
   max-height: calc(100vh - 111px);
+  white-space: pre;
+  word-break: break-word;
 }
 
 @media screen and (min-width: 1001px) {

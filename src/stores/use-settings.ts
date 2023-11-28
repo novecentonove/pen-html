@@ -8,7 +8,7 @@ export const useSettings = defineStore('settings', {
     editorFont: 'Consolas',
     fontColor: '#fff',
     editorFontSize: 16,
-    basedir: '/home/dav/test',
+    basedir: '',
     baseFontDir: '',
     theme: 'default'
   }),

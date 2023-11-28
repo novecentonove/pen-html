@@ -40,7 +40,7 @@
       </select> -->
 
       <label class="mtop">Font size</label>
-      <input type="number" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
+      <input type="number" min="5" max="25" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
 
       <!-- <label class="mt-6">App Font test</label>
       <select v-if="baseFontsDir" v-model="selectedAppFont" @change="selectFont($event as InputFileEvent, 'test')">
@@ -287,12 +287,17 @@ const getLStructureDir = async (content: any) => {
 <style>
 .settings input,
 .settings select {
+  appearance: none;
+  -webkit-appearance: none;
   height: 30px;
   padding-left: 3px;
   border-radius: 0.2em;
-  background-color: rgb(32, 32, 32);
+  background-color: var(--view_color);
+  margin: 0.1rem;
+  /* filter: brightness(190%); */
 }
 .settings .mtop {
   margin-top: 30px;
 }
+
 </style>

@@ -11,7 +11,7 @@
       <div class="h-full pt-2 leading-7">
         <p class="pb-[6px] mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
-        <div @click="openDir" class="open_dir"></div>
+        <div v-if="baseDir" @click="openDir" class="open_dir"></div>
       </div>
       
       <div class="relative flex mt-auto mb-3 justify-between">
@@ -81,11 +81,9 @@
   }
 
   const openDir = async () => {
-    const path = settings.getBaseDir
-    console.log(path)
-    if(path){
+    if(baseDir.value){
       try{
-        await open(path as string)
+        await open(baseDir.value as string)
       } catch(e){
         console.log(e)
       }
@@ -116,7 +114,7 @@
   width: 20px;
   height: 8px;
   background-color: var(--left_panel_color);
-  border-radius: 4px;
   filter: brightness(150%);
+  border-radius: 4px;
 }
 </style>

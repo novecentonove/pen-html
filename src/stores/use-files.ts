@@ -47,17 +47,17 @@ export const useFiles = defineStore('files', {
     },
 
     closeTab(path: string){
-      if(this.getOpenFiles.length){
-        this.setSelectedPath(this.getOpenFiles[this.getOpenFiles.length-1].path)
-      } else {
-        this.setSelectedPath('')
-      }
-
       // remove from unSavedFile
       this.removeFromNotSavedFile(path)
       
       // remove from open files
       this.openFiles = this.openFiles.filter( tab => tab.path !== path)
+
+      if(this.getOpenFiles.length){
+        this.setSelectedPath(this.getOpenFiles[this.getOpenFiles.length-1].path)
+      } else {
+        this.setSelectedPath('')
+      }
     },
 
     fileIsSafeTrigger(){
