@@ -30,7 +30,7 @@
         "removeFile": true,
         "renameFile": true,
         "exists": true,
-        "scope": ["*/**"]
+        "scope": { "allow": ["**", "**/*", "/**/*", "$HOME/.local/share/fonts/", "$HOME/.local/share/fonts/*", "$HOME/.local/share/fonts/**"],  "requireLiteralLeadingDot": true }
       },
       "window": {
         "startDragging": true,

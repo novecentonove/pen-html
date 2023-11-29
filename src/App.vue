@@ -9,7 +9,7 @@
       <div id="rightV" class="grow">
         <div data-tauri-drag-region class="titlebar view_color text_color">
           <div class="mx-auto pt-1">
-            <p class="text-xs pt-0.5 text-neutral-700">pen</p>
+            <p class="text-xs pt-0.5 text-white/10">pen</p>
           </div>
           <div class="titlebar_button" @click="appWindow.minimize()">
             <WindowMinimize :size="15" />
