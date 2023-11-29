@@ -91,7 +91,6 @@
   }
   
   const loadBaseDir = async () => {
-    console.log('load dir')
     if(baseDir.value){
       const content = await readDir(baseDir.value as string)
       filesAndDir.value = await getLStructureDir(content)

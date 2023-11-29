@@ -50,6 +50,8 @@
   import { type FileType } from '@/types/FileType'
     // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
+  import { listen } from '@tauri-apps/api/event'
+
 
   const settings = useSettings()
   const files = useFiles()
@@ -58,6 +60,18 @@
   // Check not saved
   const trigger = ref(0)
   const file = ref<FileType>({name: '', path: ''})
+
+  listen('tauri://file-drop', event => {
+    console.log(event)
+  })
+
+  listen('tauri://file-drop-hover', event => {
+    console.log(event)
+  })
+
+  listen('tauri://file-drop-cancelled', event => {
+    console.log(event)
+  })
 
   const startDragging = (e: MouseEvent) => {
     pauseEvent(e)
