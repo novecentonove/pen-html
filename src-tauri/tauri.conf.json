@@ -100,7 +100,8 @@
         "resizable": true,
         "title": "ThunderDown",
         "width": 1000,
-        "transparent": true
+        "transparent": true,
+        "fileDropEnabled": true
       }
     ],
     "systemTray": {

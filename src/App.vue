@@ -1,4 +1,9 @@
 <template>
+
+<transition name="fade">
+  <div v-if="isDropHover" class="xxx fixed h-full w-full bg-black/50 z-10"></div>
+</transition>
+
   <div class="main main_color view_color h-screen text_color overflow-x-scroll" @mouseup="endDragging">
     <div class="flex">
       
@@ -51,7 +56,8 @@
     // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
   import { listen } from '@tauri-apps/api/event'
-
+  // import { useToggle } from '@vueuse/core'
+  import { debounce } from 'lodash'
 
   const settings = useSettings()
   const files = useFiles()
@@ -60,18 +66,46 @@
   // Check not saved
   const trigger = ref(0)
   const file = ref<FileType>({name: '', path: ''})
+  const isDropHover = ref(false)
 
-  listen('tauri://file-drop', event => {
-    console.log(event)
+  // Drop files
+
+  const toggleDropHover = debounce((boolean = null) => {
+    if(boolean !== null){
+      isDropHover.value = !isDropHover.value
+    } else {
+      isDropHover.value = boolean
+    }
+  }, 200)
+  
+  listen('tauri://file-drop', (event: {payload: []} ) => {
+    toggleDropHover(false)
+
+    let payload: string[] = event.payload
+
+    if(payload.length){
+
+      payload.forEach(path => {
+        const name = path.substring(path.lastIndexOf('/')+1)
+        addPages({name: name, path: path})
+      });
+    }
   })
 
-  listen('tauri://file-drop-hover', event => {
-    console.log(event)
+  listen('tauri://file-drop-hover', () => {
+    toggleDropHover(true)
   })
 
-  listen('tauri://file-drop-cancelled', event => {
-    console.log(event)
+  listen('tauri://file-drop-cancelled', () => {
+    toggleDropHover(false)
   })
+
+  const addPages = debounce((file: FileType) => {
+    files.addPage(file)
+  })
+
+
+  // Drag border
 
   const startDragging = (e: MouseEvent) => {
     pauseEvent(e)
@@ -94,6 +128,8 @@
     // e.returnValue=false;
     return false;
   }
+
+  // Functions
 
   const fileDone = () => {
     const notSaved = files.getNotSavedFiles
@@ -119,7 +155,6 @@
     settings.applyTheme()
   })
  
-
 </script>
 
 <style>
@@ -150,6 +185,13 @@
 .fileDrawer {
   height: 100vh;
   white-space: nowrap;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .4s
+}
+.fade-enter-from, .fade-leave-to{
+  opacity: 0
 }
 
 </style>

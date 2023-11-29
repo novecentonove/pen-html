@@ -33,6 +33,7 @@ export const useFiles = defineStore('files', {
     setSelectedPath(path: string) {
       this.selectedPath = path
     },
+    
     addPage(file: Omit<FileType, 'children'>) {
       let exists = false
       this.openFiles.forEach(tab => {
@@ -40,10 +41,14 @@ export const useFiles = defineStore('files', {
           exists = true
           // @ts-ignore
           this.clickDrawerFile = file
+          this.setSelectedPath(file.path)
         }
       })
 
-      if(!exists) this.openFiles.push(file)
+      if(!exists) {
+        this.openFiles.push(file)
+        this.setSelectedPath(file.path)
+      }
     },
 
     closeTab(path: string){
