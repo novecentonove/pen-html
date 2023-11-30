@@ -24,7 +24,11 @@
       </div>
 
       <label class="mtop relative flex flex-col">Font size
-        <input type="text" pattern="^\d+(\.\d+)?$" min="5" max="25" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
+        <input type="text" pattern="^\d+(\.\d+)?$" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
+        <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
+          <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)" @click="increaseFontSize('+')"></div>
+          <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)" @click="increaseFontSize('-')"></div>
+        </div>
       </label>
 
       <label class="mtop">Theme</label>
@@ -106,6 +110,15 @@
     const size = Number(+e.target.value)
     settings.setEditorFontSize(size)
     document.documentElement.style.setProperty('--editor_font_size', `${e.target.value}px`)
+  }
+
+  const increaseFontSize = (type: string) => {
+    if(type === '+'){
+      selectedFontSize.value = +(selectedFontSize.value+0.1).toFixed(1)
+    } else if (type === '-'){
+      selectedFontSize.value = +(selectedFontSize.value-0.1).toFixed(1)
+    }
+    document.documentElement.style.setProperty('--editor_font_size', `${selectedFontSize.value}px`)
   }
 
   const readFileDir = async () => {

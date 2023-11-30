@@ -49,6 +49,10 @@
   border-color: var(--border_color);
 }
 
+.bg_as_border_color{
+  background-color: var(--border_color);
+}
+
 .dialog{
   background-color: var(--left_panel_color);
 }

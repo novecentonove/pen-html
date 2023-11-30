@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div ref="settingsRef" v-if="showSettings" class="settings_panel_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-l border-t border-b border-neutral-900">
+    <div ref="settingsRef" v-if="showSettings" class="settings_panel_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-t-4 border-l-4 border-neutral-900">
       <Settings />
     </div>
 
