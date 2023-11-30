@@ -57,7 +57,7 @@
   import { themeSettings } from '@/utils/themeSettings.js'
   import { listen } from '@tauri-apps/api/event'
   // import { useToggle } from '@vueuse/core'
-  import { debounce } from 'lodash'
+  import { debounce, throttle } from 'lodash'
 
   const settings = useSettings()
   const files = useFiles()
@@ -100,7 +100,7 @@
     toggleDropHover(false)
   })
 
-  const addPages = debounce((file: FileType) => {
+  const addPages = throttle((file: FileType) => {
     files.addPage(file)
   })
 

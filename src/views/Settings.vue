@@ -3,18 +3,14 @@
     <div class="settings font_colors flex flex-col">
 
       <label class="mt-6">Base Directory</label>
-      <button class="border h-12 border-neutral-500 cursor-pointer" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
+      <button class="baseDir border h-12 cursor-pointer" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
 
       <label class="mtop">App Font</label>
-      <select v-if="selectedAppFont" v-model="selectedAppFont" @change="selectFont('app')">
-        <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
-      </select>
-      <p v-else>no fonts loaded</p>
+      <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
+      <p class="text-xs py-2 text-neutral-500">Eg: 'Arial', 'Droid Sans Mono', monospace</p>
 
       <label class="mtop">Editor Font</label>
-      <select v-model="selectedEditorFont" @change="selectFont('editor')">
-        <option v-for="(font, i) in fontFamilies" :key="i" :value="font.name">{{font.name}}</option>
-      </select>
+      <input v-model="selectedEditorFont" @change="selectFont('editor')">
 
       <label class="mtop">Text color</label>
       <div class="flex justify-between">
@@ -27,8 +23,9 @@
         />
       </div>
 
-      <label class="mtop">Font size</label>
-      <input type="number" min="5" max="25" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
+      <label class="mtop relative flex flex-col">Font size
+        <input type="text" pattern="^\d+(\.\d+)?$" min="5" max="25" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
+      </label>
 
       <label class="mtop">Theme</label>
       <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
@@ -56,22 +53,6 @@
   const selectedFontSize = toRef(settings.getEditorFontSize)
   const baseFilesDir = toRef(settings.getBaseDir)
   const selectedTheme = toRef(settings.getTheme)
-
-  const fontFamilies = [
-    {
-      name: 'Consolas',
-    },
-    {
-      name: 'Arial',
-    },
-    {
-      name: 'DejaVu Sans',
-    },
-    {
-      name: 'Segoe UI',
-    },
-    
-  ]
 
   const textColors = [
     { name: 'White', value: '#fff' },
@@ -117,6 +98,11 @@
   }
 
   const selectFontSize = (e: InputFileEvent) => {
+
+    if(!e.target.validity.valid){
+      return
+    }
+
     const size = Number(+e.target.value)
     settings.setEditorFontSize(size)
     document.documentElement.style.setProperty('--editor_font_size', `${e.target.value}px`)
@@ -157,14 +143,26 @@
   appearance: none;
   -webkit-appearance: none;
   height: 30px;
-  padding-left: 3px;
+  padding-left: 0.5em;
   border-radius: 0.2em;
+  border: 1px solid var(--border_color);
   background-color: var(--view_color);
   margin: 0.1rem;
   /* filter: brightness(190%); */
 }
+
 .settings .mtop {
   margin-top: 30px;
 }
+
+.baseDir{
+  border: 1px solid var(--border_color);
+  background-color: var(--view_color);
+}
+
+input:invalid {
+  background-color: brown;
+}
+
 
 </style>

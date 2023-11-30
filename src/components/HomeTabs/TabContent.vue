@@ -24,7 +24,6 @@
 
   onMounted( async () => {
     content.value = await readTextFile(props.path as string) || '<p></p>'
-    console.log(content.value)
   })
 
 </script>
