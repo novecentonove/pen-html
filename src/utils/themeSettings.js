@@ -1,7 +1,7 @@
 // @ts-ignore
 export const themeSettings = [
   {
-    name: 'default',
+    name: 'Asfalto',
     colors: {
       'left_panel': '#202020',
       'view': '#191919',
@@ -11,7 +11,7 @@ export const themeSettings = [
     }
   },
   {
-    name: 'deep blue',
+    name: 'Melanzana',
     colors: {
       'left_panel': '#1e1e24',
       'view': '#18181f',
@@ -21,7 +21,7 @@ export const themeSettings = [
     }
   },
   {
-    name: 'blackboard',
+    name: 'Petrolio',
     colors: {
       'left_panel': '#080c0e',
       'view': '#080c0e',
