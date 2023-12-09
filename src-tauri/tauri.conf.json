@@ -7,8 +7,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "Pen",
-    "version": "0.1.0"
+    "productName": "pen-editor",
+    "version": "0.9.0"
   },
   "tauri": {
     "allowlist": {
@@ -98,7 +98,7 @@
         "fullscreen": false,
         "height": 800,
         "resizable": true,
-        "title": "ThunderDown",
+        "title": "pen-editor",
         "width": 1000,
         "transparent": true,
         "fileDropEnabled": true

@@ -7,7 +7,7 @@ export const useSettings = defineStore('settings', {
     appFont: 'Arial',
     editorFont: 'Consolas',
     fontColor: '#fff',
-    editorFontSize: 17,
+    editorFontSize: 0.9,
     basedir: '',
     baseFontDir: '',
     theme: 'default'
@@ -51,7 +51,7 @@ export const useSettings = defineStore('settings', {
       document.documentElement.style.setProperty('--app_font', this.appFont)
       document.documentElement.style.setProperty('--editor_font', this.editorFont)
       document.documentElement.style.setProperty('--text_color', this.fontColor)
-      document.documentElement.style.setProperty('--editor_font_size', `${this.editorFontSize}px`)
+      document.documentElement.style.setProperty('--editor_font_size', `${this.editorFontSize}rem`)
     },
     applyTheme(){
       const theme = themeSettings.filter((el: any) => el.name === this.getTheme)[0]

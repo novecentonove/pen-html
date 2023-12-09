@@ -113,12 +113,13 @@
   }
 
   const increaseFontSize = (type: string) => {
+    const increase = 0.01
     if(type === '+'){
-      selectedFontSize.value = +(selectedFontSize.value+0.1).toFixed(1)
+      selectedFontSize.value = +(selectedFontSize.value+increase).toFixed(3)
     } else if (type === '-'){
-      selectedFontSize.value = +(selectedFontSize.value-0.1).toFixed(1)
+      selectedFontSize.value = +(selectedFontSize.value-increase).toFixed(3)
     }
-    document.documentElement.style.setProperty('--editor_font_size', `${selectedFontSize.value}px`)
+    document.documentElement.style.setProperty('--editor_font_size', `${selectedFontSize.value}rem`)
   }
 
   const readFileDir = async () => {
