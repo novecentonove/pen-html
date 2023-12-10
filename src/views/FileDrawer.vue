@@ -1,6 +1,6 @@
 <template>
-  <div id="out_click" class="relative w-full pt-[36px] flex flex-col app_font text-sm  overflow-x-scroll">
-     <slot />
+  <div id="out_click" class="relative w-full pt-[36px] flex flex-col app_font text-sm overflow-x-scroll">
+    <slot />    <!-- drag  -->
      <div class="flex flex-col h-full pl-4">
       <div v-if="openedFiles.length">
         <p class="pb-[6px] mb-2 border-b border_color">Opened files</p>

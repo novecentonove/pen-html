@@ -24,7 +24,9 @@
     <button @click="editor.chain().focus().unsetColor().run()">
       <div class="w-3 h-3 border border-neutral-400"></div>
     </button>
-
+    <button @click="editor.chain().focus().clearNodes().run()">
+      <IconClearAll :size="size" />
+    </button>
     <!-- TODO -->
     <!-- <div class="flex gap-x-2 items-center" @mouseover="showExtraButton = true" @mouseleave="showExtraButton = false">
       <IconRight :size="15" class="p-1" />
@@ -49,9 +51,7 @@
     <div>
 
     </div>
-    <!-- <button @click="editor.chain().focus().clearNodes().run()">
-      <IconClearAll :size="size" />
-    </button> -->
+
     <!-- <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
       paragraph
     </button> -->
@@ -107,7 +107,8 @@
   import IconQuote from 'vue-material-design-icons/FormatQuoteOpen.vue';
   // @ts-ignore
   import IconClear from 'vue-material-design-icons/ClipboardOutline.vue';
-  // import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue';
+    // @ts-ignore
+  import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue';
   // import Drag from 'vue-material-design-icons/Drag.vue';
   // @ts-ignore
   import IconRight from 'vue-material-design-icons/ChevronRight.vue';

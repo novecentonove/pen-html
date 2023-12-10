@@ -10,7 +10,7 @@ export const useSettings = defineStore('settings', {
     editorFontSize: 0.9,
     basedir: '',
     baseFontDir: '',
-    theme: 'default'
+    theme: themeSettings[0].name
   }),
 
   persist: true,

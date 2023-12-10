@@ -67,7 +67,6 @@
     { name: 'Warm', value: '#bbb5a4' }
   ]
 
-  // const reload = async () => await relaunch()
   interface InputFileEvent extends Event {
       target: HTMLInputElement
   }
@@ -78,18 +77,13 @@
   }
 
   const selectFont = (type:string) => {
-
     switch (type) {
       case 'app':
-
         settings.setAppFont(selectedAppFont.value)
-        // loadFonts({name, path})
-        // console.log('check', document.fonts.check('12px' + name))
         document.documentElement.style.setProperty('--app_font', selectedAppFont.value)
         break;
       case 'editor':
         settings.setEditorFont(selectedEditorFont.value)
-        // loadFonts({name, path})
         document.documentElement.style.setProperty('--editor_font', selectedEditorFont.value)
         break;
     }
@@ -98,7 +92,7 @@
   const selectTextColors = (color: string) => {
     console.log(color)
     settings.setFontColor(color)
-    document.documentElement.style.setProperty('--text_color', color)
+    settings.applySettings()
   }
 
   const selectFontSize = (e: InputFileEvent) => {
@@ -109,7 +103,7 @@
 
     const size = Number(+e.target.value)
     settings.setEditorFontSize(size)
-    document.documentElement.style.setProperty('--editor_font_size', `${e.target.value}px`)
+    settings.applySettings()
   }
 
   const increaseFontSize = (type: string) => {
@@ -119,7 +113,8 @@
     } else if (type === '-'){
       selectedFontSize.value = +(selectedFontSize.value-increase).toFixed(3)
     }
-    document.documentElement.style.setProperty('--editor_font_size', `${selectedFontSize.value}rem`)
+    settings.setEditorFontSize(selectedFontSize.value)
+    settings.applySettings()
   }
 
   const readFileDir = async () => {
@@ -152,31 +147,28 @@
 
 
 <style>
-.settings input,
-.settings select {
-  appearance: none;
-  -webkit-appearance: none;
-  height: 30px;
-  padding-left: 0.5em;
-  border-radius: 0.2em;
-  border: 1px solid var(--border_color);
-  background-color: var(--view_color);
-  margin: 0.1rem;
-  /* filter: brightness(190%); */
-}
+  .settings input,
+  .settings select {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 30px;
+    padding-left: 0.5em;
+    border-radius: 0.2em;
+    border: 1px solid var(--border_color);
+    background-color: var(--view_color);
+    margin: 0.1rem;
+  }
 
-.settings .mtop {
-  margin-top: 30px;
-}
+  .settings .mtop {
+    margin-top: 30px;
+  }
 
-.baseDir{
-  border: 1px solid var(--border_color);
-  background-color: var(--view_color);
-}
+  .baseDir{
+    border: 1px solid var(--border_color);
+    background-color: var(--view_color);
+  }
 
-input:invalid {
-  background-color: brown;
-}
-
-
+  input:invalid {
+    background-color: brown;
+  }
 </style>
