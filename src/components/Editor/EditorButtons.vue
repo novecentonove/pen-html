@@ -18,6 +18,9 @@
     <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
       <IconUl :size="size" />
     </button>
+    <button @click="editor.chain().focus().toggleHighlight({ color: 'var(--hightlight_color)' }).run()" :class="{ 'is-active': editor.isActive('highlight', { color: 'var(--hightlight_color)' }) }">
+      <div class="w-2 h-1 bg-blue-400"></div>
+    </button>
     <button v-for="(color, i) in colors" :key="i" @click="editor.chain().focus().setColor(color).run()">
       <div class="w-3 h-3" :style="`background-color: ${color}`"></div>
     </button>
@@ -123,8 +126,9 @@
   const props = defineProps<Props>()
   const editor = props.editor
   const size = 18
+  const colors: string[] = ['#e2c42c', '#2ca1e2', '#988bd5']
+  const highlight_color = 'blue'
 
-  const colors: string[] = ['#e2c42c', '#2ca1e2', '#988bd5'];
 </script>
 
 <style scoped>

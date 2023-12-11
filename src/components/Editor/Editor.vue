@@ -36,7 +36,9 @@ import StarterKit from '@tiptap/starter-kit'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
 import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
+import { Highlight } from '@tiptap/extension-highlight'
 import { Extension } from '@tiptap/core'
+
 
 Color.configure({
   types: ['textStyle'],
@@ -148,7 +150,13 @@ onMounted( () => {
         StarterKit,
         TextStyle,
         Color,
-        CodeBlockTab
+        CodeBlockTab,
+        Highlight.configure({ 
+          multicolor: true, 
+          HTMLAttributes: {
+            class: 'highlight_text',
+          }
+        })
       ],
       editorProps: {
         attributes: {

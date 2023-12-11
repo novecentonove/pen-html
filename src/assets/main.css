@@ -13,6 +13,7 @@
   --settings_panel_color:#202020;
   --border_color: #525252;
   --markdown_pre_color: #131313;
+  --hightlight_color: #98f1ff1f;
 }
 
 .app_font {
@@ -60,6 +61,11 @@
 .markdown-body .highlight pre,
 .markdown-body pre {
   background-color: var(--markdown_pre_color);
+}
+
+.markdown-body .highlight_text {
+  padding: 1px 2px;
+  border-radius: 3px;
 }
 
 /* overwrite css*/
