@@ -4,11 +4,13 @@
      <div class="flex flex-col h-full pl-4">
       <div v-if="openedFiles.length">
         <p class="pb-[6px] mb-2 border-b border_color">Opened files</p>
-        <ul v-for="file in openedFiles">
-          <li class="cursor-pointer pl-2 mb-2 flex items-center"><Text :size="12" class="mr-1" /><FileClick :file="file"/></li>
+        <ul>
+          <li v-for="file in openedFiles" class="file_li" :key="file.path">
+            <Text :size="12" class="mr-1" /><FileClick :file="file"/>
+          </li>
         </ul>
       </div>
-      <div class="h-full pt-2 leading-7">
+      <div class="h-full pt-2">
         <p class="pb-[6px] mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
         <div v-if="baseDir" @click="openDir" class="open_dir"></div>
@@ -115,5 +117,18 @@
   background-color: var(--left_panel_color);
   filter: brightness(150%);
   border-radius: 4px;
+}
+
+.file_li {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.1rem;
+  margin: 0 0.2rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+.file_li:hover{
+  background-color: var(--view_color);
+  filter: brightness(120%);
 }
 </style>

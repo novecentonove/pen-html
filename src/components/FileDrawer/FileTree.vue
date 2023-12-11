@@ -1,10 +1,10 @@
 <template>
 
-  <li v-if="props.children" :style="indent" class="cursor-pointer flex items-center" @click="toggleChildren()" @contextmenu.prevent="toggleMenu('dir')">
+  <li v-if="props.children" :style="indent" class="file_li" @click="toggleChildren()" @contextmenu.prevent="toggleMenu('dir')">
     <Folder :size="12" class="mr-1" />{{ props.file.name }}
   </li>
 
-  <li v-else ref="toggleMenuRef" :style="indent" class="relative cursor-pointer flex items-center" @contextmenu.prevent="toggleMenu()">
+  <li v-else ref="toggleMenuRef" :style="indent" class="file_li marker:relative" @contextmenu.prevent="toggleMenu()">
     <Text :size="12" class="mr-1" /><FileClick :file="props.file" />
 
     <div v-if="showMenu" class="absolute right_click_menu view_color text_color">
