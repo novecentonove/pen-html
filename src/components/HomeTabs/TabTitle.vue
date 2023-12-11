@@ -4,7 +4,7 @@
   class="flex shrink-0 align-middle  rounded-t border_color cursor-pointer">
   <div class="flex justify-center items-center" @click="openFile(file)">
     <span class="pl-3" :id="snakeCasePath(props.file.path)"></span>
-    <span class="pl-2 py-2 pr-1 font-semibold" @click="openFile(file)">{{ fileName }}</span>
+    <span class="pl-0.5 py-2 pr-1 font-semibold" @click="openFile(file)">{{ fileName }}</span>
   </div>
   <XMarkIcon @click="closeTab" class="ml-1 mr-2 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-in-out duration-300" />
 </li>

@@ -129,6 +129,5 @@
 }
 .file_li:hover{
   background-color: var(--view_color);
-  filter: brightness(120%);
 }
 </style>

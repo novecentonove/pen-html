@@ -3,7 +3,7 @@
     <div class="settings font_colors flex flex-col">
 
       <label class="mt-6">Base Directory</label>
-      <button class="baseDir border h-12 cursor-pointer" @click="readFileDir">{{baseFilesDir ?? 'no dir selected'}}</button>
+      <button class="baseDir border h-12 cursor-pointer" @click="readFileDir">{{shortBaseFilesDir}}</button>
 
       <label class="mtop">App Font</label>
       <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
@@ -55,8 +55,16 @@
   const selectedEditorFont = toRef(settings.getEditorFont)
   const selectedTextColors = computed( () => settings.getFontColor)
   const selectedFontSize = toRef(settings.getEditorFontSize)
-  const baseFilesDir = toRef(settings.getBaseDir)
   const selectedTheme = toRef(settings.getTheme)
+  const shortBaseFilesDir = computed(() => {
+    const url = settings.getBaseDir.split('/')
+
+    if(url && url.length > 3){
+      return '../' + url[url.length-2] + '/' + url[url.length-1]
+    } else {
+      return url.join('/')
+    }
+  })
 
   const textColors = [
     { name: 'White', value: '#fff' },

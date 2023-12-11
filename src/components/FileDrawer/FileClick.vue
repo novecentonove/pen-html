@@ -1,10 +1,11 @@
 <template>
-  <span @click="openFile(props.file)">{{ file?.name }}</span>
+  <span :class="isOpenable ? '' : 'opacity-50'" @click="openFile">{{ file?.name }}</span>
 </template>
 
 <script setup lang="ts">
 import { type FileType } from '@/types/FileType';
 import { useFiles } from '@/stores/use-files'
+import { computed } from 'vue';
 
 
 type Props = { 
@@ -13,22 +14,25 @@ type Props = {
 }
 
 const props = defineProps<Props>()
-
 const files = useFiles()
 
-const openFile = async (file: FileType | null) => {
+const allowedExt = ['html'];
+const isOpenable = computed( () => {
+  const ext = props.file?.name.split('.').pop();
+  return allowedExt.includes(ext ?? '') ? true : false
+})
 
-  if(file){
-    const allowedExt = ['html'];
-    const ext = file.name.split('.').pop();
+const openFile = async () => {
 
-    if(allowedExt.includes(ext ?? '')) {
-      if(!props.onlySelect){
-        files.addPage(file)
-      }
-      files.setSelectedPath(file.path)
+  if(isOpenable && props.file){
+    
+    if(!props.onlySelect){
+      files.addPage(props.file)
     }
+
+    files.setSelectedPath(props.file.path)
   }
+
 }
 
 
