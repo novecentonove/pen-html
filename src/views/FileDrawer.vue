@@ -1,7 +1,7 @@
 <template>
   <div id="out_click" class="relative w-full pt-[36px] flex flex-col app_font text-sm overflow-x-scroll">
     <slot />    <!-- drag  -->
-     <div class="flex flex-col h-full pl-4">
+     <div class="flex flex-col h-full pl-3">
       <div v-if="openedFiles.length">
         <p class="pb-[6px] mb-2 border-b border_color">Opened files</p>
         <ul>
@@ -27,7 +27,9 @@
     </div>
 
     <div ref="settingsRef" v-if="showSettings" class="settings_panel_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-t-4 border-l-4 border-neutral-900">
-      <Settings />
+      <Suspense>
+        <Settings />
+      </Suspense>
     </div>
 
   </div>
@@ -122,9 +124,9 @@
 .file_li {
   display: flex;
   align-items: center;
-  padding: 0.25rem 0.1rem;
-  margin: 0 0.2rem;
-  border-radius: 0.3rem;
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.8rem;
+  /* border-radius: 0.35rem; */
   cursor: pointer;
 }
 .file_li:hover{

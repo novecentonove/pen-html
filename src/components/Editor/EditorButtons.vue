@@ -127,7 +127,6 @@
   const editor = props.editor
   const size = 18
   const colors: string[] = ['#e2c42c', '#2ca1e2', '#988bd5']
-  const highlight_color = 'blue'
 
 </script>
 
