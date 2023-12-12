@@ -81,7 +81,10 @@
           file.children = (inside)
         }
       }
-      return content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
+      // Sort DIR
+      const dir =  content.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
+      // Sort alphabetically
+      return dir.sort( (a: any, b:any) =>a.name.localeCompare(b.name))
   }
 
   const openDir = async () => {
