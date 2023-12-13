@@ -1,7 +1,8 @@
 <template>
   <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
-  <span v-if="!saved" class="pr-1">&#9679;</span>
-</Teleport>
+    <span class="ml-1" @mousedown="startDragging" @mouseup="endDragging"><DragIcon :size="16" /></span>
+    <span v-if="!saved" class="pr-1">&#9679;</span>
+  </Teleport>
 
   <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
     <div>
@@ -23,6 +24,8 @@
       <EditorButtons :editor="editor" />
     </bubble-menu>
   </div>
+
+
 </template>
 
 <script setup lang="ts">
@@ -38,7 +41,8 @@ import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import { Highlight } from '@tiptap/extension-highlight'
 import { Extension } from '@tiptap/core'
-
+// @ts-ignore
+import DragIcon from 'vue-material-design-icons/DragVertical.vue'
 
 Color.configure({
   types: ['textStyle'],
@@ -73,10 +77,16 @@ const saved = ref(true)
 const snakeCasePath = computed( () => snakeCase(props.path))
 let lastFileContent = ref('<p></p>')
 
+const openedFiles = computed( () => files.openFiles)
+
 type EditorVar = Editor | null
 
 let editor:EditorVar = null
-// const converter = new showdown.Converter();
+
+
+let editor_section: HTMLElement | null = null
+let file_drawer: HTMLElement | null = null
+let _tab_title_els: NodeList | null = null
 
 const getText = () => {
   if(editor !== null){
@@ -111,6 +121,64 @@ const doFocus = () => {
     }
   }
 }
+
+const startDragging = (e: MouseEvent) => {
+    pauseEvent(e)
+    document.addEventListener('mousemove', handleDragging)
+    files.setTabToDrag(props.path)
+}
+
+const handleDragging = (e: MouseEvent) => {
+    // reload _tab_title_els
+    _tab_title_els = document.querySelectorAll('._tab_title_el')
+
+    if(file_drawer && editor_section && _tab_title_els){
+      const el = document.elementFromPoint(e.clientX, e.clientY)
+
+      _tab_title_els.forEach((tab, i)=> {
+        if(tab.contains(el)){
+          tab.style.borderLeft = '1px solid'
+        } else {
+          tab.style.borderLeft = 'none'
+        }
+      })
+
+      if(file_drawer.contains(el) || editor_section.contains(el)) {
+        document.removeEventListener('mousemove', handleDragging)
+        console.log('stop')
+      }
+    }
+  }
+
+  const endDragging = (e: MouseEvent) => {
+    _tab_title_els = document.querySelectorAll('._tab_title_el')
+    const tabToMove = files.getTabToDrag
+
+    if(file_drawer && editor_section && _tab_title_els){
+      const el = document.elementFromPoint(e.clientX, e.clientY)
+
+      _tab_title_els.forEach((tab, i) => {
+        if(tab.contains(el)){
+          console.log(tabToMove + ' tab will be on: ' +  i)
+          files.reArrangeFiles(tabToMove, i)
+        }
+      })
+    }
+
+    _tab_title_els.forEach(tab => tab.style.borderLeft = 'none')
+
+    document.removeEventListener('mousemove', handleDragging)
+    pauseEvent(e)
+    
+  }
+
+  const pauseEvent = (e: MouseEvent) => {
+    if(e.stopPropagation) e.stopPropagation();
+    if(e.preventDefault) e.preventDefault();
+    // e.cancelBubble=true;
+    // e.returnValue=false;
+    return false;
+  }
 
 watch(() => props.modelValue, (value: {}) => {
   if(editor){
@@ -173,10 +241,13 @@ onMounted( () => {
         // JSON
         // this.$emit('update:modelValue', this.editor.getJSON())
       },
-    })
+  })
 
-    doFocus()
-    editorIsReady.value = true
+  doFocus()
+  editorIsReady.value = true
+  // Drag elements
+  editor_section = document.querySelector('#editor_section')
+  file_drawer = document.querySelector('#fileD')
 })
 
 onBeforeUnmount( () => {

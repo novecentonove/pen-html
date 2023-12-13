@@ -5,10 +5,12 @@
         <TabTitle :file="file" />
       </template>
       <li class="border-b border_color shadow-lg w-full min-h-[21px]"></li>
-    </ul> 
-    <section class="px-12" v-for="file in openFiles" :key="file.path">
-      <TabContent :name="file.name" :path="file.path" />
-    </section>
+    </ul>
+    <div id="editor_section" >
+      <section class="px-12" v-for="file in openFiles" :key="file.path">
+        <TabContent :name="file.name" :path="file.path" />
+      </section>
+    </div>
   </div>
 </template>
 

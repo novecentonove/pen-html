@@ -7,7 +7,8 @@ export type RootState = {
   selectedPath: string
   clickDrawerFile: Omit<FileType, 'children'>[]
   savedFile: number,
-  notSavedFiles: string[]
+  notSavedFiles: string[],
+  tabToDrag: string
 };
 
 export const useFiles = defineStore('files', {
@@ -16,7 +17,8 @@ export const useFiles = defineStore('files', {
     selectedPath: '',
     clickDrawerFile: [],
     savedFile: 0,
-    notSavedFiles: []
+    notSavedFiles: [],
+    tabToDrag: ''
   } as RootState),
 
   persist: true,
@@ -27,6 +29,7 @@ export const useFiles = defineStore('files', {
     getFileIsSaved: (state) => state.savedFile,
     getSelectedPath: (state) => state.selectedPath,
     getNotSavedFiles: (state) => state.notSavedFiles,
+    getTabToDrag: (state) => state.tabToDrag
   },
 
   actions: {
@@ -96,6 +99,21 @@ export const useFiles = defineStore('files', {
       if(!val.savedFile && !exists){
         this.getNotSavedFiles.push(path)
       }
+    },
+
+    setTabToDrag(path) {
+      this.tabToDrag = path
+    },
+    reArrangeFiles(tab_path, toIndex){
+
+      const objectToMove =  this.getOpenFiles.find((el) => el.path === tab_path)
+
+      if (objectToMove) {
+        const rearrange = this.getOpenFiles.filter(obj => obj.path !== tab_path);
+        rearrange.splice(toIndex, 0, objectToMove);
+        this.openFiles = rearrange
+      }
+
     }
   }
 })
