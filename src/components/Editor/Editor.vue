@@ -125,7 +125,6 @@ const startDragging = (e: MouseEvent) => {
     pauseEvent(e)
     document.addEventListener('mousemove', handleDragging)
     files.setTabToDrag(props.path)
-    console.log('start')
 }
 
 const handleDragging = (e: MouseEvent) => {
@@ -144,9 +143,9 @@ const handleDragging = (e: MouseEvent) => {
 
       _tab_title_els.forEach((tab: any)=> {
         if(tab.contains(el)){
-          tab.style.borderLeft = '3px solid var(--border_color)'
+          tab.style.color = 'var(--border_color)'
         } else {
-          tab.style.borderLeft = 'none'
+          tab.style.color = 'inherit'
         }
       })
 
@@ -164,47 +163,37 @@ const handleDragging = (e: MouseEvent) => {
     _tab_title_els = document.querySelectorAll('._tab_title_el')
 
     if(file_drawer && editor_section && _tab_title_els){
-      _tab_title_els.forEach((tab, i) => {
-
-        // console.log('parent ', tab.parentElement)
-
+      _tab_title_els.forEach((tab: any, i) => {
         if(tab.parentElement.contains(el)){
-          // console.log('contains: ', tab, el)
           files.reArrangeFiles(tabToMove, i)
         }
       })
     } else {
-      console.log('out of if')
-      console.log('no contains: ', _tab_title_els, editor_section, file_drawer)
+      // console.log('out of if')
     }
 
     resetStyleTab()
 
     document.removeEventListener('mousemove', handleDragging)
-    console.log('stop dragging')
     pauseEvent(e)
     
   }
 
   const resetStyleTab = () => {
-    setTimeout(() => {
-      
-
     _tab_title_els = document.querySelectorAll('._tab_title_el')
 
     _tab_title_els.forEach((tab: any) => {
-      tab.style.borderLeft = 'none'
+      tab.style.color = 'inherit'
       tab.parentElement.parentElement.style.backgroundColor = 'transparent'
       tab.parentElement.parentElement.style.opacity = '1'
     })
-  }, 500);
   }
 
   const pauseEvent = (e: MouseEvent) => {
     if(e.stopPropagation) e.stopPropagation();
     if(e.preventDefault) e.preventDefault();
-    e.cancelBubble=true;
-    e.returnValue=false;
+    // e.cancelBubble=true;
+    // e.returnValue=false;
     return false;
   }
 
