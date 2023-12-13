@@ -6,6 +6,14 @@
         <label class="mt-6">Base Directory</label>
         <button class="baseDir border h-12 cursor-pointer" @click="readFileDir">{{shortBaseFilesDir}}</button>
 
+        <label class="mt-6">Append file</label>
+
+        <label>
+          <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" type="checkbox">
+          Enable append file
+        </label>
+        <button class="baseDir border h-12 cursor-pointer" @click="readFile">{{shortBaseAppededFile}}</button>
+
         <label class="mtop">App Font</label>
         <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
         <p class="text-xs py-2 text-neutral-500">Eg: 'Arial', 'Droid Sans Mono', monospace</p>
@@ -65,6 +73,7 @@
   const selectedFontSize = toRef(settings.getEditorFontSize)
   const selectedTheme = toRef(settings.getTheme)
   const appVersion = await getVersion()
+  const enableAppendFile = toRef(settings.enableAppendFile)
 
   const shortBaseFilesDir = computed(() => {
     const url = settings.getBaseDir.split('/')
@@ -74,6 +83,23 @@
     } else {
       return url.join('/')
     }
+  })
+
+  const shortBaseAppededFile = computed(() => {
+
+    const file = settings.getfileToAppend
+
+    if(file){
+      const url = file.path.split('/')
+
+      if(url && url.length > 3){
+        return '../' + url[url.length-2] + '/' + url[url.length-1]
+      } else {
+        return url.join('/')
+      }
+    }
+
+    return ''
   })
 
   const textColors = [
@@ -150,6 +176,26 @@
     }
   }
 
+  const readFile = async () => {
+    try{
+        const selecteFile = await open({
+          multiple: false,
+          title: 'Open file',
+          directory: false
+        });
+        if(selecteFile){
+          const name = (selecteFile as string).substring(selecteFile.lastIndexOf('/')+1);
+          const val = {
+            name: name,
+            path: selecteFile as string
+          }
+          settings.setfileToAppend(val)
+        }
+    } catch(e){
+        console.error(e)
+    }
+  }
+
   const getLStructureDir = async (content: any) => { 
     for (const file of content) {
         if(typeof file.children === 'object'){
@@ -165,7 +211,7 @@
 
 
 <style>
-  .settings input,
+  .settings input:not([type='checkbox']),
   .settings select {
     appearance: none;
     -webkit-appearance: none;

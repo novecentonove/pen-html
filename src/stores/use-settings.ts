@@ -1,6 +1,19 @@
 import { defineStore } from 'pinia'
 // @ts-ignore
 import { themeSettings } from '@/utils/themeSettings.js'
+import { type FileType } from '@/types/FileType'
+
+export type RootState = {
+  appFont: string
+  editorFont: string
+  fontColor: string
+  editorFontSize: number,
+  basedir: string,
+  baseFontDir: string,
+  theme: string,
+  enableAppendFile: boolean,
+  fileToAppend: FileType
+};
 
 export const useSettings = defineStore('settings', {
   state: () => ({ 
@@ -10,8 +23,10 @@ export const useSettings = defineStore('settings', {
     editorFontSize: 0.9,
     basedir: '',
     baseFontDir: '',
-    theme: themeSettings[0].name
-  }),
+    theme: themeSettings[0].name,
+    enableAppendFile: false,
+    fileToAppend: {}
+  } as RootState),
 
   persist: true,
 
@@ -23,6 +38,8 @@ export const useSettings = defineStore('settings', {
     getBaseDir: (state) => state.basedir,
     getBaseFontDir: (state) => state.baseFontDir,
     getTheme: (state) => state.theme,
+    getEnableAppendFile: (state) => state.enableAppendFile,
+    getfileToAppend: (state) => state.fileToAppend,
   },
 
   actions: {
@@ -46,6 +63,12 @@ export const useSettings = defineStore('settings', {
     },
     setTheme(theme: string){
       this.theme = theme
+    },
+    setEnableAppendFile(val: boolean){
+      this.enableAppendFile = val
+    },
+    setfileToAppend(val: FileType){
+      this.fileToAppend = val
     },
     applySettings(){
       document.documentElement.style.setProperty('--app_font', this.appFont)

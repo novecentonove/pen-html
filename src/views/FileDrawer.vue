@@ -10,10 +10,19 @@
           </li>
         </ul>
       </div>
-      <div class="h-full pt-2">
+      <div class="pt-2">
         <p class="pb-[6px] mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
-        <div v-if="baseDir" @click="openDir" class="open_dir"></div>
+        <div v-if="baseDir" @click="openDir" class="ml-2 open_dir"></div>
+      </div>
+
+      <div class="h-full border-t border_color" v-if="getEnableAppendFile">
+        <!-- <p class="pb-[6px] mb-2 border-b border_color">Opened files</p> -->
+        <ul>
+          <li class="file_li">
+            <Text :size="12" class="mr-1" /><FileClick :file="fileToAppend"/>
+          </li>
+        </ul>
       </div>
       
       <div class="relative flex mt-auto mb-3 justify-between">
@@ -61,6 +70,9 @@
   const file_is_saved = computed(() => files.getFileIsSaved)
   const openedFiles = computed( () => files.getOpenFiles)
   const baseDir = computed( () => settings.getBaseDir)
+  const getEnableAppendFile = computed( () => settings.getEnableAppendFile)
+  const fileToAppend = computed( () => settings.getfileToAppend)
+
 
   const [showSettings, toggleSettings] = useToggle()
 
@@ -108,6 +120,8 @@
     loadBaseDir()
 
     setInterval(loadBaseDir, 1000*60*5)
+
+    console.log(fileToAppend.value)
   })
 
 </script>

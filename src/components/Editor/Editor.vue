@@ -1,6 +1,6 @@
 <template>
   <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
-    <span class="ml-1" @mousedown="startDragging" @mouseup="endDragging"><DragIcon :size="16" /></span>
+    <span class="_drag_span ml-1 opacity-25" @mousedown="startDragging" @mouseup="endDragging"><DragIcon :size="14" /></span>
     <span v-if="!saved" class="pr-1">&#9679;</span>
   </Teleport>
 
@@ -144,6 +144,7 @@ const handleDragging = (e: MouseEvent) => {
       _tab_title_els.forEach((tab: any)=> {
         if(tab.contains(el)){
           tab.style.color = 'var(--border_color)'
+          tab.parentElement.querySelector('._drag_span').style.opacity = 1
         } else {
           tab.style.color = 'inherit'
         }
