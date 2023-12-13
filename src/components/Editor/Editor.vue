@@ -77,8 +77,6 @@ const saved = ref(true)
 const snakeCasePath = computed( () => snakeCase(props.path))
 let lastFileContent = ref('<p></p>')
 
-const openedFiles = computed( () => files.openFiles)
-
 type EditorVar = Editor | null
 
 let editor:EditorVar = null
@@ -122,10 +120,12 @@ const doFocus = () => {
   }
 }
 
+// TAb dragging
 const startDragging = (e: MouseEvent) => {
     pauseEvent(e)
     document.addEventListener('mousemove', handleDragging)
     files.setTabToDrag(props.path)
+    console.log('start')
 }
 
 const handleDragging = (e: MouseEvent) => {
@@ -134,10 +134,17 @@ const handleDragging = (e: MouseEvent) => {
 
     if(file_drawer && editor_section && _tab_title_els){
       const el = document.elementFromPoint(e.clientX, e.clientY)
+      const thisTab: HTMLElement | null = document.querySelector(`#${snakeCasePath.value}`)
+      if(thisTab){
+        // @ts-ignore
+        thisTab.parentElement.parentElement.style.backgroundColor = '#000000'
+        // @ts-ignore
+        thisTab.parentElement.parentElement.style.opacity = '0.5'
+      }
 
-      _tab_title_els.forEach((tab, i)=> {
+      _tab_title_els.forEach((tab: any)=> {
         if(tab.contains(el)){
-          tab.style.borderLeft = '1px solid'
+          tab.style.borderLeft = '3px solid var(--border_color)'
         } else {
           tab.style.borderLeft = 'none'
         }
@@ -145,38 +152,59 @@ const handleDragging = (e: MouseEvent) => {
 
       if(file_drawer.contains(el) || editor_section.contains(el)) {
         document.removeEventListener('mousemove', handleDragging)
-        console.log('stop')
+        resetStyleTab()
       }
     }
   }
 
   const endDragging = (e: MouseEvent) => {
-    _tab_title_els = document.querySelectorAll('._tab_title_el')
+
     const tabToMove = files.getTabToDrag
+    const el = document.elementFromPoint(e.clientX, e.clientY)
+    _tab_title_els = document.querySelectorAll('._tab_title_el')
 
     if(file_drawer && editor_section && _tab_title_els){
-      const el = document.elementFromPoint(e.clientX, e.clientY)
-
       _tab_title_els.forEach((tab, i) => {
-        if(tab.contains(el)){
-          console.log(tabToMove + ' tab will be on: ' +  i)
+
+        // console.log('parent ', tab.parentElement)
+
+        if(tab.parentElement.contains(el)){
+          // console.log('contains: ', tab, el)
           files.reArrangeFiles(tabToMove, i)
         }
       })
+    } else {
+      console.log('out of if')
+      console.log('no contains: ', _tab_title_els, editor_section, file_drawer)
     }
 
-    _tab_title_els.forEach(tab => tab.style.borderLeft = 'none')
+    resetStyleTab()
 
     document.removeEventListener('mousemove', handleDragging)
+    console.log('stop dragging')
     pauseEvent(e)
     
+  }
+
+  const resetStyleTab = () => {
+    setTimeout(() => {
+      
+
+    _tab_title_els = document.querySelectorAll('._tab_title_el')
+
+    _tab_title_els.forEach((tab: any) => {
+      tab.style.borderLeft = 'none'
+      tab.parentElement.parentElement.style.backgroundColor = 'transparent'
+      tab.parentElement.parentElement.style.opacity = '1'
+    })
+  }, 500);
   }
 
   const pauseEvent = (e: MouseEvent) => {
     if(e.stopPropagation) e.stopPropagation();
     if(e.preventDefault) e.preventDefault();
-    // e.cancelBubble=true;
-    // e.returnValue=false;
+    e.cancelBubble=true;
+    e.returnValue=false;
     return false;
   }
 
