@@ -43,10 +43,7 @@ import { Highlight } from '@tiptap/extension-highlight'
 import { Extension } from '@tiptap/core'
 // @ts-ignore
 import DragIcon from 'vue-material-design-icons/DragVertical.vue'
-
-Color.configure({
-  types: ['textStyle'],
-})
+// import TaskList from '@tiptap/extension-task-list'
 
 const CodeBlockTab = Extension.create({
   name: 'CodeBlockTab',
@@ -235,14 +232,19 @@ onMounted( () => {
         BubbleMenu,
         StarterKit,
         TextStyle,
-        Color,
+        Color.configure({
+          types: ['textStyle'],
+        }),
+
         CodeBlockTab,
+        
         Highlight.configure({ 
           multicolor: true, 
           HTMLAttributes: {
             class: 'highlight_text',
           }
-        })
+        }),
+        // TaskList
       ],
       editorProps: {
         attributes: {

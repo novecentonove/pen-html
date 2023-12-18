@@ -1,60 +1,53 @@
 <template>
-  <div v-if="editor" class="buttons_bar flex items-center flex-no-wrap gap-x-2 p-1  rounded-lg">
-    <button @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+
+  <div v-if="editor" :class="!showButtons ? 'w-[245px]' : 'w-[360px]'" class="buttons_bar inline-flex flex-no-wrap items-center p-1 rounded-lg"> 
+    <button title="Bold" @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
       <IconBold :size="size" />
     </button>
-    <button @click="editor.chain().focus().toggleItalic().run()" :disabled="!editor.can().chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+    <button title="Italic" @click="editor.chain().focus().toggleItalic().run()" :disabled="!editor.can().chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
       <IconItalic :size="size" />
     </button>
-    <button @click="editor.chain().focus().toggleCode().run()" :disabled="!editor.can().chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
+    <button title="Inline code" @click="editor.chain().focus().toggleCode().run()" :disabled="!editor.can().chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
       <IconCode :size="size" />
     </button>
-    <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
+    <button title="Code block" @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
       <IconCodeBlock :size="size" />
     </button>
-    <button @click="editor.chain().focus().toggleStrike().run()" :disabled="!editor.can().chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
+    <button title="Strike" @click="editor.chain().focus().toggleStrike().run()" :disabled="!editor.can().chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
       <IconStrike :size="size" />
     </button>
-    <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
+    <button title="Ul" @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
       <IconUl :size="size" />
     </button>
-    <button @click="editor.chain().focus().toggleHighlight({ color: 'var(--hightlight_color)' }).run()" :class="{ 'is-active': editor.isActive('highlight', { color: 'var(--hightlight_color)' }) }">
-      <div class="w-2 h-1 bg-blue-400"></div>
-    </button>
-    <button v-for="(color, i) in colors" :key="i" @click="editor.chain().focus().setColor(color).run()">
-      <div class="w-3 h-3" :style="`background-color: ${color}`"></div>
-    </button>
-    <button @click="editor.chain().focus().unsetColor().run()">
-      <div class="w-3 h-3 border border-neutral-400"></div>
-    </button>
-    <button @click="editor.chain().focus().clearNodes().run()">
+    <button title="Clear style" @click="editor.chain().focus().clearNodes().run()">
       <IconClearAll :size="size" />
     </button>
-    <!-- TODO -->
-    <!-- <div class="flex gap-x-2 items-center" @mouseover="showExtraButton = true" @mouseleave="showExtraButton = false">
+    <button title="Clear font color" @click="editor.chain().focus().unsetColor().run()">
+      <div class="w-3 h-3 border border-neutral-400"></div>
+    </button>
+    <div class="inline-flex" @mouseover="showExtraButtons(true)" @mouseleave="showExtraButtons(false)">
       <IconRight :size="15" class="p-1" />
       <transition name="slide_right">
-        <div v-if="showExtraButton" class="flex gap-x-2">
-          <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
+        <div v-if="showButtons" class="flex">
+          <button title="ol" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
             <IconOl :size="size" />
           </button>
-          <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }">
-            <IconQuote :size="size" />
+          <button title="Highlight" @click="editor.chain().focus().toggleHighlight({ color: 'var(--hightlight_color)' }).run()" :class="{ 'is-active': editor.isActive('highlight', { color: 'var(--hightlight_color)' }) }">
+            <div class="w-2 h-1 bg-blue-400"></div>
           </button>
-          <button @click="editor.chain().focus().unsetAllMarks().run()">
-            <IconClear :size="size" />
+          <button v-for="(color, i) in colors" :key="i" :title="'Text color'" @click="editor.chain().focus().setColor(color).run()">
+            <div class="w-3 h-3" :style="`background-color: ${color}`"></div>
           </button>
+          <!-- <button @click="editor.chain().focus().toggleTaskList().run()" :class="{ 'is-active': editor.isActive('taskList') }">
+          </button> -->
         </div>
       </transition>
-    </div> -->
-
-    <!-- <button ">
-      <IconClear :size="size" />
-    </button> -->
-    <div>
-
     </div>
 
+    <!--
+    <button @click="editor.chain().focus().unsetAllMarks().run()">
+      <IconClear :size="size" />
+    </button> -->
     <!-- <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
       paragraph
     </button> -->
@@ -75,9 +68,6 @@
     </button>
     <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
       h6
-    </button> -->
-    <!-- <button @click="editor.chain().focus().setHorizontalRule().run()">
-      horizontal rule
     </button> -->
     <!-- <button @click="editor.chain().focus().setHardBreak().run()">
       hard break
@@ -109,14 +99,16 @@
   // @ts-ignore
   import IconQuote from 'vue-material-design-icons/FormatQuoteOpen.vue';
   // @ts-ignore
-  import IconClear from 'vue-material-design-icons/ClipboardOutline.vue';
+  // import IconClear from 'vue-material-design-icons/ClipboardOutline.vue';
     // @ts-ignore
   import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue';
   // import Drag from 'vue-material-design-icons/Drag.vue';
   // @ts-ignore
   import IconRight from 'vue-material-design-icons/ChevronRight.vue';
   import { Editor, } from '@tiptap/vue-3'
-
+  import { ref } from 'vue'
+  import { debounce } from 'lodash'
+  
   type EditorVar = Editor | null
 
   type Props = { 
@@ -128,12 +120,15 @@
   const size = 18
   const colors: string[] = ['#e2c42c', '#2ca1e2', '#988bd5']
 
+  const showButtons = ref(false)
+  const showExtraButtons = debounce( (bool: boolean) => showButtons.value = bool, 200)
 </script>
 
 <style scoped>
   button {
     padding: 0.2rem;
     border-radius: 0.2rem;
+    margin-right: 3px;
   }
   button:hover {
     background-color: #524e4e;
@@ -148,6 +143,7 @@
     border-radius: .2rem;
   }
 
+
   .slide_right-enter-active {
     transition: all 0.2s;
   }
@@ -160,5 +156,31 @@
   .slide_right-leave-to {
     transform: translatex(-100%);
     opacity: 0;
+  }
+
+
+  /* .buttons_bar {
+    transition: all 1s;
+    width: 50px;
+  }
+  .inner_extra_buttons{
+    display: none;
+    transition: all 1s;
+    opacity: 0;
+  }
+
+  .extra_buttons:hover .buttons_bar{
+    width: 300px;
+  } */
+
+  /* .extra_buttons:hover .inner_extra_buttons{
+    display: flex;
+    transition: all 1s;
+    opacity: 1;
+  } */
+
+
+  .buttons_bar {
+    transition: width .3s; /* Applica la transizione alla larghezza con una durata di 1 secondo */
   }
 </style>
