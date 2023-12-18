@@ -11,10 +11,10 @@
         <div class="absolute h-[70%] w-2 right-0 bottom-0 px-1" @mousedown="startDragging" style="cursor: col-resize" />
       </FileDrawer>
 
-      <div id="rightV" class="grow">
-        <div data-tauri-drag-region class="titlebar view_color text_color">
+      <div id="rightV" class="grow view_color">
+        <div data-tauri-drag-region class="titlebar text_color">
           <div class="mx-auto pt-1">
-            <p class="text-xs pt-0.5 text-white/10">pen</p>
+            <!-- <p class="text-xs pt-0.5 text-white/10">pen</p> -->
           </div>
           <div class="titlebar_button" @click="appWindow.minimize()">
             <WindowMinimize :size="15" />

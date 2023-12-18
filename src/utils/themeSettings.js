@@ -21,11 +21,21 @@ export const themeSettings = [
     }
   },
   {
+    name: 'Oblò',
+    colors: {
+      'left_panel': '#121517',
+      'view': '#161a1d',
+      'settings_panel': '#121517',
+      'border' : '#7a5208',
+      'pre': '#0a060e'
+    }
+  },
+  {
     name: 'Petrolio',
     colors: {
-      'left_panel': '#080c0e',
+      'left_panel': '#020304',
       'view': '#080c0e',
-      'settings_panel': '#080c0e',
+      'settings_panel': '#020304',
       'border' : '#616100',
       'pre': 'black'
     }

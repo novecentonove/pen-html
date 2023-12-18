@@ -16,7 +16,7 @@
         <div v-if="baseDir" @click="openDir" class="ml-2 open_dir"></div>
       </div>
 
-      <div class="h-full border-t border_color" v-if="getEnableAppendFile">
+      <div class="h-full border-t border_color mr-4" v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
         <!-- <p class="pb-[6px] mb-2 border-b border_color">Opened files</p> -->
         <ul>
           <li class="file_li">
@@ -119,9 +119,7 @@
   onMounted( () => {
     loadBaseDir()
 
-    setInterval(loadBaseDir, 1000*60*5)
-
-    console.log(fileToAppend.value)
+    setInterval(loadBaseDir, 1000*60*2)
   })
 
 </script>

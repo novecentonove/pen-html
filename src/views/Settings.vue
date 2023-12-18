@@ -6,11 +6,9 @@
         <label class="mt-6">Base Directory</label>
         <button class="baseDir border h-12 cursor-pointer" @click="readFileDir">{{shortBaseFilesDir}}</button>
 
-        <label class="mt-6">Append file</label>
-
-        <label>
+        <label class="mt-6">
           <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" type="checkbox">
-          Enable append file
+          Enable appended file
         </label>
         <button class="baseDir border h-12 cursor-pointer" @click="readFile">{{shortBaseAppededFile}}</button>
 
@@ -89,7 +87,7 @@
 
     const file = settings.getfileToAppend
 
-    if(file){
+    if(Object.keys(file).length){
       const url = file.path.split('/')
 
       if(url && url.length > 3){
