@@ -108,25 +108,19 @@
   // Drag border
 
   const startDragging = (e: MouseEvent) => {
-    pauseEvent(e)
     document.addEventListener('mousemove', handleDragging)
     leftW.value = e.pageX
+
+    setTimeout(() => {
+      endDragging()
+    }, 3000);
   }
-  const endDragging = (e: MouseEvent) => {
+  const endDragging = () => {
     document.removeEventListener('mousemove', handleDragging)
-    pauseEvent(e)
   }
 
   const handleDragging = (e: MouseEvent) => {
     leftW.value = e.pageX
-  }
-
-  const pauseEvent = (e: MouseEvent) => {
-    if(e.stopPropagation) e.stopPropagation();
-    if(e.preventDefault) e.preventDefault();
-    // e.cancelBubble=true;
-    // e.returnValue=false;
-    return false;
   }
 
   // Functions

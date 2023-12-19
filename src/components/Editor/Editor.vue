@@ -118,8 +118,7 @@ const doFocus = () => {
 }
 
 // TAb dragging
-const startDragging = (e: MouseEvent) => {
-    pauseEvent(e)
+const startDragging = () => {
     document.addEventListener('mousemove', handleDragging)
     files.setTabToDrag(props.path)
 }
@@ -172,9 +171,7 @@ const handleDragging = (e: MouseEvent) => {
 
     resetStyleTab()
 
-    document.removeEventListener('mousemove', handleDragging)
-    pauseEvent(e)
-    
+    document.removeEventListener('mousemove', handleDragging)  
   }
 
   const resetStyleTab = () => {
@@ -185,14 +182,6 @@ const handleDragging = (e: MouseEvent) => {
       tab.parentElement.parentElement.style.backgroundColor = 'transparent'
       tab.parentElement.parentElement.style.opacity = '1'
     })
-  }
-
-  const pauseEvent = (e: MouseEvent) => {
-    if(e.stopPropagation) e.stopPropagation();
-    if(e.preventDefault) e.preventDefault();
-    // e.cancelBubble=true;
-    // e.returnValue=false;
-    return false;
   }
 
 watch(() => props.modelValue, (value: {}) => {

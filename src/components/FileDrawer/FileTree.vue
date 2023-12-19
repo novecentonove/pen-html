@@ -32,7 +32,7 @@
   // @ts-ignore
   import Folder from 'vue-material-design-icons/Folder.vue';
   // @ts-ignore
-  import Text from 'vue-material-design-icons/TextLong.vue';
+  import TextFileIcon from 'vue-material-design-icons/TextLong.vue';
   import { useToggle } from '@vueuse/core'
   import { onClickOutside } from '@vueuse/core'
 

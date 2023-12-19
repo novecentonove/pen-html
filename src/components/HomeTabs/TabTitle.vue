@@ -2,7 +2,7 @@
 <li
   :class="{ 'border-b shadow-lg': selectedPath != props.file.path, 'border-t border-r border-l' :selectedPath == props.file.path}" 
   class="flex shrink-0 align-middle  rounded-t border_color cursor-pointer select-none">
-  <div class="flex justify-center items-center">
+  <div class="flex justify-center items-center app_font">
     <!-- Teleport here -->
     <span :id="snakeCasePath(props.file.path)" class="_tab_title_el flex"></span>
     <span class="px-1 py-2 font-semibold" @click="openFile(file)" style="font-size: 0.8rem;">{{ fileName }}</span>
