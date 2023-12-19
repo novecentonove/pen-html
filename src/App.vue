@@ -7,7 +7,7 @@
   <div class="main main_color view_color h-screen text_color overflow-x-scroll" @mouseup="endDragging">
     <div class="flex">
       
-      <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0" :style="`width: ${leftW}px`" >
+      <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0 select-none" :style="`width: ${leftW}px`" >
         <div class="absolute h-[70%] w-2 right-0 bottom-0 px-1" @mousedown="startDragging" style="cursor: col-resize" />
       </FileDrawer>
 

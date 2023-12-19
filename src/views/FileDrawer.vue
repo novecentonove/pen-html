@@ -3,7 +3,7 @@
     <slot />    <!-- drag  -->
      <div class="flex flex-col h-full pl-3">
       <div v-if="openedFiles.length">
-        <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Opened files</p>
+        <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Opene editors</p>
         <ul>
           <li v-for="file in openedFiles" class="file_li" :key="file.path">
             <TextFileIcon :size="12" class="mr-1" /><FileClick :file="file"/>
