@@ -5,7 +5,7 @@
   <div class="flex justify-center items-center">
     <!-- Teleport here -->
     <span :id="snakeCasePath(props.file.path)" class="_tab_title_el flex"></span>
-    <span class="px-1 py-2 font-semibold" @click="openFile(file)">{{ fileName }}</span>
+    <span class="px-1 py-2 font-semibold" @click="openFile(file)" style="font-size: 0.8rem;">{{ fileName }}</span>
   </div>
   <XMarkIcon @click="closeTab" class="ml-1 mr-2 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-in-out duration-300" />
 </li>

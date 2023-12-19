@@ -47,7 +47,7 @@
     </div>
 
     <div class="fixed bottom-2 right-2">
-      <p class="text-xs opacity-50">v. {{ appVersion }}</p>
+      <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
     </div>
 
   </div>

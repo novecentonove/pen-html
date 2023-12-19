@@ -1,5 +1,5 @@
 <template>
-  <span :class="isOpenable ? '' : 'opacity-50'" @click="openFile">{{ file?.name }}</span>
+  <span :class="isOpenable ? '' : 'opacity-50'" @click="openFile">{{ fileName }}</span>
 </template>
 
 <script setup lang="ts">
@@ -35,5 +35,14 @@ const openFile = async () => {
 
 }
 
+const fileName = computed( () => {
+    const name = props?.file?.name
+    if(name){
+      const ext = name.split('.').pop()
+      if(ext === 'html') return name.substring(0, name.lastIndexOf('.')) || name
+      return name
+    }
+    return ''
+  })
 
 </script>

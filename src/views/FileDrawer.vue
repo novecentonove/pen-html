@@ -1,32 +1,32 @@
 <template>
-  <div id="out_click" class="relative w-full pt-[36px] flex flex-col app_font text-sm overflow-x-scroll">
+  <div id="out_click" class="relative w-full pt-[36px] flex flex-col app_font TextFileIcon-sm overflow-x-scroll">
     <slot />    <!-- drag  -->
      <div class="flex flex-col h-full pl-3">
       <div v-if="openedFiles.length">
-        <p class="pb-[6px] mb-2 border-b border_color">Opened files</p>
+        <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Opened files</p>
         <ul>
           <li v-for="file in openedFiles" class="file_li" :key="file.path">
-            <Text :size="12" class="mr-1" /><FileClick :file="file"/>
+            <TextFileIcon :size="12" class="mr-1" /><FileClick :file="file"/>
           </li>
         </ul>
       </div>
       <div class="pt-2">
-        <p class="pb-[6px] mr-4 border-b border_color"></p>
+        <p :title="baseDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
         <div v-if="baseDir" @click="openDir" class="ml-2 open_dir"></div>
       </div>
 
-      <div class="h-full border-t border_color mr-4" v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
-        <!-- <p class="pb-[6px] mb-2 border-b border_color">Opened files</p> -->
+      <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
+        <p class="pb-[6px] mb-2 border-b border_color mr-4"></p>
         <ul>
           <li class="file_li">
-            <Text :size="12" class="mr-1" /><FileClick :file="fileToAppend"/>
+            <TextFileIcon :size="12" class="mr-1" /><FileClick :file="fileToAppend"/>
           </li>
         </ul>
       </div>
       
       <div class="relative flex mt-auto mb-3 justify-between">
-        <div class="cursor-pointer">
+        <div class="iconSettings cursor-pointer">
           <!-- see onClickOutside-->
           <IconSettings v-if="showSettings" :size="20"/>
           <IconSettings v-else @click="toggleSettings()" :size="20"/>
@@ -53,7 +53,7 @@
   import Settings from '@/views/Settings.vue'
   import FileClick from '../components/FileDrawer/FileClick.vue'
   // @ts-ignore
-  import Text from 'vue-material-design-icons/TextLong.vue'
+  import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
   // @ts-ignore
   import IconSettings from 'vue-material-design-icons/Cog.vue'
   import { readDir } from '@tauri-apps/api/fs'
@@ -146,5 +146,9 @@
 }
 .file_li:hover{
   background-color: var(--view_color);
+}
+
+.iconSettings{
+    opacity: 0.15;
 }
 </style>
