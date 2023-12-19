@@ -1,61 +1,76 @@
 <template>
-  <div class="realtive pt-4 px-12 flex flex-col">
-    <div class="overflow-y-scroll">
-      <div class="settings font_colors flex flex-col">
+  <div class="px-12 flex flex-col h-full">
+    <div>
+      <div class="settings my-6 font_colors flex flex-col gap-6">
 
-        <label class="mt-6">Base Directory</label>
-        <button class="baseDir border h-12 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir}}</button>
-
-        <label class="mt-6">
-          <input v-model="enableAppendDir" @change="settings.setEnableAppendDir(enableAppendDir)" type="checkbox">
-          Enable append Dir
-        </label>
-        <button class="baseDir border h-12 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir}}</button>
-
-        <label class="mt-6">
-          <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" type="checkbox">
-          Enable append file
-        </label>
-        <button class="baseDir border h-12 cursor-pointer" @click="readFile">{{shortBaseAppededFile}}</button>
-
-        <label class="mtop">App Font</label>
-        <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
-        <p class="text-xs py-2 text-neutral-500">Eg: 'Arial', 'Droid Sans Mono', monospace</p>
-
-        <label class="mtop">Editor Font</label>
-        <input v-model="selectedEditorFont" @change="selectFont('editor')">
-
-        <label class="mtop">Text color</label>
-        <div class="flex justify-between">
-          <div v-for="(color, i) in textColors" 
-          :title="color.name" 
-          :key="i" 
-          class="w-10 h-10" 
-          :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
-          @click="selectTextColors(color.value)"
-          />
+        <div class="flex flex-col">
+          <label class="mtop">Base Directory</label>
+          <button class="baseDir border h-8 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir}}</button>
         </div>
 
-        <label class="mtop relative flex flex-col">Font size
-          <input type="text" pattern="^\d+(\.\d+)?$" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
-          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
-            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)" @click="increaseFontSize('+')"></div>
-            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)" @click="increaseFontSize('-')"></div>
+        <div class="flex flex-col">
+          <label class="mtop">
+            <input v-model="enableAppendDir" @change="settings.setEnableAppendDir(enableAppendDir)" class="accent-slate-900" type="checkbox">
+            Enable append Dir
+          </label>
+          <button class="baseDir border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir}}</button>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="mtop">
+            <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" class="accent-slate-900" type="checkbox">
+            Enable append file
+          </label>
+          <button class="baseDir border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile}}</button>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="mtop">App Font</label>
+          <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
+          <p class="text-xs py-2 text-neutral-500">Eg: 'Arial', 'Droid Sans Mono', monospace</p>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="mtop">Editor Font</label>
+          <input v-model="selectedEditorFont" @change="selectFont('editor')">
+        </div>
+
+        <div class="flex flex-col">
+          <label class="mtop">Text color</label>
+          <div class="flex justify-between">
+            <div v-for="(color, i) in textColors" 
+            :title="color.name" 
+            :key="i" 
+            class="w-10 h-10" 
+            :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
+            @click="selectTextColors(color.value)"
+            />
           </div>
-        </label>
-
-        <label class="mtop">Theme</label>
-        <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
-          <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
-        </select>
-
         </div>
+
+        <div class="flex flex-col">
+          <label class="mtop relative flex flex-col">Font size
+            <input type="text" pattern="^\d+(\.\d+)?$" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
+            <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
+              <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)" @click="increaseFontSize('+')"></div>
+              <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)" @click="increaseFontSize('-')"></div>
+            </div>
+          </label>
+        </div>
+
+        <div class="flex flex-col">
+          <label class="mtop">Theme</label>
+          <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
+            <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
+          </select>
+        </div>
+      </div>
     </div>
 
     <div class="fixed bottom-2 right-2">
       <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
     </div>
-    enableAppendDir: {{ enableAppendDir }}
+
   </div>
 </template>
 
@@ -246,7 +261,7 @@
   }
 
   .settings .mtop {
-    margin-top: 30px;
+    /* margin-top: 15px; */
   }
 
   .baseDir{

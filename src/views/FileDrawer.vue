@@ -41,11 +41,13 @@
       </div>
     </div>
 
-    <div ref="settingsRef" v-if="showSettings" class="settings_panel_color fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-t-4 border-l-4 border-neutral-900">
-      <Suspense>
-        <Settings />
-      </Suspense>
-    </div>
+    <transition name="slide">
+      <div ref="settingsRef" v-if="showSettings" class="settings_panel_color overflow-y-scroll fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-t-4 border-l-4 border-neutral-900">
+        <Suspense>
+          <Settings />
+        </Suspense>
+      </div>
+    </transition>
 
   </div>
 </template>
@@ -185,5 +187,19 @@
 
 .iconSettings{
     opacity: 0.15;
+}
+
+.slide-enter-active {
+  transition: all 0.05s ease-in-out;
+}
+
+.slide-leave-active {
+  transition: all 0.05s;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translatex(100%);
+  opacity: 0;
 }
 </style>

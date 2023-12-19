@@ -157,29 +157,7 @@
     transform: translatex(-100%);
     opacity: 0;
   }
-
-
-  /* .buttons_bar {
-    transition: all 1s;
-    width: 50px;
-  }
-  .inner_extra_buttons{
-    display: none;
-    transition: all 1s;
-    opacity: 0;
-  }
-
-  .extra_buttons:hover .buttons_bar{
-    width: 300px;
-  } */
-
-  /* .extra_buttons:hover .inner_extra_buttons{
-    display: flex;
-    transition: all 1s;
-    opacity: 1;
-  } */
-
-
+  
   .buttons_bar {
     transition: width .3s; /* Applica la transizione alla larghezza con una durata di 1 secondo */
   }
