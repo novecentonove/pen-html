@@ -3,7 +3,7 @@
     <slot />    <!-- drag  -->
      <div class="flex flex-col h-full pl-3">
       <div v-if="openedFiles.length">
-        <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Opene editors</p>
+        <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Open editors</p>
         <ul>
           <li v-for="file in openedFiles" class="file_li" :key="file.path">
             <TextFileIcon :size="12" class="mr-1" /><FileClick :file="file"/>
@@ -13,7 +13,13 @@
       <div class="pt-2">
         <p :title="baseDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
-        <div v-if="baseDir" @click="openDir" class="ml-2 open_dir"></div>
+        <div v-if="baseDir" @click="openDir('base')" class="ml-2 open_dir"></div>
+      </div>
+
+      <div v-if="enableAppendDir && appendedDir" class="pt-2">
+        <p :title="appendedDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
+        <FileList :files="filesAndDirAppended"/>
+        <div v-if="filesAndDirAppended" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
       </div>
 
       <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
@@ -62,7 +68,9 @@
   import { onClickOutside } from '@vueuse/core'
   import { useToggle } from '@vueuse/core'
 
+  // TODO SISTEMARE VARIABILI FILES AND DIR
   const filesAndDir = ref<FileType[] | []>([])
+  const filesAndDirAppended = ref<FileType[] | []>([])
   const files = useFiles()
   const settings = useSettings()
   const settingsRef = ref(null)
@@ -72,7 +80,8 @@
   const baseDir = computed( () => settings.getBaseDir)
   const getEnableAppendFile = computed( () => settings.getEnableAppendFile)
   const fileToAppend = computed( () => settings.getfileToAppend)
-
+  const enableAppendDir = computed( () => settings.getEnableAppendDir)
+  const appendedDir = computed( () => settings.getAppendedDir)
 
   const [showSettings, toggleSettings] = useToggle()
 
@@ -82,6 +91,11 @@
   watch(baseDir, async (value) => {
     const content = await readDir(value as string)
     filesAndDir.value = await getLStructureDir(content)
+  })
+
+  watch(appendedDir, async (value) => {
+    const content = await readDir(value as string)
+    filesAndDirAppended.value = await getLStructureDir(content)
   })
 
   // recursive get structure // TODO : use FileType to any
@@ -99,26 +113,47 @@
       return dir.sort( (a: any, b:any) =>a.name.localeCompare(b.name))
   }
 
-  const openDir = async () => {
-    if(baseDir.value){
+  const openDir = async (type: string) => {
+    let dir = ''
+    switch (type) {
+      case 'base':
+        dir = baseDir.value as string
+        break;
+      case 'appendedDir':
+        dir = appendedDir.value as string
+        break;
+    }
+    if(dir){
       try{
-        await open(baseDir.value as string)
+        await open(dir)
       } catch(e){
         console.log(e)
       }
     }
   }
   
-  const loadBaseDir = async () => {
-    if(baseDir.value){
-      const content = await readDir(baseDir.value as string)
-      filesAndDir.value = await getLStructureDir(content)
-    }
+  const loadBaseDir = async (type: string) => {
+      switch (type) {
+        case 'base':
+          if(baseDir.value){
+            const contentBase = await readDir(baseDir.value as string)
+            filesAndDir.value = await getLStructureDir(contentBase)
+          }
+          break;
+        case 'appendedDir':
+          if(appendedDir.value){
+            const contentDir = await readDir(appendedDir.value as string)
+            filesAndDirAppended.value = await getLStructureDir(contentDir)
+          }
+          break;
+      }
   } 
 
   onMounted( () => {
-    loadBaseDir()
-
+    loadBaseDir('base')
+    if(enableAppendDir.value && appendedDir.value){
+      loadBaseDir('appendedDir')
+    }
     setInterval(loadBaseDir, 1000*60*2)
   })
 

@@ -11,8 +11,10 @@ export type RootState = {
   basedir: string,
   baseFontDir: string,
   theme: string,
+  enableAppendDir: boolean,
+  appendedDir: string
   enableAppendFile: boolean,
-  fileToAppend: FileType
+  fileToAppend: FileType,
 };
 
 export const useSettings = defineStore('settings', {
@@ -24,6 +26,8 @@ export const useSettings = defineStore('settings', {
     basedir: '',
     baseFontDir: '',
     theme: themeSettings[0].name,
+    enableAppendDir: false,
+    appendedDir: '',
     enableAppendFile: false,
     fileToAppend: {}
   } as RootState),
@@ -38,6 +42,8 @@ export const useSettings = defineStore('settings', {
     getBaseDir: (state) => state.basedir,
     getBaseFontDir: (state) => state.baseFontDir,
     getTheme: (state) => state.theme,
+    getEnableAppendDir: (state) => state.enableAppendDir,
+    getAppendedDir:  (state) => state.appendedDir,
     getEnableAppendFile: (state) => state.enableAppendFile,
     getfileToAppend: (state) => state.fileToAppend,
   },
@@ -63,6 +69,12 @@ export const useSettings = defineStore('settings', {
     },
     setTheme(theme: string){
       this.theme = theme
+    },
+    setEnableAppendDir(val: boolean){
+      this.enableAppendDir = val
+    },
+    setAppendedDir(val: string){
+      this.appendedDir = val
     },
     setEnableAppendFile(val: boolean){
       this.enableAppendFile = val

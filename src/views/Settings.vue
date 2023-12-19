@@ -4,11 +4,17 @@
       <div class="settings font_colors flex flex-col">
 
         <label class="mt-6">Base Directory</label>
-        <button class="baseDir border h-12 cursor-pointer" @click="readFileDir">{{shortBaseFilesDir}}</button>
+        <button class="baseDir border h-12 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir}}</button>
+
+        <label class="mt-6">
+          <input v-model="enableAppendDir" @change="settings.setEnableAppendDir(enableAppendDir)" type="checkbox">
+          Enable append Dir
+        </label>
+        <button class="baseDir border h-12 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir}}</button>
 
         <label class="mt-6">
           <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" type="checkbox">
-          Enable appended file
+          Enable append file
         </label>
         <button class="baseDir border h-12 cursor-pointer" @click="readFile">{{shortBaseAppededFile}}</button>
 
@@ -49,7 +55,7 @@
     <div class="fixed bottom-2 right-2">
       <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
     </div>
-
+    enableAppendDir: {{ enableAppendDir }}
   </div>
 </template>
 
@@ -72,9 +78,20 @@
   const selectedTheme = toRef(settings.getTheme)
   const appVersion = await getVersion()
   const enableAppendFile = toRef(settings.enableAppendFile)
+  const enableAppendDir = toRef(settings.getEnableAppendDir)
 
   const shortBaseFilesDir = computed(() => {
     const url = settings.getBaseDir.split('/')
+
+    if(url && url.length > 3){
+      return '../' + url[url.length-2] + '/' + url[url.length-1]
+    } else {
+      return url.join('/')
+    }
+  })
+
+  const shortBaseAppededDir = computed(() => {
+    const url = settings.getAppendedDir.split('/')
 
     if(url && url.length > 3){
       return '../' + url[url.length-2] + '/' + url[url.length-1]
@@ -159,7 +176,7 @@
     settings.applySettings()
   }
 
-  const readFileDir = async () => {
+  const readFileDir = async (type: string) => {
     try{
         const selecteDir = await open({
           multiple: false,
@@ -167,7 +184,14 @@
           directory: true
         });
         if(selecteDir){
-          settings.setBaseDir(selecteDir as string)
+          switch (type) {
+            case 'append':
+              settings.setAppendedDir(selecteDir as string)
+              break;
+            case 'base':
+              settings.setBaseDir(selecteDir as string)
+              break;
+          }
         }
     } catch(e){
         console.error(e)
