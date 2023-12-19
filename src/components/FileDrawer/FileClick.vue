@@ -1,5 +1,5 @@
 <template>
-  <span :class="isOpenable ? '' : 'opacity-50'" @click="openFile">{{ fileName }}</span>
+  <span class="w-full" :class="isOpenable ? '' : 'opacity-50'" @click="openFile">{{ fileName }}</span>
 </template>
 
 <script setup lang="ts">

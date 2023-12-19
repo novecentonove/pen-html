@@ -112,8 +112,7 @@
       // Sort alphabetically
       const alpha = content.sort( (a: any, b:any) =>a.name.localeCompare(b.name))
       // Sort DIR
-      const dir =  alpha.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
-      return dir
+      return alpha.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
   }
 
   const openDir = async (type: string) => {
