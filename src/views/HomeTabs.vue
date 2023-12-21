@@ -1,11 +1,14 @@
 <template>
   <div class="text-xs overflow-y-scroll">
-    <ul class="flex w-full list-none">
-      <template v-for="file in openFiles" :key="file.path" >
-        <TabTitle :file="file" />
-      </template>
-      <li class="border-b border_color shadow-lg w-full min-h-[21px]"></li>
-    </ul>
+    <div class="flex">
+      <div class="w-2 border-b border_color shadow-lg"></div>
+      <ul class="flex w-full list-none">
+        <template v-for="file in openFiles" :key="file.path" >
+          <TabTitle :file="file" />
+        </template>
+        <li class="border-b border_color shadow-lg w-full min-h-[21px]"></li>
+      </ul>
+    </div>
     <div id="editor_section" >
       <section class="px-12" v-for="file in openFiles" :key="file.path">
         <TabContent :name="file.name" :path="file.path" />
