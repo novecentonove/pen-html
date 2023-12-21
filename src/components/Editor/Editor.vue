@@ -91,6 +91,15 @@ const getText = () => {
 }
 
 const saveFile = async () => {
+
+  const allowedExt = ['html'];
+  const ext = props.path.split('.').pop();
+
+  if(!allowedExt.includes(ext ?? '')){
+    alert('File extension is not html, I cant save the file -- create dialog')
+    return
+  }
+
   const content = getText()
   try {
     await writeFile(

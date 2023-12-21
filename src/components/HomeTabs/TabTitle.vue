@@ -44,12 +44,12 @@
 
   const openFile = async (file: FileType | null) => {
     if(file){
-      const allowedExt = ['html'];
-      const ext = file.name.split('.').pop();
+      // const allowedExt = ['html'];
+      // const ext = file.name.split('.').pop();
 
-      if(allowedExt.includes(ext ?? '')) {
+      // if(allowedExt.includes(ext ?? '')) {
         files.setSelectedPath(file.path)
-      }
+      // }
     }
   }
 

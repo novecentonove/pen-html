@@ -69,7 +69,6 @@
   const isDropHover = ref(false)
 
   // Drop files
-
   const toggleDropHover = debounce((boolean = null) => {
     if(boolean !== null){
       isDropHover.value = !isDropHover.value
@@ -84,10 +83,9 @@
     let payload: string[] = event.payload
 
     if(payload.length){
-
       payload.forEach(path => {
         const name = path.substring(path.lastIndexOf('/')+1)
-        addPages({name: name, path: path})
+        addPagesFromDrop({name: name, path: path})
       });
     }
   })
@@ -100,13 +98,12 @@
     toggleDropHover(false)
   })
 
-  const addPages = throttle((file: FileType) => {
+  const addPagesFromDrop = throttle((file: FileType) => {
     files.addPage(file)
   })
 
 
   // Drag border
-
   const startDragging = (e: MouseEvent) => {
     document.addEventListener('mousemove', handleDragging)
     leftW.value = e.pageX
@@ -124,7 +121,6 @@
   }
 
   // Functions
-
   const fileDone = () => {
     const notSaved = files.getNotSavedFiles
     if(notSaved.length){
