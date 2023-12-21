@@ -1,7 +1,7 @@
 <template>
 
 <transition name="fade">
-  <div v-if="isDropHover" class="xxx fixed h-full w-full bg-black/50 z-10"></div>
+  <div v-if="isDropping" class="fixed h-full w-full bg-black/50 z-10"></div>
 </transition>
 
   <div class="main main_color view_color h-screen text_color overflow-x-scroll" @mouseup="endDragging">
@@ -66,28 +66,33 @@
   // Check not saved
   const trigger = ref(0)
   const file = ref<FileType>({name: '', path: ''})
-  const isDropHover = ref(false)
+  const isDropping = ref(false)
 
   // Drop files
   const toggleDropHover = debounce((boolean = null) => {
-    if(boolean !== null){
-      isDropHover.value = !isDropHover.value
+    if(boolean === null){
+      isDropping.value = !isDropping.value
     } else {
-      isDropHover.value = boolean
+      isDropping.value = boolean
     }
   }, 200)
   
   listen('tauri://file-drop', (event: {payload: []} ) => {
-    toggleDropHover(false)
-
     let payload: string[] = event.payload
 
     if(payload.length){
       payload.forEach(path => {
-        const name = path.substring(path.lastIndexOf('/')+1)
-        addPagesFromDrop({name: name, path: path})
+        const name: string = path.substring(path.lastIndexOf('/')+1)
+        const ext: string = path.split('.').pop() ?? ''
+        const allowedExt = ['html', 'txt', 'css', 'md']
+
+        if(allowedExt.includes(ext ?? '')){
+          addPagesFromDrop({name: name, path: path})
+        }
       });
     }
+
+    toggleDropHover(false)
   })
 
   listen('tauri://file-drop-hover', () => {

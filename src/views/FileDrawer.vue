@@ -91,22 +91,34 @@
   onClickOutside(settingsRef, closeSettings)
 
   watch(baseDir, async (value) => {
-    const content = await readDir(value as string)
-    filesAndDir.value = await getLStructureDir(content)
+    try{
+      const content = await readDir(value as string)
+      filesAndDir.value = await getLStructureDir(content)
+    } catch(e){
+      console.error(e)
+    }
   })
 
   watch(appendedDir, async (value) => {
-    const content = await readDir(value as string)
-    filesAndDirAppended.value = await getLStructureDir(content)
+    try{
+      const content = await readDir(value as string)
+      filesAndDirAppended.value = await getLStructureDir(content)
+    } catch(e){
+      console.error(e)
+    }
   })
 
   // recursive get structure // TODO : use FileType to any
   const getLStructureDir = async (content: any) => {
     for (const file of content) {
         if(typeof file.children === 'object'){
-          const inside = await readDir((file.path as string))
-          getLStructureDir(inside)
-          file.children = (inside)
+          try{
+            const inside = await readDir((file.path as string))
+            getLStructureDir(inside)
+            file.children = (inside)
+          } catch(e){
+            console.error(e)
+          }
         }
       }
       // Sort alphabetically
@@ -138,14 +150,22 @@
       switch (type) {
         case 'base':
           if(baseDir.value){
-            const contentBase = await readDir(baseDir.value as string)
-            filesAndDir.value = await getLStructureDir(contentBase)
+            try{
+              const contentBase = await readDir(baseDir.value as string)
+              filesAndDir.value = await getLStructureDir(contentBase)
+            } catch(e){
+              console.log(e)
+            }
           }
           break;
         case 'appendedDir':
           if(appendedDir.value){
-            const contentDir = await readDir(appendedDir.value as string)
-            filesAndDirAppended.value = await getLStructureDir(contentDir)
+            try{
+              const contentDir = await readDir(appendedDir.value as string)
+              filesAndDirAppended.value = await getLStructureDir(contentDir)
+            } catch(e){
+              console.log(e)
+            }
           }
           break;
       }
