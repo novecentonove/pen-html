@@ -1,11 +1,14 @@
 <template>
 
-  <div v-if="editor" :class="!showButtons ? 'w-[245px]' : 'w-[360px]'" class="buttons_bar inline-flex flex-no-wrap items-center p-1 rounded-lg"> 
+  <div v-if="editor" :class="!showButtons ? 'w-[270px]' : 'w-[390px]'" class="buttons_bar inline-flex flex-no-wrap items-center p-1 rounded-lg"> 
     <button title="Bold" @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
       <IconBold :size="size" />
     </button>
     <button title="Italic" @click="editor.chain().focus().toggleItalic().run()" :disabled="!editor.can().chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
       <IconItalic :size="size" />
+    </button>
+    <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
+      <FormatUnderline :size="size" />
     </button>
     <button title="Inline code" @click="editor.chain().focus().toggleCode().run()" :disabled="!editor.can().chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
       <IconCode :size="size" />
@@ -105,6 +108,8 @@
   // import Drag from 'vue-material-design-icons/Drag.vue';
   // @ts-ignore
   import IconRight from 'vue-material-design-icons/ChevronRight.vue';
+    // @ts-ignore
+  import FormatUnderline from 'vue-material-design-icons/FormatUnderline.vue';
   import { Editor, } from '@tiptap/vue-3'
   import { ref } from 'vue'
   import { debounce } from 'lodash'
@@ -118,7 +123,7 @@
   const props = defineProps<Props>()
   const editor = props.editor
   const size = 18
-  const colors: string[] = ['#e2c42c', '#2ca1e2', '#988bd5']
+  const colors: string[] = ['#8c7c27', '#465694', '#988bd5']
 
   const showButtons = ref(false)
   const showExtraButtons = debounce( (bool: boolean) => showButtons.value = bool, 200)

@@ -44,12 +44,7 @@
 
   const openFile = async (file: FileType | null) => {
     if(file){
-      // const allowedExt = ['html'];
-      // const ext = file.name.split('.').pop();
-
-      // if(allowedExt.includes(ext ?? '')) {
         files.setSelectedPath(file.path)
-      // }
     }
   }
 

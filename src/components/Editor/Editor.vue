@@ -41,6 +41,7 @@ import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import { Highlight } from '@tiptap/extension-highlight'
 import { Extension } from '@tiptap/core'
+import Underline from '@tiptap/extension-underline'
 // @ts-ignore
 import DragIcon from 'vue-material-design-icons/DragVertical.vue'
 // import TaskList from '@tiptap/extension-task-list'
@@ -242,6 +243,7 @@ onMounted( () => {
             class: 'highlight_text',
           }
         }),
+        Underline
         // TaskList
       ],
       editorProps: {

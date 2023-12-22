@@ -20,6 +20,10 @@ body{
     font-size: 15px;
 }
 
+::selection {
+  background: var(--border_color);
+}
+
 .app_font {
   font-family: var(--app_font);
 }
