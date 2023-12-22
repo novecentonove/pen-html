@@ -58,6 +58,7 @@
   import { listen } from '@tauri-apps/api/event'
   // import { useToggle } from '@vueuse/core'
   import { debounce, throttle } from 'lodash'
+  import { allowedExt } from '@/types/AllowedExt'
 
   const settings = useSettings()
   const files = useFiles()
@@ -84,7 +85,6 @@
       payload.forEach(path => {
         const name: string = path.substring(path.lastIndexOf('/')+1)
         const ext: string = path.split('.').pop() ?? ''
-        const allowedExt = ['html', 'txt', 'css', 'md']
 
         if(allowedExt.includes(ext ?? '')){
           addPagesFromDrop({name: name, path: path})

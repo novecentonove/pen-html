@@ -6,7 +6,7 @@
 import { type FileType } from '@/types/FileType';
 import { useFiles } from '@/stores/use-files'
 import { computed } from 'vue';
-
+import { allowedExt } from '@/types/AllowedExt'
 
 type Props = { 
   file:  FileType | null,
@@ -16,7 +16,6 @@ type Props = {
 const props = defineProps<Props>()
 const files = useFiles()
 
-const allowedExt = ['html'];
 const isOpenable = computed( () => {
   const ext = props.file?.name.split('.').pop();
   return allowedExt.includes(ext ?? '') ? true : false
