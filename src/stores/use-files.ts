@@ -68,7 +68,7 @@ export const useFiles = defineStore('files', {
       }
     },
 
-    fileIsSafeTrigger(){
+    triggerFileIsSaved(){
       this.savedFile++
     },
 

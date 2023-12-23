@@ -1,9 +1,14 @@
 <template>
   
   <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
-    <!-- <TitleTabAttributes /> -->
-    <span class="_drag_span ml-1 opacity-25" @mousedown="startDragging" @mouseup="endDragging"><DragIcon :size="14" /></span>
-    <span v-if="!saved" class="pr-1">&#9679;</span>
+    <TitleTabAttributes
+      :saved="saved"
+      :name="name"
+      :path="path"
+      :snake-case-path="snakeCasePath"
+     />
+    <!-- <span class="_drag_span ml-1 opacity-25" @mousedown="startDragging" @mouseup="endDragging"><DragIcon :size="14" /></span>
+    <span v-if="!saved" class="pr-1">&#9679;</span> -->
   </Teleport>
 
   <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
@@ -45,8 +50,8 @@ import TextStyle from '@tiptap/extension-text-style'
 import { Highlight } from '@tiptap/extension-highlight'
 import { Extension } from '@tiptap/core'
 import Underline from '@tiptap/extension-underline'
-// @ts-ignore
-import DragIcon from 'vue-material-design-icons/DragVertical.vue'
+
+
 // import TaskList from '@tiptap/extension-task-list'
 
 const CodeBlockTab = Extension.create({
@@ -69,23 +74,18 @@ type Props = {
   path: string
 }
 
-const files = useFiles()
 const props = defineProps<Props>()
+const files = useFiles()
 const emit = defineEmits(['update:modelValue'])
 const isSame = <Ref>ref(null)
 const editorIsReady = ref(false)
 const saved = ref(true)
-const snakeCasePath = computed( () => snakeCase(props.path))
+const snakeCasePath = computed( (): string => snakeCase(props.path))
 let lastFileContent = ref('<p></p>')
 
 type EditorVar = Editor | null
 
 let editor:EditorVar = null
-
-
-let editor_section: HTMLElement | null = null
-let file_drawer: HTMLElement | null = null
-let _tab_title_els: NodeList | null = null
 
 const getText = () => {
   if(editor !== null){
@@ -96,14 +96,6 @@ const getText = () => {
 
 const saveFile = async () => {
 
-  const allowedExt = ['html'];
-  const ext = props.path.split('.').pop();
-
-  if(!allowedExt.includes(ext ?? '')){
-    alert('File extension is not html, I cant save the file -- create dialog')
-    return
-  }
-
   const content = getText()
   try {
     await writeFile(
@@ -112,7 +104,7 @@ const saveFile = async () => {
         path: props.path,
       }
     )
-    files.fileIsSafeTrigger()
+    files.triggerFileIsSaved()
     if(editor){
       lastFileContent.value = editor.getHTML()
       saved.value = true
@@ -130,72 +122,7 @@ const doFocus = () => {
   }
 }
 
-// TAb dragging
-const startDragging = () => {
-    document.addEventListener('mousemove', handleDragging)
-    files.setTabToDrag(props.path)
-}
 
-const handleDragging = (e: MouseEvent) => {
-    // reload _tab_title_els
-    _tab_title_els = document.querySelectorAll('._tab_title_el')
-
-    if(file_drawer && editor_section && _tab_title_els){
-      const el = document.elementFromPoint(e.clientX, e.clientY)
-      const thisTab: HTMLElement | null = document.querySelector(`#${snakeCasePath.value}`)
-      if(thisTab){
-        // @ts-ignore
-        thisTab.parentElement.parentElement.style.backgroundColor = '#000000'
-        // @ts-ignore
-        thisTab.parentElement.parentElement.style.opacity = '0.5'
-      }
-
-      _tab_title_els.forEach((tab: any)=> {
-        if(tab.contains(el)){
-          tab.style.color = 'var(--border_color)'
-          tab.parentElement.querySelector('._drag_span').style.opacity = 1
-        } else {
-          tab.style.color = 'inherit'
-        }
-      })
-
-      if(file_drawer.contains(el) || editor_section.contains(el)) {
-        document.removeEventListener('mousemove', handleDragging)
-        resetStyleTab()
-      }
-    }
-  }
-
-  const endDragging = (e: MouseEvent) => {
-
-    const tabToMove = files.getTabToDrag
-    const el = document.elementFromPoint(e.clientX, e.clientY)
-    _tab_title_els = document.querySelectorAll('._tab_title_el')
-
-    if(file_drawer && editor_section && _tab_title_els){
-      _tab_title_els.forEach((tab: any, i) => {
-        if(tab.parentElement.contains(el)){
-          files.reArrangeFiles(tabToMove, i)
-        }
-      })
-    } else {
-      // console.log('out of if')
-    }
-
-    resetStyleTab()
-
-    document.removeEventListener('mousemove', handleDragging)  
-  }
-
-  const resetStyleTab = () => {
-    _tab_title_els = document.querySelectorAll('._tab_title_el')
-
-    _tab_title_els.forEach((tab: any) => {
-      tab.style.color = 'inherit'
-      tab.parentElement.parentElement.style.backgroundColor = 'transparent'
-      tab.parentElement.parentElement.style.opacity = '1'
-    })
-  }
 
 watch(() => props.modelValue, (value: {}) => {
   if(editor){
@@ -268,9 +195,6 @@ onMounted( () => {
 
   doFocus()
   editorIsReady.value = true
-  // Drag elements
-  editor_section = document.querySelector('#editor_section')
-  file_drawer = document.querySelector('#fileD')
 })
 
 onBeforeUnmount( () => {
