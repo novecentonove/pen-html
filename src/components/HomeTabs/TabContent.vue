@@ -1,7 +1,8 @@
 <template>
   <div v-show="path == selectedPath">
     <KeepAlive>
-      <Editor v-if="content" 
+      <component :is="editorComponent[current]"
+        v-if="content" 
         v-model="content" 
         :name="name" 
         :path="path" />
@@ -13,7 +14,8 @@
   import { computed, onMounted, ref, toRef } from 'vue'
   import { useFiles } from '@/stores/use-files'
   import { type FileType } from '@/types/FileType'
-  import Editor from '@/components/Editor/Editor.vue'
+  import HtmlEditor from '@/components/Editor/HtmlEditor.vue'
+  import Text from '@/components/Editor/Text.vue'
   import { readTextFile } from '@tauri-apps/api/fs'
 
   const props = defineProps<FileType>()
@@ -21,10 +23,24 @@
   const path = toRef(props.path)
   const selectedPath = computed( () => files.getSelectedPath)
   const content = ref('')
+  const editorComponent:any = {HtmlEditor, Text}
+  const current = ref('Editor')
 
   onMounted( async () => {
     try {
-      content.value = await readTextFile(props.path as string) || '<p></p>'
+      const ext = props.path.split('.').pop()
+      let defaultIfEmpty = '<p></p>'
+      switch (ext) {
+        case 'html':
+          current.value = 'HtmlEditor'
+          break;
+        default:
+          current.value = 'Text'
+          defaultIfEmpty = ' '
+          break;
+      }
+      
+      content.value = await readTextFile(props.path as string) || defaultIfEmpty
     } catch(e){
       content.value = '<p><span style="color:red">Error: file not existing</span></p>'
       console.log(e)

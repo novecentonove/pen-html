@@ -1,5 +1,7 @@
 <template>
+  
   <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
+    <!-- <TitleTabAttributes /> -->
     <span class="_drag_span ml-1 opacity-25" @mousedown="startDragging" @mouseup="endDragging"><DragIcon :size="14" /></span>
     <span v-if="!saved" class="pr-1">&#9679;</span>
   </Teleport>
@@ -34,6 +36,7 @@ import { type Ref, onBeforeUnmount, onMounted, ref, watch, computed } from 'vue'
 import { snakeCase} from 'lodash'
 import { useFiles } from '../../stores/use-files'
 import EditorButtons from './EditorButtons.vue'
+import TitleTabAttributes from './TitleTabAttributes.vue'
 import { writeFile } from '@tauri-apps/api/fs'
 import StarterKit from '@tiptap/starter-kit'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
