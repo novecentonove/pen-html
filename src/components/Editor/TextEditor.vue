@@ -9,8 +9,8 @@
      />
   </Teleport>
   
-  <div @keyup.ctrl.s="saveFile" class="plain_text mt-6">
-    <textarea v-model="content" @keyup.ctrl.z.exact="undo" @keyup.ctrl.shift.z.exact="redo" class="text_area bg-transparent w-full" style="height: 80vh;"></textarea>
+  <div @keyup.ctrl.s="saveFile" @click.prevent.self="doFocus" class="plain_text px-12 mt-6">
+    <textarea ref="text_area" v-model="content" @keyup.ctrl.z.exact="undo" @keyup.ctrl.shift.z.exact="redo" class="text_area editor_font editor_font_size bg-transparent w-full" style="height: 80vh;"></textarea>
   </div>
 </template>
 
@@ -22,14 +22,6 @@ import { snakeCase} from 'lodash'
 import { writeFile } from '@tauri-apps/api/fs'
 import { useRefHistory } from '@vueuse/core'
 
-const files = useFiles()
-const text_area:Ref<HTMLDivElement|null> = ref(null)
-const content = ref('')
-const saved = ref(false)
-
-// @ts-ignore
-const { history, undo, redo } = useRefHistory(content)
-
 type Props = {
   modelValue: string,
   name: string,
@@ -38,8 +30,22 @@ type Props = {
 
 const props = defineProps<Props>()
 
+const files = useFiles()
+const text_area:Ref<HTMLDivElement|null> = ref(null)
+const content = ref(props.modelValue)
+const saved = ref(true)
 const lastFileContent = ref('')
 const snakeCasePath = computed( (): string => snakeCase(props.path))
+// @ts-ignore
+const { history, undo, redo } = useRefHistory(content)
+
+const doFocus = () => {
+  if(text_area.value){
+    text_area.value.focus()
+    console.log('dofocus')
+  }
+  console.log('focus')
+}
 
 const saveFile = async () => {
 
@@ -60,13 +66,14 @@ const saveFile = async () => {
 
 watch(content, (value: string) => {
   saved.value = value === lastFileContent.value
+}, { immediate: false })
+
+watch(saved, (bool) => {
+    files.toggleUnsavedFiles({path: props.path, savedFile: bool})
 })
 
 onMounted( () => {
-  if(text_area.value){
-    text_area.value.focus()
-  }
-  content.value = props.modelValue
+  doFocus()
 })
 
 </script>

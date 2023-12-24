@@ -7,11 +7,9 @@
       :path="path"
       :snake-case-path="snakeCasePath"
      />
-    <!-- <span class="_drag_span ml-1 opacity-25" @mousedown="startDragging" @mouseup="endDragging"><DragIcon :size="14" /></span>
-    <span v-if="!saved" class="pr-1">&#9679;</span> -->
   </Teleport>
 
-  <div class="wrapper_editor h-full relative markdown-body editor_font editor_font_size">
+  <div @click.prevent.self="doFocus" class="wrapper_editor h-full relative markdown-body editor_font editor_font_size px-12">
     <div>
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content 
@@ -129,15 +127,12 @@ watch(() => props.modelValue, (value: {}) => {
     const htmlEditor = editor.getHTML() 
     saved.value = lastFileContent.value == htmlEditor
 
-    // HTML
-    // ??
     isSame.value = htmlEditor === value
-    // JSON
-    // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
+
     if (isSame.value) {
       return
     }
-    // const htmlText = converter.makeHtml(value);
+
     editor.commands.setContent(value, false)
   }
 })
@@ -186,10 +181,7 @@ onMounted( () => {
       },
       content: props.modelValue,
       onUpdate: () => {
-        // HTML
         emit('update:modelValue', editor?.getHTML())
-        // JSON
-        // this.$emit('update:modelValue', this.editor.getJSON())
       },
   })
 

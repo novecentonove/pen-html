@@ -6,7 +6,7 @@ export const themeSettings = [
       'left_panel': '#202020',
       'view': '#191919',
       'settings_panel': '#202020',
-      'border' : '#525252',
+      'border' : '#5c382e',
       'pre': '#131313'
     }
   },

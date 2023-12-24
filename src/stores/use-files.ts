@@ -104,8 +104,9 @@ export const useFiles = defineStore('files', {
     setTabToDrag(path: string) {
       this.tabToDrag = path
     },
+    
     reArrangeFiles(tab_path: string, toIndex: number){
-console.log(tab_path, toIndex)
+
       const objectToMove =  this.getOpenFiles.find((el) => el.path === tab_path)
 
       if (objectToMove) {

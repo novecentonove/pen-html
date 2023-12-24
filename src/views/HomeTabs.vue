@@ -10,7 +10,7 @@
       </ul>
     </div>
     <div id="editor_section" >
-      <section class="px-12" v-for="file in openFiles" :key="file.path">
+      <section v-for="file in openFiles" :key="file.path">
         <TabContent :name="file.name" :path="file.path" />
       </section>
     </div>

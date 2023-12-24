@@ -21,7 +21,7 @@ body{
 }
 
 ::selection {
-  background: var(--border_color);
+  background: #234779;
 }
 
 .app_font {
