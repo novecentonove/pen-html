@@ -1,5 +1,8 @@
 <template>
-  <span class="w-full" :class="isOpenable ? '' : 'opacity-50'" @click="openFile">{{ fileName }}</span>
+  <div class="flex items-center" @click="openFile">
+    <TextFileIcon :size="12" class="mr-1" />
+    <span class="w-full" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -7,6 +10,8 @@ import { type FileType } from '@/types/FileType';
 import { useFiles } from '@/stores/use-files'
 import { computed } from 'vue';
 import { allowedExt } from '@/types/AllowedExt'
+// @ts-ignore
+import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
 
 type Props = { 
   file:  FileType | null,

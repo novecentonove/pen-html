@@ -1,69 +1,68 @@
 <template>
   <div class="px-12 flex flex-col h-full">
-    <div>
-      <div class="settings my-6 font_colors flex flex-col gap-6">
 
-        <div class="flex flex-col">
-          <label class="mtop">Base Directory</label>
-          <button class="baseDir border h-8 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir}}</button>
+    <div class="settings my-6 font_colors flex flex-col gap-6">
+      
+      <div class="flex flex-col">
+        <label class="mtop">Base Directory</label>
+        <button class="baseDir border h-8 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir}}</button>
+      </div>
+
+      <div class="flex flex-col">
+        <label class="mtop">
+          <input v-model="enableAppendDir" @change="settings.setEnableAppendDir(enableAppendDir)" class="accent-slate-900" type="checkbox">
+          Enable append Dir
+        </label>
+        <button class="baseDir border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir}}</button>
+      </div>
+
+      <div class="flex flex-col">
+        <label class="mtop">
+          <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" class="accent-slate-900" type="checkbox">
+          Enable append file
+        </label>
+        <button class="baseDir border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile}}</button>
+      </div>
+
+      <div class="flex flex-col">
+        <label class="mtop">App Font</label>
+        <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
+        <p class="text-xs py-2 text-neutral-500">Eg: 'Arial', 'Droid Sans Mono', monospace</p>
+      </div>
+
+      <div class="flex flex-col">
+        <label class="mtop">Editor Font</label>
+        <input v-model="selectedEditorFont" @change="selectFont('editor')">
+      </div>
+
+      <div class="flex flex-col">
+        <label class="mtop">Text color</label>
+        <div class="flex justify-between">
+          <div v-for="(color, i) in textColors" 
+          :title="color.name" 
+          :key="i" 
+          class="w-10 h-10" 
+          :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
+          @click="selectTextColors(color.value)"
+          />
         </div>
+      </div>
 
-        <div class="flex flex-col">
-          <label class="mtop">
-            <input v-model="enableAppendDir" @change="settings.setEnableAppendDir(enableAppendDir)" class="accent-slate-900" type="checkbox">
-            Enable append Dir
-          </label>
-          <button class="baseDir border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir}}</button>
-        </div>
-
-        <div class="flex flex-col">
-          <label class="mtop">
-            <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" class="accent-slate-900" type="checkbox">
-            Enable append file
-          </label>
-          <button class="baseDir border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile}}</button>
-        </div>
-
-        <div class="flex flex-col">
-          <label class="mtop">App Font</label>
-          <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
-          <p class="text-xs py-2 text-neutral-500">Eg: 'Arial', 'Droid Sans Mono', monospace</p>
-        </div>
-
-        <div class="flex flex-col">
-          <label class="mtop">Editor Font</label>
-          <input v-model="selectedEditorFont" @change="selectFont('editor')">
-        </div>
-
-        <div class="flex flex-col">
-          <label class="mtop">Text color</label>
-          <div class="flex justify-between">
-            <div v-for="(color, i) in textColors" 
-            :title="color.name" 
-            :key="i" 
-            class="w-10 h-10" 
-            :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
-            @click="selectTextColors(color.value)"
-            />
+      <div class="flex flex-col">
+        <label class="mtop relative flex flex-col">Font size
+          <input type="text" pattern="^\d+(\.\d+)?$" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
+          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
+            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)" @click="increaseFontSize('+')"></div>
+            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)" @click="increaseFontSize('-')"></div>
           </div>
-        </div>
+        </label>
+      </div>
 
-        <div class="flex flex-col">
-          <label class="mtop relative flex flex-col">Font size
-            <input type="text" pattern="^\d+(\.\d+)?$" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
-            <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
-              <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)" @click="increaseFontSize('+')"></div>
-              <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)" @click="increaseFontSize('-')"></div>
-            </div>
-          </label>
-        </div>
-
-        <div class="flex flex-col">
-          <label class="mtop">Theme</label>
-          <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
-            <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
-          </select>
-        </div>
+      <div class="flex flex-col mb-1">
+        <label class="mtop">Theme</label>
+        <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
+          <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
+        </select>
       </div>
     </div>
 
@@ -137,8 +136,8 @@
     { name: 'Gray', value: '#b0b0b0' },
     { name: 'Stormy Sky', value: '#909090' },
     { name: 'Fog in Padania', value: '#808080' },
-    { name: 'Cold', value: '#9fa7b6' },
-    { name: 'Warm', value: '#bbb5a4' }
+    { name: 'Cold', value: '#7b828e' },
+    { name: 'Warm', value: '#8c887d' }
   ]
 
   interface InputFileEvent extends Event {
@@ -248,6 +247,10 @@
 
 
 <style>
+  /* fix overflow-y  */
+  .settings{
+    min-height: 800px;
+  }
   .settings input:not([type='checkbox']),
   .settings select {
     appearance: none;
@@ -260,9 +263,9 @@
     margin: 0.1rem;
   }
 
-  .settings .mtop {
-    /* margin-top: 15px; */
-  }
+  /* .settings .mtop {
+    margin-top: 15px;
+  } */
 
   .baseDir{
     border: 1px solid var(--border_color);

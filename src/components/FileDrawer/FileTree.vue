@@ -5,7 +5,7 @@
   </li>
 
   <li v-else ref="toggleMenuRef" :style="indent" class="file_li marker:relative" @contextmenu.prevent="toggleMenu()">
-    <TextFileIcon :size="12" class="mr-1" /><FileClick :file="props.file" />
+    <FileClick :file="props.file" />
 
     <div v-if="showMenu" class="absolute right_click_menu view_color text_color">
       <ul class="static">

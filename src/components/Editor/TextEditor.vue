@@ -82,7 +82,6 @@ watch(() => props.onSelectedPath, () => doFocus())
 
 onMounted( () => {
   doFocus()
-  console.log('openfile', openFile)
 })
 
 </script>

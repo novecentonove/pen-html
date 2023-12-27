@@ -6,7 +6,7 @@
         <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Open editors</p>
         <ul>
           <li v-for="file in openedFiles" class="file_li" :key="file.path">
-            <TextFileIcon :size="12" class="mr-1" /><FileClick :file="file"/>
+            <FileClick :file="file" />
           </li>
         </ul>
       </div>
@@ -26,7 +26,7 @@
         <p class="pb-[6px] mb-2 border-b border_color mr-4"></p>
         <ul>
           <li class="file_li">
-            <TextFileIcon :size="12" class="mr-1" /><FileClick :file="fileToAppend"/>
+            <FileClick :file="fileToAppend" />
           </li>
         </ul>
       </div>
@@ -63,8 +63,6 @@
   import Toast from '@/components/FileDrawer/Toast.vue'
   import Settings from '@/views/Settings.vue'
   import FileClick from '../components/FileDrawer/FileClick.vue'
-  // @ts-ignore
-  import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
   // @ts-ignore
   import ReloadIcon from 'vue-material-design-icons/Reload.vue'
   // @ts-ignore
