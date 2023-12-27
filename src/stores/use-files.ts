@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { type FileType } from '@/types/FileType'
 
 export type RootState = {
-  openFiles: Omit<FileType, 'children'>[]
+  openFiles: Omit<FileType & { isError?: boolean, error?: string}, 'children'>[]
   selectedPath: string
   clickDrawerFile: Omit<FileType, 'children'>[]
   savedFile: number,
@@ -24,6 +24,7 @@ export const useFiles = defineStore('files', {
   persist: true,
 
   getters: {
+    getOpenFile: (state) => (path: string) => state.openFiles.find((file) => file.path === path),
     getOpenFiles: (state) => state.openFiles,
     getClickDrawerFile: (state) => state.clickDrawerFile,
     getFileIsSaved: (state) => state.savedFile,
@@ -115,6 +116,15 @@ export const useFiles = defineStore('files', {
         this.openFiles = rearrange
       }
 
+    },
+    setOpenFileError(path: string, isError: boolean, error: string ){
+      this.openFiles = this.getOpenFiles.map(file => {
+        if(file.path === path){
+          file.isError = isError,
+          file.error = error
+        }
+        return file
+      })
     }
   }
 })

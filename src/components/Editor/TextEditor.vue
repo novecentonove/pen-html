@@ -8,8 +8,11 @@
       :snake-case-path="snakeCasePath"
      />
   </Teleport>
-  
-  <div @keyup.ctrl.s="saveFile" @click.prevent.self="doFocus" class="plain_text px-12 mt-6">
+  <div v-if="openFile?.isError" class="editor_font editor_font_size px-12 mt-6">
+    <p>An errror occurred</p>
+    <p v-if="openFile.error">{{ openFile.error }}</p>
+  </div>
+  <div v-else @keyup.ctrl.s="saveFile" @click.prevent.self="doFocus" class="plain_text editor_font px-12 mt-6">
     <textarea ref="text_area" v-model="content" @keyup.ctrl.z.exact="undo" @keyup.ctrl.shift.z.exact="redo" class="text_area editor_font editor_font_size bg-transparent w-full" style="height: 80vh;"></textarea>
   </div>
 </template>
@@ -25,7 +28,9 @@ import { useRefHistory } from '@vueuse/core'
 type Props = {
   modelValue: string,
   name: string,
-  path: string
+  path: string,
+  // isError: boolean
+  // error: string
 }
 
 const props = defineProps<Props>()
@@ -36,6 +41,8 @@ const content = ref(props.modelValue)
 const saved = ref(true)
 const lastFileContent = ref('')
 const snakeCasePath = computed( (): string => snakeCase(props.path))
+const openFile = files.getOpenFile(props.path)
+
 // @ts-ignore
 const { history, undo, redo } = useRefHistory(content)
 
@@ -74,6 +81,7 @@ watch(saved, (bool) => {
 
 onMounted( () => {
   doFocus()
+  console.log('openfile', openFile)
 })
 
 </script>

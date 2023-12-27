@@ -18,6 +18,7 @@
   import TextEditor from '@/components/Editor/TextEditor.vue'
   import { readTextFile } from '@tauri-apps/api/fs'
 
+
   const props = defineProps<FileType>()
   const files = useFiles()
   const path = toRef(props.path)
@@ -41,8 +42,9 @@
       }
       
       content.value = await readTextFile(props.path as string) || defaultIfEmpty
-    } catch(e){
-      content.value = '<p><span style="color:red">Error: file not existing or error</span></p>'
+    } catch(e: any){
+      content.value = ' '
+      files.setOpenFileError(path.value, true, e)
       console.log(e)
     }
   })

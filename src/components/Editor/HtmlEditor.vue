@@ -9,7 +9,11 @@
      />
   </Teleport>
 
-  <div @click.prevent.self="doFocus" class="wrapper_editor h-full relative markdown-body editor_font editor_font_size px-12">
+  <div v-if="openFile?.isError" class="editor_font editor_font_size mt-6 px-12">
+      <p>An errror occurred</p>
+      <p v-if="openFile.error">{{ openFile.error }}</p>
+  </div>
+  <div v-else @click.prevent.self="doFocus" class="wrapper_editor h-full relative markdown-body editor_font editor_font_size px-12">
     <div>
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content 
@@ -67,8 +71,8 @@ const CodeBlockTab = Extension.create({
 })
 
 type Props = {
-  modelValue: string,
-  name: string,
+  modelValue: string
+  name: string
   path: string
 }
 
@@ -79,6 +83,7 @@ const isSame = <Ref>ref(null)
 const editorIsReady = ref(false)
 const saved = ref(true)
 const snakeCasePath = computed( (): string => snakeCase(props.path))
+const openFile = files.getOpenFile(props.path)
 let lastFileContent = ref('<p></p>')
 
 type EditorVar = Editor | null

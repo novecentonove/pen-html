@@ -112,17 +112,16 @@
   const startDragging = (e: MouseEvent) => {
     document.addEventListener('mousemove', handleDragging)
     leftW.value = e.pageX
-
-    setTimeout(() => {
-      endDragging()
-    }, 3000);
   }
+  
   const endDragging = () => {
     document.removeEventListener('mousemove', handleDragging)
   }
 
   const handleDragging = (e: MouseEvent) => {
-    leftW.value = e.pageX
+    if(e.pageX > 70){
+      leftW.value = e.pageX
+    }
   }
 
   // Functions
