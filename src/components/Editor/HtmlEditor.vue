@@ -74,6 +74,7 @@ type Props = {
   modelValue: string
   name: string
   path: string
+  onSelectedPath: number
 }
 
 const props = defineProps<Props>()
@@ -153,6 +154,8 @@ watch(editorIsReady, (value: boolean) => {
 watch(saved, (bool) => {
     files.toggleUnsavedFiles({path: props.path, savedFile: bool})
 })
+
+watch(() => props.onSelectedPath, () => doFocus())
 
 onMounted( () => {
   editor = new Editor({

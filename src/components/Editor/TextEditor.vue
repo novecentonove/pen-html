@@ -29,8 +29,7 @@ type Props = {
   modelValue: string,
   name: string,
   path: string,
-  // isError: boolean
-  // error: string
+  onSelectedPath: number
 }
 
 const props = defineProps<Props>()
@@ -78,6 +77,8 @@ watch(content, (value: string) => {
 watch(saved, (bool) => {
     files.toggleUnsavedFiles({path: props.path, savedFile: bool})
 })
+
+watch(() => props.onSelectedPath, () => doFocus())
 
 onMounted( () => {
   doFocus()

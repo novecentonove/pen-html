@@ -5,27 +5,35 @@
         v-if="content" 
         v-model="content" 
         :name="name" 
-        :path="path" />
+        :path="path" 
+        :on-selected-path="onSelectedPath"/>
     </KeepAlive>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref, toRef } from 'vue'
+  import { computed, onMounted, ref, toRef, watch } from 'vue'
   import { useFiles } from '@/stores/use-files'
   import { type FileType } from '@/types/FileType'
   import HtmlEditor from '@/components/Editor/HtmlEditor.vue'
   import TextEditor from '@/components/Editor/TextEditor.vue'
   import { readTextFile } from '@tauri-apps/api/fs'
 
-
+  type Current = "HtmlEditor | TextEditor"
   const props = defineProps<FileType>()
   const files = useFiles()
   const path = toRef(props.path)
   const selectedPath = computed( () => files.getSelectedPath)
   const content = ref('')
   const editorComponent:any = {HtmlEditor, TextEditor}
-  const current = ref('Editor')
+  const onSelectedPath = ref(0)
+  const current:Current = ref('HtmlEditor')
+
+  watch(selectedPath, () => {
+    if(path.value == selectedPath.value){
+      onSelectedPath.value++
+    }
+  })
 
   onMounted( async () => {
     try {
