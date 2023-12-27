@@ -26,7 +26,7 @@ export const themeSettings = [
       'left_panel': '#121517',
       'view': '#161a1d',
       'settings_panel': '#121517',
-      'border' : '#7a5208',
+      'border' : '#37330f',
       'pre': '#0a060e'
     }
   },

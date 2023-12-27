@@ -136,7 +136,7 @@
     { name: 'Light Gray', value: '#d3d3d3' },
     { name: 'Gray', value: '#b0b0b0' },
     { name: 'Stormy Sky', value: '#909090' },
-    { name: 'Fog in Padania', value: '#6b6b6b' },
+    { name: 'Fog in Padania', value: '#808080' },
     { name: 'Cold', value: '#9fa7b6' },
     { name: 'Warm', value: '#bbb5a4' }
   ]

@@ -19,7 +19,7 @@
   import TextEditor from '@/components/Editor/TextEditor.vue'
   import { readTextFile } from '@tauri-apps/api/fs'
 
-  type Current = "HtmlEditor | TextEditor"
+  type Current = 'HtmlEditor' | 'TextEditor'
   const props = defineProps<FileType>()
   const files = useFiles()
   const path = toRef(props.path)
@@ -27,7 +27,7 @@
   const content = ref('')
   const editorComponent:any = {HtmlEditor, TextEditor}
   const onSelectedPath = ref(0)
-  const current:Current = ref('HtmlEditor')
+  const current = ref<Current>('HtmlEditor')
 
   watch(selectedPath, () => {
     if(path.value == selectedPath.value){
