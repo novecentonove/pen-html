@@ -31,13 +31,16 @@
         </ul>
       </div>
       
-      <div class="relative flex mt-auto mb-3 justify-between">
+      <div class="relative flex items-center mt-auto mb-3 justify-between">
         <div class="iconSettings cursor-pointer">
           <!-- see onClickOutside-->
           <IconSettings v-if="showSettings" :size="20"/>
           <IconSettings v-else @click="toggleSettings()" :size="20"/>
         </div>
+
+        <ReloadIcon :size="20" @click="loadAllDirs" class="iconSettings cursor-pointer mr-4" />
         <Toast :trigger="file_is_saved" />
+
       </div>
     </div>
 
@@ -62,6 +65,8 @@
   import FileClick from '../components/FileDrawer/FileClick.vue'
   // @ts-ignore
   import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
+  // @ts-ignore
+  import ReloadIcon from 'vue-material-design-icons/Reload.vue'
   // @ts-ignore
   import IconSettings from 'vue-material-design-icons/Cog.vue'
   import { readDir } from '@tauri-apps/api/fs'
@@ -171,12 +176,16 @@
       }
   } 
 
-  onMounted( () => {
+  const loadAllDirs = () => {
     loadBaseDir('base')
     if(enableAppendDir.value && appendedDir.value){
       loadBaseDir('appendedDir')
     }
-    setInterval(loadBaseDir, 1000*60*2)
+  }
+
+  onMounted( () => {
+    loadAllDirs()
+    setInterval(loadAllDirs, 1000*60*2)
   })
 
 </script>
