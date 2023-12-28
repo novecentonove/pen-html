@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-  import FileDrawer from '@/views/FileDrawer.vue';
+  import FileDrawer from '@/views/FileDrawer.vue'
   import { appWindow } from '@tauri-apps/api/window'
   import { onMounted, ref } from 'vue'
   import { useSettings } from '@/stores/use-settings'
@@ -87,7 +87,7 @@
         if(allowedExt.includes(ext ?? '')){
           addPagesFromDrop({name: name, path: path})
         }
-      });
+      })
     }
 
     toggleDropHover(false)

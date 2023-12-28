@@ -86,30 +86,30 @@
 
 <script setup lang="ts">
   // @ts-ignore
-  import IconBold from 'vue-material-design-icons/FormatBold.vue';
+  import IconBold from 'vue-material-design-icons/FormatBold.vue'
   // @ts-ignore
-  import IconItalic from 'vue-material-design-icons/FormatItalic.vue';
+  import IconItalic from 'vue-material-design-icons/FormatItalic.vue'
   // @ts-ignore
-  import IconStrike from 'vue-material-design-icons/FormatStrikethroughVariant.vue';
+  import IconStrike from 'vue-material-design-icons/FormatStrikethroughVariant.vue'
   // @ts-ignore
-  import IconCodeBlock from 'vue-material-design-icons/CodeBraces.vue';
+  import IconCodeBlock from 'vue-material-design-icons/CodeBraces.vue'
   // @ts-ignore
-  import IconCode from 'vue-material-design-icons/CodeBrackets.vue';
+  import IconCode from 'vue-material-design-icons/CodeBrackets.vue'
   // @ts-ignore
-  import IconOl from 'vue-material-design-icons/FormatListNumbered.vue';
+  import IconOl from 'vue-material-design-icons/FormatListNumbered.vue'
   // @ts-ignore
-  import IconUl from 'vue-material-design-icons/FormatListBulleted.vue';
+  import IconUl from 'vue-material-design-icons/FormatListBulleted.vue'
   // @ts-ignore
-  import IconQuote from 'vue-material-design-icons/FormatQuoteOpen.vue';
+  import IconQuote from 'vue-material-design-icons/FormatQuoteOpen.vue'
   // @ts-ignore
-  // import IconClear from 'vue-material-design-icons/ClipboardOutline.vue';
+  // import IconClear from 'vue-material-design-icons/ClipboardOutline.vue'
     // @ts-ignore
-  import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue';
-  // import Drag from 'vue-material-design-icons/Drag.vue';
+  import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue'
+  // import Drag from 'vue-material-design-icons/Drag.vue'
   // @ts-ignore
-  import IconRight from 'vue-material-design-icons/ChevronRight.vue';
+  import IconRight from 'vue-material-design-icons/ChevronRight.vue'
     // @ts-ignore
-  import FormatUnderline from 'vue-material-design-icons/FormatUnderline.vue';
+  import FormatUnderline from 'vue-material-design-icons/FormatUnderline.vue'
   import { Editor, } from '@tiptap/vue-3'
   import { ref } from 'vue'
   import { debounce } from 'lodash'

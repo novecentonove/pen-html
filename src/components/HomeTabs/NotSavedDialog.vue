@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue'
   import { useFiles } from '@/stores/use-files'
-   import { type FileType } from '@/types/FileType';
+   import { type FileType } from '@/types/FileType'
 
   const emit = defineEmits(['fileDone'])
 
@@ -66,15 +66,15 @@
         // @ts-ignore
         dialog.value.close()
         emit('fileDone', 'ok')
-        break;
+        break
       case 'cancel':
         // @ts-ignore
         dialog.value.close()
-        break;
+        break
       default:
         // @ts-ignore
         dialog.value.close()
-      break;
+      break
     }
 
   }

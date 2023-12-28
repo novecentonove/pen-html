@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import { ref, watch } from 'vue'
 
   type Props = {
     trigger: number,
@@ -19,7 +19,7 @@
     show.value = true
     setTimeout(() => {
       show.value = false
-    }, 2000);
+    }, 2000)
   })
 </script>
 

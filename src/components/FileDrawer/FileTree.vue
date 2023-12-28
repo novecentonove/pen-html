@@ -25,14 +25,14 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue'
   import { type FileType } from '@/types/FileType'
   import FileTree from './FileTree.vue'
   import FileClick from './FileClick.vue'
   // @ts-ignore
-  import Folder from 'vue-material-design-icons/Folder.vue';
+  import Folder from 'vue-material-design-icons/Folder.vue'
   // @ts-ignore
-  import TextFileIcon from 'vue-material-design-icons/TextLong.vue';
+  import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
   import { useToggle } from '@vueuse/core'
   import { onClickOutside } from '@vueuse/core'
 
@@ -41,7 +41,7 @@
     depth: number
     file: FileType
     closeMenu?: number
-  }>();
+  }>()
 
   const emit = defineEmits(['closeMenu'])
 

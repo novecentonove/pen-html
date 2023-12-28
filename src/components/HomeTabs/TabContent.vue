@@ -42,11 +42,11 @@
       switch (ext) {
         case 'html':
           current.value = 'HtmlEditor'
-          break;
+          break
         default:
           current.value = 'TextEditor'
           defaultIfEmpty = ' '
-          break;
+          break
       }
       
       content.value = await readTextFile(props.path as string) || defaultIfEmpty

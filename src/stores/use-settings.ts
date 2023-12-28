@@ -15,7 +15,7 @@ export type RootState = {
   appendedDir: string
   enableAppendFile: boolean,
   fileToAppend: FileType,
-};
+}
 
 export const useSettings = defineStore('settings', {
   state: () => ({ 

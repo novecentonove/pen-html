@@ -68,7 +68,7 @@
   import IconSettings from 'vue-material-design-icons/Cog.vue'
   import { readDir } from '@tauri-apps/api/fs'
   import { open } from '@tauri-apps/api/shell'
-  import { type FileType } from '@/types/FileType';
+  import { type FileType } from '@/types/FileType'
   import { onClickOutside } from '@vueuse/core'
   import { useToggle } from '@vueuse/core'
 
@@ -134,10 +134,10 @@
     switch (type) {
       case 'base':
         dir = baseDir.value as string
-        break;
+        break
       case 'appendedDir':
         dir = appendedDir.value as string
-        break;
+        break
     }
     if(dir){
       try{
@@ -159,7 +159,7 @@
               console.log(e)
             }
           }
-          break;
+          break
         case 'appendedDir':
           if(appendedDir.value){
             try{
@@ -169,7 +169,7 @@
               console.log(e)
             }
           }
-          break;
+          break
       }
   } 
 

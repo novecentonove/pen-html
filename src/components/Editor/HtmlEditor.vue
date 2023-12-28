@@ -93,7 +93,7 @@ let editor:EditorVar = null
 
 const getText = () => {
   if(editor !== null){
-    const htmlContent = editor.getHTML();
+    const htmlContent = editor.getHTML()
     return htmlContent
   }
 }
@@ -148,7 +148,7 @@ watch(editorIsReady, (value: boolean) => {
       if(value && editor){
         lastFileContent.value = editor.getHTML()
       }
-    }, 2000);
+    }, 2000)
 })
 
 watch(saved, (bool) => {

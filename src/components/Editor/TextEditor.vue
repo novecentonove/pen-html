@@ -13,7 +13,7 @@
     <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
   <div v-else @keyup.ctrl.s="saveFile" @click.prevent.self="doFocus" class="plain_text editor_font px-12 mt-6">
-    <textarea ref="text_area" v-model="content" @keyup.ctrl.z.exact="undo" @keyup.ctrl.shift.z.exact="redo" class="text_area editor_font editor_font_size bg-transparent w-full" style="height: 80vh;"></textarea>
+    <textarea ref="text_area" v-model="content" @keyup.ctrl.z.exact="undo" @keyup.ctrl.shift.z.exact="redo" class="text_area editor_font editor_font_size bg-transparent w-full" style="height: 80vh"></textarea>
   </div>
 </template>
 

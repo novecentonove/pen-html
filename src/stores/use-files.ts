@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 // @ts-ignore
 import { type FileType } from '@/types/FileType'
-import { snakeCase } from 'lodash';
+import { snakeCase } from 'lodash'
 
 export type RootState = {
   openFiles: Omit<FileType & { isError?: boolean, error?: string}, 'children'>[]
@@ -10,7 +10,7 @@ export type RootState = {
   savedFile: number,
   notSavedFiles: string[],
   tabToDrag: string
-};
+}
 
 export const useFiles = defineStore('files', {
   state: () => ({ 
@@ -69,7 +69,7 @@ export const useFiles = defineStore('files', {
           texttab.style.filter = 'brightness(1.3)'
           setTimeout(() => {
             texttab.style.filter = 'brightness(1)'
-          }, 200);
+          }, 200)
         }
       }
     },
@@ -106,7 +106,7 @@ export const useFiles = defineStore('files', {
       const files = this.getNotSavedFiles
       const savedFile = val.savedFile
       const path = val.path
-      const exists = files.includes(path);
+      const exists = files.includes(path)
 
       if(savedFile && exists){
         this.removeFromNotSavedFile(path)
@@ -130,8 +130,8 @@ export const useFiles = defineStore('files', {
       const objectToMove =  this.getOpenFiles.find((el) => el.path === tab_path)
 
       if (objectToMove) {
-        const rearrange = this.getOpenFiles.filter(obj => obj.path !== tab_path);
-        rearrange.splice(toIndex, 0, objectToMove);
+        const rearrange = this.getOpenFiles.filter(obj => obj.path !== tab_path)
+        rearrange.splice(toIndex, 0, objectToMove)
         this.openFiles = rearrange
       }
 

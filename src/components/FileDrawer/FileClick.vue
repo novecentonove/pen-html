@@ -6,9 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { type FileType } from '@/types/FileType';
+import { type FileType } from '@/types/FileType'
 import { useFiles } from '@/stores/use-files'
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { allowedExt } from '@/types/AllowedExt'
 // @ts-ignore
 import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
@@ -21,7 +21,7 @@ const props = defineProps<Props>()
 const files = useFiles()
 
 const isOpenable = computed( () => {
-  const ext = props.file?.name.split('.').pop();
+  const ext = props.file?.name.split('.').pop()
   return allowedExt.includes(ext ?? '') ? true : false
 })
 

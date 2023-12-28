@@ -41,7 +41,7 @@
           :title="color.name" 
           :key="i" 
           class="w-10 h-10" 
-          :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
+          :style="`background-color:${color.value} ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
           @click="selectTextColors(color.value)"
           />
         </div>
@@ -77,7 +77,7 @@
   import { useSettings } from '@/stores/use-settings'
   // @ts-ignore
   import Left from 'vue-material-design-icons/ChevronLeft.vue'
-  import { readDir } from '@tauri-apps/api/fs';
+  import { readDir } from '@tauri-apps/api/fs'
     // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
   import { getVersion } from '@tauri-apps/api/app'
@@ -152,11 +152,11 @@
       case 'app':
         settings.setAppFont(selectedAppFont.value)
         document.documentElement.style.setProperty('--app_font', selectedAppFont.value)
-        break;
+        break
       case 'editor':
         settings.setEditorFont(selectedEditorFont.value)
         document.documentElement.style.setProperty('--editor_font', selectedEditorFont.value)
-        break;
+        break
     }
   }
 
@@ -194,15 +194,15 @@
           multiple: false,
           title: 'Open Dir',
           directory: true
-        });
+        })
         if(selecteDir){
           switch (type) {
             case 'append':
               settings.setAppendedDir(selecteDir as string)
-              break;
+              break
             case 'base':
               settings.setBaseDir(selecteDir as string)
-              break;
+              break
           }
         }
     } catch(e){
@@ -216,9 +216,9 @@
           multiple: false,
           title: 'Open file',
           directory: false
-        });
+        })
         if(selecteFile){
-          const name = (selecteFile as string).substring(selecteFile.lastIndexOf('/')+1);
+          const name = (selecteFile as string).substring(selecteFile.lastIndexOf('/')+1)
           const val = {
             name: name,
             path: selecteFile as string
