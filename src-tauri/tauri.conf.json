@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "pen-editor",
+    "productName": "pen html",
     "version": "1.0.0"
   },
   "tauri": {
@@ -98,7 +98,7 @@
         "fullscreen": false,
         "height": 800,
         "resizable": true,
-        "title": "pen-editor",
+        "title": "pen html",
         "width": 1000,
         "transparent": true,
         "fileDropEnabled": true
