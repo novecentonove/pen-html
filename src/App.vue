@@ -23,8 +23,7 @@
           </div>
         </div>
 
-        
-        <HomeTabs class="pb-12" >
+        <HomeTabs>
           <div class="absolute h-[70%] w-2 left-0 bottom-0 -ml-2 px-1" @mousedown="startDragging" style="cursor: col-resize" />
         </HomeTabs>
         

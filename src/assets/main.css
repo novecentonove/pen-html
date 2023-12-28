@@ -83,7 +83,7 @@ ol, ul, menu{
 
 ::-webkit-scrollbar {
   width: 7px;
-  height: 0;
+  height:7px;
   background-color: transparent;
 }
 

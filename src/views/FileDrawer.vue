@@ -42,7 +42,7 @@
 
     </div>
 
-    <div class="relative flex items-center mt-auto pl-3 mb-3 justify-between">
+    <div class="relative flex items-center mt-auto mb-3 pt-3 pl-3 justify-between">
       <div class="iconSettings cursor-pointer">
         <!-- see onClickOutside-->
         <IconSettings title="Settings" v-if="showSettings" :size="20"/>
