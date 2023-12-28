@@ -7,7 +7,7 @@
   <div class="main main_color view_color h-screen text_color" @mouseup="endDragging">
     <div class="flex">
       
-      <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0 select-none" :style="`width: ${leftW}px`" />
+      <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0" :style="`width: ${leftW}px`" />
         
       <div id="rightV" class="relative grow view_color select-none">
         <div data-tauri-drag-region class="titlebar text_color">

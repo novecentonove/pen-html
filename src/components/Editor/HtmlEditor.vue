@@ -14,7 +14,7 @@
       <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
 
-  <div v-else @click.prevent.self="doFocus" class="wrapper_editor h-full relative markdown-body editor_font editor_font_size px-12">
+  <div v-else @click.prevent.self="doFocus" class="wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-12">
     <div>
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content 
@@ -206,7 +206,7 @@ onBeforeUnmount( () => {
 </script>
 
 <style>
-.wrapper_editor, .tiptap {
+.tiptap {
   max-height: calc(100vh - 111px);
   white-space: pre;
   word-break: break-word;
