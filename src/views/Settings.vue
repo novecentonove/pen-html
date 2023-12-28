@@ -41,7 +41,7 @@
           :title="color.name" 
           :key="i" 
           class="w-10 h-10" 
-          :style="`background-color:${color.value} ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
+          :style="`background-color:${color.value}; ${selectedTextColors === color.value ? 'border: 2px solid darkred' : ''}`" 
           @click="selectTextColors(color.value)"
           />
         </div>

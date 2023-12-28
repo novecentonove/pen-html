@@ -100,5 +100,9 @@ ol, ul, menu{
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background-color: transparent;
 } 
+
+::-webkit-scrollbar-corner { 
+  background-color: transparent;
+}

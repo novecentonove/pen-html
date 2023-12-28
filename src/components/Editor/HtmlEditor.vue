@@ -1,5 +1,5 @@
 <template>
-  
+
   <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
     <TitleTabAttributes
       :saved="saved"
@@ -14,11 +14,11 @@
       <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
 
-  <div v-else @click.prevent.self="doFocus" class="wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-12">
-    <div>
+  <div v-else @click.prevent.self="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-12">
+    <div class="self-stretch">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
-        <editor-content 
-        :editor="editor" 
+        <editor-content
+        :editor="editor"
         type="color"
         @input="editor.chain().focus().setColor($event.target.value).run()"
         :value="editor.getAttributes('textStyle').color"
@@ -126,11 +126,9 @@ const doFocus = () => {
   }
 }
 
-
-
 watch(() => props.modelValue, (value: {}) => {
   if(editor){
-    const htmlEditor = editor.getHTML() 
+    const htmlEditor = editor.getHTML()
     saved.value = lastFileContent.value == htmlEditor
 
     isSame.value = htmlEditor === value
@@ -169,9 +167,9 @@ onMounted( () => {
         }),
 
         CodeBlockTab,
-        
-        Highlight.configure({ 
-          multicolor: true, 
+
+        Highlight.configure({
+          multicolor: true,
           HTMLAttributes: {
             class: 'highlight_text',
           }
@@ -206,25 +204,22 @@ onBeforeUnmount( () => {
 </script>
 
 <style>
+.wrapper_editor, .tiptap {
+  height: calc(100vh - 111px);
+}
+
 .tiptap {
-  max-height: calc(100vh - 111px);
   white-space: pre;
   word-break: break-word;
-  margin: 0 auto !important;
+  margin: 0 auto;
+  overflow-y: scroll;
+  padding-right: 25px;
 }
 
 @media screen and (min-width: 1001px) {
   .tiptap {
     max-width: 80%;
   }
-}
-
-.tiptap  {
-  height: 100vh;
-  overflow-y: scroll;
-  margin: 30px auto;
-  padding-right: 40px;
-  word-break: break-word;
 }
 
 </style>

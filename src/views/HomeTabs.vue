@@ -1,7 +1,7 @@
 <template>
   <slot />    <!-- resize border  -->
   
-  <div class="pb-12 text-xs overflow-y-scroll">
+  <div class="text-xs overflow-y-scroll">
     <div class="flex">
       <div class="w-2 border-b border_color shadow-lg"></div>
       <ul class="flex w-full list-none">

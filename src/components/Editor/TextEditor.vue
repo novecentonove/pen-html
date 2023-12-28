@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, computed, onMounted, ref, watch } from 'vue'
+import { type Ref, computed, onMounted, ref, watch } from 'vue'
 import { useFiles } from '../../stores/use-files'
 import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
 import { snakeCase} from 'lodash'
@@ -33,7 +33,6 @@ type Props = {
 }
 
 const props = defineProps<Props>()
-
 const files = useFiles()
 const text_area:Ref<HTMLDivElement|null> = ref(null)
 const content = ref(props.modelValue)
@@ -48,9 +47,7 @@ const { history, undo, redo } = useRefHistory(content)
 const doFocus = () => {
   if(text_area.value){
     text_area.value.focus()
-    console.log('dofocus')
   }
-  console.log('focus')
 }
 
 const saveFile = async () => {
@@ -88,9 +85,12 @@ onMounted( () => {
 
 <style>
 .plain_text textarea {
-    border: none;
-    overflow: auto;
-    outline: none;
-    resize: none;
+  padding-right: 20px;
+  line-height: 1.25rem;
+  border: none;
+  overflow: auto;
+  outline: none;
+  resize: none;
 }
+
 </style>
