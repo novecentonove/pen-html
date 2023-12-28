@@ -1,7 +1,6 @@
 <template>
-  <div class="px-12 flex flex-col h-full">
-
-    <div class="settings my-6 font_colors flex flex-col gap-6">
+  <div class="px-12">
+    <div class="settings h-full my-6 font_colors flex flex-col gap-6">
       
       <div class="flex flex-col">
         <label class="mtop">Base Directory</label>
@@ -64,12 +63,11 @@
           <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
         </select>
       </div>
-    </div>
 
-    <div class="fixed bottom-2 right-2">
-      <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
+      <div class="text-right">
+        <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
+      </div>
     </div>
-
   </div>
 </template>
 

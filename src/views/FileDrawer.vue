@@ -1,6 +1,7 @@
 <template>
   <div id="out_click" class="relative w-full pt-[36px] flex flex-col app_font TextFileIcon-sm overflow-x-scroll">
     <slot />    <!-- drag  -->
+
      <div class="flex flex-col h-full pl-3">
       <div v-if="openedFiles.length">
         <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Open editors</p>
@@ -10,18 +11,17 @@
           </li>
         </ul>
       </div>
+
       <div class="pt-2">
         <p :title="baseDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
         <FileList :files="filesAndDir"/>
         <div v-if="baseDir" @click="openDir('base')" class="ml-2 open_dir"></div>
       </div>
-
       <div v-if="enableAppendDir && appendedDir" class="pt-2">
         <p :title="appendedDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
         <FileList :files="filesAndDirAppended"/>
         <div v-if="filesAndDirAppended" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
       </div>
-
       <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
         <p class="pb-[6px] mb-2 border-b border_color mr-4"></p>
         <ul>
@@ -34,13 +34,11 @@
       <div class="relative flex items-center mt-auto mb-3 justify-between">
         <div class="iconSettings cursor-pointer">
           <!-- see onClickOutside-->
-          <IconSettings v-if="showSettings" :size="20"/>
-          <IconSettings v-else @click="toggleSettings()" :size="20"/>
+          <IconSettings title="Settings" v-if="showSettings" :size="20"/>
+          <IconSettings title="Settings" v-else @click="toggleSettings()" :size="20"/>
         </div>
-
-        <ReloadIcon :size="20" @click="loadAllDirs" class="iconSettings cursor-pointer mr-4" />
-        <Toast :trigger="file_is_saved" />
-
+        <ReloadIcon :size="20" title="reload files" @click="loadAllDirs" class="iconSettings cursor-pointer mr-4" />
+        <ToastSaved :trigger="file_is_saved" />
       </div>
     </div>
 
@@ -60,7 +58,7 @@
   import { useFiles } from '@/stores/use-files'
   import { useSettings } from '@/stores/use-settings'
   import FileList from '@/components/FileDrawer/FileList.vue'
-  import Toast from '@/components/FileDrawer/Toast.vue'
+  import ToastSaved from '@/components/FileDrawer/ToastSaved.vue'
   import Settings from '@/views/Settings.vue'
   import FileClick from '../components/FileDrawer/FileClick.vue'
   // @ts-ignore

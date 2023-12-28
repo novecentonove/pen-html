@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center" @click="openFile">
+  <div class="flex items-center w-full" @click="openFile">
     <TextFileIcon :size="12" class="mr-1" />
     <span class="w-full" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
   </div>
