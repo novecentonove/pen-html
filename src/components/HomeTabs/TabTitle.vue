@@ -6,7 +6,7 @@
     <!-- Teleport here -->
     <span :id="snakeCasePath(props.file.path)" class="_tab_title_el flex"></span>
   </div>
-  <CloseIcon @click="closeTab" :size="13" class="ml-1 mr-2 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-in-out duration-300" />
+  <CloseIcon @click="closeTab" :size="13" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-in-out duration-300" />
 </li>
 
 <Teleport to="body">
