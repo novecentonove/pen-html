@@ -4,18 +4,14 @@
   <div v-if="isDropping" class="fixed h-full w-full bg-black/50 z-10"></div>
 </transition>
 
-  <div class="main main_color view_color h-screen text_color overflow-x-scroll" @mouseup="endDragging">
+  <div class="main main_color view_color h-screen text_color" @mouseup="endDragging">
     <div class="flex">
       
-      <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0 select-none" :style="`width: ${leftW}px`" >
-        <div class="absolute h-[70%] w-2 right-0 bottom-0 px-1" @mousedown="startDragging" style="cursor: col-resize" />
-      </FileDrawer>
-
-      <div id="rightV" class="grow view_color">
+      <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0 select-none" :style="`width: ${leftW}px`" />
+        
+      <div id="rightV" class="relative grow view_color select-none">
         <div data-tauri-drag-region class="titlebar text_color">
-          <div class="mx-auto pt-1">
-            <!-- <p class="text-xs pt-0.5 text-white/10">pen</p> -->
-          </div>
+
           <div class="titlebar_button" @click="appWindow.minimize()">
             <WindowMinimize :size="15" />
           </div>
@@ -27,7 +23,10 @@
           </div>
         </div>
 
-        <HomeTabs class="pb-12"/>
+        
+        <HomeTabs class="pb-12" >
+          <div class="absolute h-[70%] w-2 left-0 bottom-0 -ml-2 px-1" @mousedown="startDragging" style="cursor: col-resize" />
+        </HomeTabs>
         
         <Teleport to="body">
           <NotSavedDialog :file-to-close="file" :trigger="trigger" @fileDone="fileDone" />

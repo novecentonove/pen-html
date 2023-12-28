@@ -210,6 +210,7 @@ onBeforeUnmount( () => {
   max-height: calc(100vh - 111px);
   white-space: pre;
   word-break: break-word;
+  margin: 0 auto !important;
 }
 
 @media screen and (min-width: 1001px) {

@@ -148,7 +148,6 @@
     border-radius: .2rem;
   }
 
-
   .slide_right-enter-active {
     transition: all 0.2s;
   }

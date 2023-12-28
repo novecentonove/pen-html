@@ -1,55 +1,56 @@
 <template>
-  <div id="out_click" class="relative w-full pt-[36px] flex flex-col app_font TextFileIcon-sm overflow-x-scroll">
-    <slot />    <!-- drag  -->
+  <div class="flex flex-col">
+    <div id="out_click" class="relative overflow-x-scroll w-full h-full pt-[36px] flex flex-col app_font TextFileIcon-sm">
 
-     <div class="flex flex-col h-full pl-3">
-      <div v-if="openedFiles.length">
-        <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Open editors</p>
-        <ul>
-          <li v-for="file in openedFiles" class="file_li" :key="file.path">
-            <FileClick :file="file" />
-          </li>
-        </ul>
-      </div>
-
-      <div class="pt-2">
-        <p :title="baseDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
-        <FileList :files="filesAndDir"/>
-        <div v-if="baseDir" @click="openDir('base')" class="ml-2 open_dir"></div>
-      </div>
-      <div v-if="enableAppendDir && appendedDir" class="pt-2">
-        <p :title="appendedDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
-        <FileList :files="filesAndDirAppended"/>
-        <div v-if="filesAndDirAppended" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
-      </div>
-      <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
-        <p class="pb-[6px] mb-2 border-b border_color mr-4"></p>
-        <ul>
-          <li class="file_li">
-            <FileClick :file="fileToAppend" />
-          </li>
-        </ul>
-      </div>
-      
-      <div class="relative flex items-center mt-auto mb-3 justify-between">
-        <div class="iconSettings cursor-pointer">
-          <!-- see onClickOutside-->
-          <IconSettings title="Settings" v-if="showSettings" :size="20"/>
-          <IconSettings title="Settings" v-else @click="toggleSettings()" :size="20"/>
+      <div class="flex flex-col h-full pl-3">
+        <div v-if="openedFiles.length">
+          <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Open editors</p>
+          <ul>
+            <li v-for="file in openedFiles" class="file_li" :key="file.path">
+              <FileClick :file="file" />
+            </li>
+          </ul>
         </div>
-        <ReloadIcon :size="20" title="reload files" @click="loadAllDirs" class="iconSettings cursor-pointer mr-4" />
-        <ToastSaved :trigger="file_is_saved" />
+
+        <div class="pt-2">
+          <p :title="baseDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
+          <FileList :files="filesAndDir"/>
+          <div v-if="baseDir" @click="openDir('base')" class="ml-2 open_dir"></div>
+        </div>
+        <div v-if="enableAppendDir && appendedDir" class="pt-2">
+          <p :title="appendedDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
+          <FileList :files="filesAndDirAppended"/>
+          <div v-if="filesAndDirAppended" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
+        </div>
+        <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
+          <p class="pb-[6px] mb-2 border-b border_color mr-4"></p>
+          <ul>
+            <li class="file_li">
+              <FileClick :file="fileToAppend" />
+            </li>
+          </ul>
+        </div>
       </div>
+
+      <transition name="slide">
+        <div ref="settingsRef" v-if="showSettings" class="settings_panel_color overflow-y-scroll fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-t-4 border-l-4 border-neutral-900">
+          <Suspense>
+            <Settings />
+          </Suspense>
+        </div>
+      </transition>
+
     </div>
 
-    <transition name="slide">
-      <div ref="settingsRef" v-if="showSettings" class="settings_panel_color overflow-y-scroll fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-t-4 border-l-4 border-neutral-900">
-        <Suspense>
-          <Settings />
-        </Suspense>
+    <div class="relative flex items-center mt-auto pl-3 mb-3 justify-between">
+      <div class="iconSettings cursor-pointer">
+        <!-- see onClickOutside-->
+        <IconSettings title="Settings" v-if="showSettings" :size="20"/>
+        <IconSettings title="Settings" v-else @click="toggleSettings()" :size="20"/>
       </div>
-    </transition>
-
+      <ReloadIcon :size="20" title="reload files" @click="loadAllDirs" class="iconSettings cursor-pointer mr-4" />
+      <ToastSaved :trigger="file_is_saved" />
+    </div>
   </div>
 </template>
 

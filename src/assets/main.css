@@ -84,10 +84,12 @@ ol, ul, menu{
 ::-webkit-scrollbar {
   width: 7px;
   height: 0;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f1f1f;
+  background-color: white;
+  opacity: 0.05;
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: padding-box;
@@ -99,4 +101,4 @@ ol, ul, menu{
 
 ::-webkit-scrollbar-track {
   background: transparent;
-}
+} 
