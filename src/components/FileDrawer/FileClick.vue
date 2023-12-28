@@ -15,7 +15,6 @@ import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
 
 type Props = { 
   file:  FileType | null,
-  onlySelect?:  boolean,
 }
 
 const props = defineProps<Props>()
@@ -27,16 +26,10 @@ const isOpenable = computed( () => {
 })
 
 const openFile = async () => {
-
   if(isOpenable && props.file){
-    
-    if(!props.onlySelect){
       files.addPage(props.file)
-    }
-
-    files.setSelectedPath(props.file.path)
+    // files.setSelectedPath(props.file.path)
   }
-
 }
 
 const fileName = computed( () => {

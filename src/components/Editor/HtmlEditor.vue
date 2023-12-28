@@ -13,6 +13,7 @@
       <p>An errror occurred</p>
       <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
+
   <div v-else @click.prevent.self="doFocus" class="wrapper_editor h-full relative markdown-body editor_font editor_font_size px-12">
     <div>
       <div v-if="editor" @keyup.ctrl.s="saveFile">
@@ -33,7 +34,6 @@
       <EditorButtons :editor="editor" />
     </bubble-menu>
   </div>
-
 
 </template>
 

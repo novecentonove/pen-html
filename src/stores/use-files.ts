@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 // @ts-ignore
 import { type FileType } from '@/types/FileType'
+import { snakeCase } from 'lodash';
 
 export type RootState = {
   openFiles: Omit<FileType & { isError?: boolean, error?: string}, 'children'>[]
@@ -35,6 +36,11 @@ export const useFiles = defineStore('files', {
 
   actions: {
     setSelectedPath(path: string) {
+
+      if(this.selectedPath == path){
+        this.highlightTabTitle(path)
+      }
+
       this.selectedPath = path
     },
     
@@ -52,6 +58,19 @@ export const useFiles = defineStore('files', {
       if(!exists) {
         this.openFiles.push(file)
         this.setSelectedPath(file.path)
+      }
+    },
+
+    highlightTabTitle(path: string){
+      const selectedTab:HTMLElement | null = document.querySelector(`#${snakeCase(path)}`)
+      if(selectedTab){
+        const texttab:HTMLElement | null = selectedTab.querySelector('._filename_tab')
+        if(texttab){
+          texttab.style.filter = 'brightness(1.3)'
+          setTimeout(() => {
+            texttab.style.filter = 'brightness(1)'
+          }, 200);
+        }
       }
     },
 

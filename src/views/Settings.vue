@@ -64,7 +64,7 @@
         </select>
       </div>
 
-      <div class="text-right">
+      <div class="text-right mt-6">
         <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
       </div>
     </div>

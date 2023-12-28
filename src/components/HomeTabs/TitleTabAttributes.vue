@@ -2,7 +2,7 @@
   <div class="flex justify-center items-center">
     <div class="pl-2" style="font-size: 0.6rem;" :class="saved ? 'opacity-0' : 'opacity-100'">&#9679;</div>
     <div class="_drag_div pr-1 py-2 ml-1" @click="openFile({name: props.name, path: props.path})" @mousedown.prevent="startDragging" @mouseup.prevent="endDragging">
-      <div class="font-semibold" style="font-size: 0.8rem;">{{ fileName }}</div>
+      <div class="_filename_tab font-semibold transition duration-200" style="font-size: 0.8rem;">{{ fileName }}</div>
     </div>
   </div>
 </template>
