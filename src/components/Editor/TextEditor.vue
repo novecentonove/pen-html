@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { Ref, computed, onMounted, ref, watch } from 'vue'
 import { useFiles } from '../../stores/use-files'
-import TitleTabAttributes from './TitleTabAttributes.vue'
+import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
 import { snakeCase} from 'lodash'
 import { writeFile } from '@tauri-apps/api/fs'
 import { useRefHistory } from '@vueuse/core'
