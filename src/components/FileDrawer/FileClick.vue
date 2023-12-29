@@ -2,7 +2,7 @@
   <div class="file_click flex items-center w-full">
     <div class="flex items-center mr-auto w-full" @click="openFile" >
       <TextFileIcon :size="12" class="mr-1" />
-      <span class="file_li_inner" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
+      <span class="file_li_inner cut_text" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
     </div>
     <CloseIcon :size="14" class="icon_close hover:text-red-700" v-if="props.closable" @click="files.closeTab(props?.file?.path || '')" />
   </div>
@@ -70,5 +70,9 @@ const fileName = computed( () => {
 .file_click:hover .icon_close{
   opacity: 0.5;
 }
-
+.cut_text { 
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  white-space: nowrap;
+}
 </style>

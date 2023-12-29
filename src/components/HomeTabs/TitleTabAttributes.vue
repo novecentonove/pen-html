@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center">
+  <div :title="props.path" class="flex justify-center items-center">
     <div class="pl-[6px]" style="font-size: 0.6rem" :class="props.unsaved ? 'opacity-100' : 'opacity-0'">&#9679</div>
     <div class="_drag_div py-2 pr-1 pl-[6px]" @click="openFile({name: props.name, path: props.path})" @mousedown.prevent="startDragging" @mouseup.prevent="endDragging">
       <div class="_filename_tab font-semibold transition duration-200" style="font-size: 0.8rem">{{ fileName }}</div>

@@ -11,7 +11,9 @@
         
       <div id="rightV" class="relative grow view_color select-none">
         <div data-tauri-drag-region class="titlebar text_color">
-
+    <!-- <div class="ml-3 mr-auto pt-1 text-xs">
+      <p>path</p>
+    </div> -->
           <div class="titlebar_button" @click="appWindow.minimize()">
             <WindowMinimize :size="15" />
           </div>

@@ -14,7 +14,7 @@
       <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
 
-  <div v-else @click.prevent.self="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-6">
+  <div v-else @click.prevent.self="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-10">
     <div class="self-stretch">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content
