@@ -14,7 +14,7 @@
       <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
 
-  <div v-else @click.prevent.self="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-12">
+  <div v-else @click.prevent.self="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-6">
     <div class="self-stretch">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content
@@ -210,12 +210,7 @@ onBeforeUnmount( () => {
   margin: 0 auto;
   overflow-y: scroll;
   padding-right: 25px;
-}
-
-@media screen and (min-width: 1001px) {
-  .tiptap {
-    max-width: 80%;
-  }
+  max-width: 700px;
 }
 
 </style>
