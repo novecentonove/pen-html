@@ -38,14 +38,28 @@ const openFile = async () => {
 }
 
 const fileName = computed( () => {
-    const name = props?.file?.name
-    if(name){
-      const ext = name.split('.').pop()
-      if(ext === 'html') return name.substring(0, name.lastIndexOf('.')) || name
-      return name
+  let name = props?.file?.name
+  if(name){
+
+    // remove html ext
+    const ext = name.split('.').pop()
+    const nameOnly = name.substring(0, name.lastIndexOf('.')) || name
+    let parsedName = nameOnly
+
+    // short filemane if too long
+    if(parsedName.length > 25){
+      const start = parsedName.substring(0, 6)
+      const end = parsedName.slice(-6)
+      parsedName = `${start}...${end}`
     }
-    return ''
-  })
+
+    if(ext === 'html'){
+      return parsedName
+    }
+    return `${parsedName}.${ext}`
+  }
+  return ''
+})
 
 </script>
 

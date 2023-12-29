@@ -52,23 +52,7 @@ import TextStyle from '@tiptap/extension-text-style'
 import { Highlight } from '@tiptap/extension-highlight'
 import { Extension } from '@tiptap/core'
 import Underline from '@tiptap/extension-underline'
-
-
 // import TaskList from '@tiptap/extension-task-list'
-
-const CodeBlockTab = Extension.create({
-  name: 'CodeBlockTab',
-  addKeyboardShortcuts() {
-    return {
-      Tab: () => {
-        if (editor?.isActive("codeBlock")) {
-          return editor.commands.insertContent("\t")
-        }
-        return true
-      }
-    }
-  }
-})
 
 type Props = {
   modelValue: string
@@ -166,7 +150,19 @@ onMounted( () => {
           types: ['textStyle'],
         }),
 
-        CodeBlockTab,
+        Extension.create({
+          name: 'CodeBlockTab',
+          // @ts-ignore
+          addKeyboardShortcuts() {
+            return {
+              Tab: () => {
+                if (editor?.isActive("codeBlock")) {
+                  return editor.commands.insertContent("\t")
+                }
+              }
+            }
+          }
+        }),
 
         Highlight.configure({
           multicolor: true,
