@@ -7,7 +7,7 @@
           <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Open editors</p>
           <ul>
             <li v-for="file in openedFiles" class="file_li" :key="file.path">
-              <FileClick :file="file" />
+              <FileClick :file="file" :closable="true"/>
             </li>
           </ul>
         </div>
@@ -202,13 +202,17 @@
 .file_li {
   display: flex;
   align-items: center;
-  padding: 0.25rem 0.5rem;
+  padding-left: 0.5rem;
   margin-right: 0.8rem;
   /* border-radius: 0.35rem; */
   cursor: pointer;
 }
 .file_li:hover{
   background-color: var(--view_color);
+}
+
+.file_li_inner{
+  padding: 0.25rem 0.15rem;
 }
 
 .slide-enter-active {

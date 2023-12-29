@@ -59,8 +59,6 @@ export const useFiles = defineStore('files', {
         this.openFiles.push(file)
         this.setSelectedPath(file.path)
       }
-
-      console.log(this.getSelectedPath)
     },
 
     highlightTabTitle(path: string){
@@ -77,9 +75,10 @@ export const useFiles = defineStore('files', {
     },
 
     closeTab(path: string){
+
       // remove from unSavedFile
       this.removeFromNotSavedFile(path)
-      
+
       // remove from open files
       this.openFiles = this.openFiles.filter( tab => tab.path !== path)
 

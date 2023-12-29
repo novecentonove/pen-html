@@ -16,7 +16,7 @@
 <script setup lang="ts">
   import { computed, ref, watch } from 'vue'
   import { useFiles } from '@/stores/use-files'
-   import { type FileType } from '@/types/FileType'
+  import { type FileType } from '@/types/FileType'
 
   const emit = defineEmits(['fileDone'])
 

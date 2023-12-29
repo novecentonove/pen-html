@@ -1,7 +1,10 @@
 <template>
-  <div class="flex items-center w-full" @click="openFile">
-    <TextFileIcon :size="12" class="mr-1" />
-    <span class="w-full" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
+  <div class="file_click flex items-center w-full">
+    <div class="flex items-center mr-auto w-full" @click="openFile" >
+      <TextFileIcon :size="12" class="mr-1" />
+      <span class="file_li_inner" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
+    </div>
+    <CloseIcon :size="14" class="icon_close hover:text-red-700" v-if="props.closable" @click="files.closeTab(props?.file?.path || '')" />
   </div>
 </template>
 
@@ -12,9 +15,12 @@ import { computed } from 'vue'
 import { allowedExt } from '@/types/AllowedExt'
 // @ts-ignore
 import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
+// @ts-ignore
+import CloseIcon from 'vue-material-design-icons/Close.vue'
 
 type Props = { 
   file:  FileType | null,
+  closable?: boolean
 }
 
 const props = defineProps<Props>()
@@ -42,3 +48,13 @@ const fileName = computed( () => {
   })
 
 </script>
+
+<style>
+.icon_close{
+  opacity: 0;
+}
+.file_click:hover .icon_close{
+  opacity: 0.5;
+}
+
+</style>
