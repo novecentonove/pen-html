@@ -44,7 +44,7 @@ export const useFiles = defineStore('files', {
       this.selectedPath = path
     },
     
-    addPage(file: Omit<FileType, 'children'>) {
+    addAndSelectPage(file: Omit<FileType, 'children'>) {
       let exists = false
       this.openFiles.forEach(tab => {
         if(tab.path === file.path){
@@ -59,6 +59,8 @@ export const useFiles = defineStore('files', {
         this.openFiles.push(file)
         this.setSelectedPath(file.path)
       }
+
+      console.log(this.getSelectedPath)
     },
 
     highlightTabTitle(path: string){

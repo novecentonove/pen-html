@@ -102,7 +102,7 @@
   })
 
   const addPagesFromDrop = throttle((file: FileType) => {
-    files.addPage(file)
+    files.addAndSelectPage(file)
   })
 
 

@@ -2,7 +2,7 @@
 
   <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
     <TitleTabAttributes
-      :saved="saved"
+      :unsaved="unsaved"
       :name="name"
       :path="path"
       :snake-case-path="snakeCasePath"
@@ -82,7 +82,7 @@ const files = useFiles()
 const emit = defineEmits(['update:modelValue'])
 const isSame = <Ref>ref(null)
 const editorIsReady = ref(false)
-const saved = ref(true)
+const unsaved = ref(false)
 const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.getOpenFile(props.path)
 let lastFileContent = ref('<p></p>')
@@ -111,7 +111,7 @@ const saveFile = async () => {
     files.triggerFileIsSaved()
     if(editor){
       lastFileContent.value = editor.getHTML()
-      saved.value = true
+      unsaved.value = false
     }
   } catch (e) {
     console.log(e)
@@ -129,7 +129,7 @@ const doFocus = () => {
 watch(() => props.modelValue, (value: {}) => {
   if(editor){
     const htmlEditor = editor.getHTML()
-    saved.value = lastFileContent.value == htmlEditor
+    unsaved.value = lastFileContent.value != htmlEditor
 
     isSame.value = htmlEditor === value
 
@@ -149,8 +149,8 @@ watch(editorIsReady, (value: boolean) => {
     }, 2000)
 })
 
-watch(saved, (bool) => {
-    files.toggleUnsavedFiles({path: props.path, savedFile: bool})
+watch(unsaved, (bool) => {
+    files.toggleUnsavedFiles({path: props.path, savedFile: !bool})
 })
 
 watch(() => props.onSelectedPath, () => doFocus())

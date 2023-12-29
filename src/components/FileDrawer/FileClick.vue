@@ -27,8 +27,7 @@ const isOpenable = computed( () => {
 
 const openFile = async () => {
   if(isOpenable && props.file){
-      files.addPage(props.file)
-    // files.setSelectedPath(props.file.path)
+      files.addAndSelectPage(props.file)
   }
 }
 

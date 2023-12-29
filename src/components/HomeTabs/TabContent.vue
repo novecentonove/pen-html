@@ -1,8 +1,9 @@
 <template>
+  
   <div v-show="path == selectedPath">
     <KeepAlive>
       <component :is="editorComponent[current]"
-        v-if="content" 
+        v-if="componentIsReady"
         v-model="content" 
         :name="name" 
         :path="path" 
@@ -28,6 +29,7 @@
   const editorComponent:any = {HtmlEditor, TextEditor}
   const onSelectedPath = ref(0)
   const current = ref<Current>('HtmlEditor')
+  const componentIsReady = ref(false)
 
   watch(selectedPath, () => {
     if(path.value == selectedPath.value){
@@ -45,13 +47,14 @@
           break
         default:
           current.value = 'TextEditor'
-          defaultIfEmpty = ' '
+          defaultIfEmpty = ''
           break
       }
       
-      content.value = await readTextFile(props.path as string) || defaultIfEmpty
+      content.value = await readTextFile(props.path as string) ?? defaultIfEmpty
+      componentIsReady.value = true
     } catch(e: any){
-      content.value = ' '
+      content.value = ''
       files.setOpenFileError(path.value, true, e)
       console.log(e)
     }

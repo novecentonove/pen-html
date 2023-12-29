@@ -2,7 +2,7 @@
 
 <Teleport :to="`#${snakeCasePath}`">
     <TitleTabAttributes
-      :saved="saved"
+      :unsaved="unsaved"
       :name="name"
       :path="path"
       :snake-case-path="snakeCasePath"
@@ -36,7 +36,7 @@ const props = defineProps<Props>()
 const files = useFiles()
 const text_area:Ref<HTMLDivElement|null> = ref(null)
 const content = ref(props.modelValue)
-const saved = ref(true)
+const unsaved = ref(false)
 const lastFileContent = ref('')
 const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.getOpenFile(props.path)
@@ -61,24 +61,25 @@ const saveFile = async () => {
     )
     files.triggerFileIsSaved()
     lastFileContent.value = content.value
-    saved.value = true
+    unsaved.value = false
   } catch (e) {
     console.log(e)
   }
 }
 
 watch(content, (value: string) => {
-  saved.value = value === lastFileContent.value
+  unsaved.value = value != lastFileContent.value
 }, { immediate: false })
 
-watch(saved, (bool) => {
-    files.toggleUnsavedFiles({path: props.path, savedFile: bool})
+watch(unsaved, (bool) => {
+    files.toggleUnsavedFiles({path: props.path, savedFile: !bool})
 })
 
 watch(() => props.onSelectedPath, () => doFocus())
 
 onMounted( () => {
   doFocus()
+  console.log('ui')
 })
 
 </script>

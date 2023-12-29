@@ -43,12 +43,12 @@
     </div>
 
     <div class="relative flex items-center mt-auto mb-3 pt-3 pl-3 justify-between">
-      <div class="iconSettings cursor-pointer">
+      <div class="opacity-20 cursor-pointer">
         <!-- see onClickOutside-->
         <IconSettings title="Settings" v-if="showSettings" :size="20"/>
         <IconSettings title="Settings" v-else @click="toggleSettings()" :size="20"/>
       </div>
-      <ReloadIcon :size="20" title="reload files" @click="loadAllDirs" class="iconSettings cursor-pointer mr-4" />
+      <ReloadIcon :size="18" title="reload files" @click="loadAllDirs" class="opacity-30 cursor-pointer mr-4" />
       <ToastSaved :trigger="file_is_saved" />
     </div>
   </div>
@@ -209,10 +209,6 @@
 }
 .file_li:hover{
   background-color: var(--view_color);
-}
-
-.iconSettings{
-    opacity: 0.15;
 }
 
 .slide-enter-active {

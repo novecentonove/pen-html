@@ -20,7 +20,7 @@
     // @ts-ignore
   import CloseIcon from 'vue-material-design-icons/Close.vue'
   import NotSavedDialog from "./NotSavedDialog.vue"
-   import { type FileType } from '@/types/FileType'
+  import { type FileType } from '@/types/FileType'
   import { useFiles } from '@/stores/use-files'
   // @ts-ignore
   import { snakeCase } from 'lodash'
