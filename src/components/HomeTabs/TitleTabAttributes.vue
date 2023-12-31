@@ -8,11 +8,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 // @ts-ignore
 import DragIcon from 'vue-material-design-icons/DragVertical.vue'
 import { useFiles } from '../../stores/use-files'
 import { type FileType } from '@/types/FileType'
+import { parseFileName } from '@/composable/parseFileName'
 
 type Props = {
   unsaved: boolean,
@@ -28,30 +29,7 @@ let file_drawer: HTMLElement | null = null
 let _tab_title_els: NodeList | null = null
 
 const files = useFiles()
-
-const fileName = computed( () => {
-  let name = props.name
-  if(name){
-
-    // remove html ext
-    const ext = name.split('.').pop()
-    const nameOnly = name.substring(0, name.lastIndexOf('.')) || name
-    let parsedName = nameOnly
-
-    // short filemane if too long
-    if(parsedName.length > 25){
-      const start = parsedName.substring(0, 6)
-      const end = parsedName.slice(-6)
-      parsedName = `${start}...${end}`
-    }
-
-    if(ext === 'html'){
-      return parsedName
-    }
-    return `${parsedName}.${ext}`
-  }
-  return ''
-})
+const fileName = parseFileName(props?.name ?? '')
 
 const openFile = async (file: FileType | null) => {
   if(file){
