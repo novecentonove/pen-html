@@ -196,7 +196,6 @@ onBeforeUnmount( () => {
     editor.destroy()
   }
 })
-
 </script>
 
 <style>

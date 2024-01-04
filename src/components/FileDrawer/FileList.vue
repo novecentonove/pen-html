@@ -18,5 +18,4 @@ const props = defineProps<{
 }>()
 
 const closeMenutrigger = ref(0)
-
 </script>

@@ -116,5 +116,4 @@ onMounted( () => {
   editor_section = document.querySelector('#editor_section')
   file_drawer = document.querySelector('#fileD')
 })
-
 </script>

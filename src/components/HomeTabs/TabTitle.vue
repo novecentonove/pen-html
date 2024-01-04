@@ -42,7 +42,6 @@
   const snakeCasePath = (path: string) => {
     return snakeCase(path)
   }
-
 </script>
 
 <style>

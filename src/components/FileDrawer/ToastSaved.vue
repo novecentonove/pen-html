@@ -20,8 +20,7 @@
     setTimeout(() => {
       show.value = false
     }, 2000)
-  })
-</script>
+  })</script>
 
 <style>
   .saved_file-enter-active {

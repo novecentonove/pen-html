@@ -27,7 +27,6 @@
 
   const files = useFiles()
   const openFiles = computed(() => files.getOpenFiles)
-
 </script>
 
 <style>

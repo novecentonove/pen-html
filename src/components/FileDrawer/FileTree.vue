@@ -77,7 +77,6 @@
   watch(() => props.closeMenu, () => {
     closeMenu()
   })
-
 </script>
 
 <style>

@@ -77,5 +77,4 @@
       break
     }
 
-  }
-</script>
+  }</script>

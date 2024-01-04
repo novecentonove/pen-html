@@ -1,5 +1,4 @@
 <template>
-  
   <div v-show="path == selectedPath">
     <KeepAlive>
       <component :is="editorComponent[current]"
@@ -58,6 +57,4 @@
       files.setOpenFileError(path.value, true, e)
       console.log(e)
     }
-  })
-
-</script>
+  })</script>

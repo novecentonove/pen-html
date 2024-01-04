@@ -80,7 +80,6 @@ watch(() => props.onSelectedPath, () => doFocus())
 onMounted( () => {
   doFocus()
 })
-
 </script>
 
 <style>

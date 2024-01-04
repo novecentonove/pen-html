@@ -11,9 +11,9 @@
         
       <div id="rightV" class="relative grow view_color select-none">
         <div data-tauri-drag-region class="titlebar text_color">
-    <!-- <div class="ml-3 mr-auto pt-1 text-xs">
-      <p>path</p>
-    </div> -->
+          <!-- <div class="ml-3 mr-auto pt-1 text-xs">
+            <p>path</p>
+          </div> -->
           <div class="titlebar_button" @click="appWindow.minimize()">
             <WindowMinimize :size="15" />
           </div>
@@ -26,7 +26,7 @@
         </div>
 
         <HomeTabs>
-          <div class="absolute h-[70%] w-2 left-0 bottom-0 -ml-2 px-1" @mousedown="startDragging" style="cursor: col-resize" />
+          <div class="absolute h-full w-2 left-0 bottom-0 -ml-2 px-1" @mousedown="startDragging" style="cursor: col-resize" />
         </HomeTabs>
         
         <Teleport to="body">
@@ -148,8 +148,7 @@
     settings.applySettings()
     settings.applyTheme()
   })
- 
-</script>
+ </script>
 
 <style>
 .titlebar {
