@@ -1,12 +1,12 @@
 <template>
 <li
-  :class="{ 'border-b shadow-lg': selectedPath != props.file.path, 'border-t border-r border-l' :selectedPath == props.file.path}" 
+  :class="{ 'border-b shadow-lg inactive': selectedPath != props.file.path, 'border-t border-r border-l' :selectedPath == props.file.path}" 
   class="flex shrink-0 justify-center items-center align-middle rounded-t border_color cursor-pointer select-none">
   <div class="flex justify-center items-center app_font">
     <!-- Teleport here -->
     <span :id="snakeCasePath(props.file.path)" class="_tab_title_el flex"></span>
   </div>
-  <CloseIcon @click="closeTab" :size="13" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-in-out duration-300" />
+  <CloseIcon @click="closeTab" :size="13"  :class="{ 'inactive': selectedPath != props.file.path}" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
 </li>
 
 <Teleport to="body">
@@ -45,15 +45,5 @@
 </script>
 
 <style>
-  .dialog {
-    min-width: 425px;
-    max-width: 600px;
-    border: 1px solid #202020;
-  }
-  .dialog_b button{
-    width: 100%;
-      padding: 8px 10px;
-      margin: 0 8px;
-      border-radius: 5px;
-  }
+  .inactive { color:  color-mix(in srgb, currentColor 40%, transparent); }
 </style>

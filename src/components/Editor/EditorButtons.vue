@@ -126,7 +126,8 @@
   const colors: string[] = ['#8c7c27', '#465694', '#988bd5']
 
   const showButtons = ref(false)
-  const showExtraButtons = debounce( (bool: boolean) => showButtons.value = bool, 200)</script>
+  const showExtraButtons = debounce( (bool: boolean) => showButtons.value = bool, 200)
+  </script>
 
 <style scoped>
   button {

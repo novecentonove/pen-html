@@ -77,4 +77,19 @@
       break
     }
 
-  }</script>
+  }
+  </script>
+  
+  <style>
+  .dialog {
+    min-width: 425px;
+    max-width: 600px;
+    border: 1px solid #202020;
+  }
+  .dialog_b button{
+    width: 100%;
+      padding: 8px 10px;
+      margin: 0 8px;
+      border-radius: 5px;
+  }
+  </style>

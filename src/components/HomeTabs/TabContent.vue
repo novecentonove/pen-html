@@ -57,4 +57,5 @@
       files.setOpenFileError(path.value, true, e)
       console.log(e)
     }
-  })</script>
+  })
+  </script>
