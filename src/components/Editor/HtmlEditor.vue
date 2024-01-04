@@ -15,7 +15,7 @@
   </div>
 
   <div v-else @click.prevent.self="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-10">
-    <div class="self-stretch">
+    <div class="self-stretch overflow-y-scroll">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content
         :editor="editor"
@@ -208,10 +208,16 @@ onBeforeUnmount( () => {
   white-space: pre;
   word-break: break-word;
   margin: 0 auto;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   padding-right: 25px;
   max-width: 700px;
 }
+
+/* @media screen and (min-width: 950px) {
+  .tiptap {
+    padding-right: 20%;
+  }
+} */
 
 </style>
 

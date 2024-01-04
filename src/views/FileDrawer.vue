@@ -23,7 +23,7 @@
           <div v-if="filesAndDirAppended" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
         </div>
         <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
-          <p class="pb-[6px] mb-2 border-b border_color mr-4"></p>
+          <p :title="fileToAppend.path" class="pb-[6px] mb-2 border-b border_color mr-4"></p>
           <ul>
             <li class="file_li">
               <FileClick :file="fileToAppend" />
@@ -48,7 +48,9 @@
         <IconSettings title="Settings" v-if="showSettings" :size="20"/>
         <IconSettings title="Settings" v-else @click="toggleSettings()" :size="20"/>
       </div>
-      <ReloadIcon :size="18" title="reload files" @click="loadAllDirs" class="opacity-30 cursor-pointer mr-4" />
+      <div title="Reload all dirs" class="opacity-30 cursor-pointer mr-2" >
+        <ReloadIcon :size="18" @click="loadAllDirs" />
+      </div>
       <ToastSaved :trigger="file_is_saved" />
     </div>
   </div>
