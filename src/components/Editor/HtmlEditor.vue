@@ -83,7 +83,6 @@ const getText = () => {
 }
 
 const saveFile = async () => {
-
   const content = getText()
   try {
     await writeFile(
@@ -92,7 +91,9 @@ const saveFile = async () => {
         path: props.path,
       }
     )
+
     files.triggerFileIsSaved()
+
     if(editor){
       lastFileContent.value = editor.getHTML()
       unsaved.value = false
@@ -211,13 +212,6 @@ onBeforeUnmount( () => {
   padding-right: 25px;
   max-width: 700px;
 }
-
-/* @media screen and (min-width: 950px) {
-  .tiptap {
-    padding-right: 20%;
-  }
-} */
-
 </style>
 
 
