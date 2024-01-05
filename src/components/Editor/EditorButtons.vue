@@ -31,7 +31,7 @@
     <div class="inline-flex" @mouseover="showExtraButtons(true)" @mouseleave="showExtraButtons(false)">
       <IconRight width="1.6em" class="p-0" />
       <transition name="slide_right">
-        <div v-if="showButtons" class="flex">
+        <div v-if="showButtons" class="flex [&>button]:ml-0.5">
           <button title="ol" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
             <IconOl :width="size" />
           </button>
@@ -124,7 +124,7 @@ button {
   margin-right: 3px;
 }
 button:hover {
-  background-color: #524e4e;
+  background-color: #303030;
 }
 .buttons_bar{
   /* min-width: 405px; */
@@ -132,7 +132,7 @@ button:hover {
   border: 1px solid #3b3b3b;
 }
 .is-active{
-  background-color: #524e4e;
+  background-color: #292929;
   border-radius: .2rem;
 }
 
