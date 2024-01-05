@@ -23,13 +23,13 @@
       <IconUl :width="size" />
     </button>
     <button title="Clear style" @click="editor.chain().focus().clearNodes().run()">
-      <IconClearAll :width="size" />
+      <SquareOutline :width="size" />
     </button>
     <button title="Clear font color" @click="editor.chain().focus().unsetColor().run()">
-      <div class="w-3 h-3 border border-neutral-400"></div>
+      <IconClearAll :width="size" />
     </button>
     <div class="inline-flex" @mouseover="showExtraButtons(true)" @mouseleave="showExtraButtons(false)">
-      <IconRight width="2em" class="p-1" />
+      <IconRight width="1.6em" class="p-0" />
       <transition name="slide_right">
         <div v-if="showButtons" class="flex">
           <button title="ol" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
@@ -85,84 +85,72 @@
 </template>
 
 <script setup lang="ts">
-  // @ts-ignore
-  import IconBold from '@/icons/FormatBold.vue'
-  // @ts-ignore
-  import IconItalic from '@/icons/FormatItalic.vue'
-  // @ts-ignore
-  import IconStrike from '@/icons/FormatStrike.vue'
-  // @ts-ignore
-  import IconCodeBlock from '@/icons/CodeBraces.vue'
-  // @ts-ignore
-  import IconCode from '@/icons/CodeBrackets.vue'
-  // @ts-ignore
-  import IconOl from '@/icons/FormatListNumbered.vue'
-  // @ts-ignore
-  import IconUl from '@/icons/FormatListBulleted.vue'
-  // @ts-ignore
-  import IconQuote from '@/icons/FormatQuoteOpen.vue'
-  // @ts-ignore
-  // import IconClear from '@/icons/ClipboardOutline.vue'
-    // @ts-ignore
-  import IconClearAll from '@/icons/ClipboardMinusOutline.vue'
-  // import Drag from '@/icons/Drag.vue'
-  // @ts-ignore
-  import IconRight from '@/icons/ChevronRight.vue'
-    // @ts-ignore
-  import FormatUnderline from '@/icons/FormatUnderline.vue'
-  import { Editor, } from '@tiptap/vue-3'
-  import { ref } from 'vue'
-  import { debounce } from 'lodash'
-  
-  type EditorVar = Editor | null
+import IconBold from '@/icons/FormatBold.vue'
+import IconItalic from '@/icons/FormatItalic.vue'
+import IconStrike from '@/icons/FormatStrike.vue'
+import IconCodeBlock from '@/icons/CodeBraces.vue'
+import IconCode from '@/icons/CodeBrackets.vue'
+import IconOl from '@/icons/FormatListNumbered.vue'
+import IconUl from '@/icons/FormatListBulleted.vue'
+import SquareOutline from '@/icons/SquareOutline.vue'
+import IconClearAll from '@/icons/ClipboardMinusOutline.vue'
+import IconRight from '@/icons/ChevronRight.vue'
+import FormatUnderline from '@/icons/FormatUnderline.vue'
+// import Drag from '@/icons/Drag.vue'
+// import IconQuote from '@/icons/FormatQuoteOpen.vue'
+import { Editor, } from '@tiptap/vue-3'
+import { ref } from 'vue'
+import { debounce } from 'lodash'
 
-  type Props = { 
-    editor:  EditorVar | null
-  }
+type EditorVar = Editor | null
 
-  const props = defineProps<Props>()
-  const editor = props.editor
-  const size = '1.3em'
-  const colors: string[] = ['#8c7c27', '#465694', '#988bd5']
+type Props = { 
+  editor:  EditorVar | null
+}
 
-  const showButtons = ref(false)
-  const showExtraButtons = debounce( (bool: boolean) => showButtons.value = bool, 200)
-  </script>
+const props = defineProps<Props>()
+const editor = props.editor
+const size = '1.3em'
+const colors: string[] = ['#8c7c27', '#465694', '#988bd5']
+
+const showButtons = ref(false)
+const showExtraButtons = debounce( (bool: boolean) => showButtons.value = bool, 200)
+</script>
 
 <style scoped>
-  button {
-    padding: 0.2rem;
-    border-radius: 0.2rem;
-    margin-right: 3px;
-  }
-  button:hover {
-    background-color: #524e4e;
-  }
-  .buttons_bar{
-    /* min-width: 405px; */
-    background-color: #131313;
-    border: 1px solid #3b3b3b;
-  }
-  .is-active{
-    background-color: #524e4e;
-    border-radius: .2rem;
-  }
+button {
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+  margin-right: 3px;
+}
+button:hover {
+  background-color: #524e4e;
+}
+.buttons_bar{
+  /* min-width: 405px; */
+  background-color: #131313;
+  border: 1px solid #3b3b3b;
+}
+.is-active{
+  background-color: #524e4e;
+  border-radius: .2rem;
+}
 
-  .slide_right-enter-active {
-    transition: all 0.2s;
-  }
+.slide_right-enter-active {
+  transition: all 0.2s;
+}
 
-  .slide_right-leave-active {
-    transition: all 0.2s;
-  }
+.slide_right-leave-active {
+  transition: all 0.2s;
+}
 
-  .slide_right-enter-from,
-  .slide_right-leave-to {
-    transform: translatex(-100%);
-    opacity: 0;
-  }
-  
-  .buttons_bar {
-    transition: width .3s; /* Applica la transizione alla larghezza con una durata di 1 secondo */
-  }
+.slide_right-enter-from,
+.slide_right-leave-to {
+  transform: translatex(-100%);
+  opacity: 0;
+}
+
+.buttons_bar {
+  transition: width .3s; /* Applica la transizione alla larghezza con una durata di 1 secondo */
+}
 </style>
