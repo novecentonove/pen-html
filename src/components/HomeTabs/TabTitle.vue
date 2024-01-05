@@ -6,7 +6,7 @@
     <!-- Teleport here -->
     <span :id="snakeCasePath(props.file.path)" class="_tab_title_el flex"></span>
   </div>
-  <CloseIcon @click="closeTab" :size="13"  :class="{ 'inactive': selectedPath != props.file.path}" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
+  <CloseIcon @click="closeTab" :class="{ 'inactive': selectedPath != props.file.path}" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
 </li>
 
 <Teleport to="body">
@@ -17,8 +17,7 @@
 
 <script setup lang="ts">
   import { computed, ref } from 'vue'
-    // @ts-ignore
-  import CloseIcon from 'vue-material-design-icons/Close.vue'
+  import CloseIcon from '@/icons/Close.vue'
   import NotSavedDialog from "./NotSavedDialog.vue"
   import { type FileType } from '@/types/FileType'
   import { useFiles } from '@/stores/use-files'

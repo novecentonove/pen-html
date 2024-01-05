@@ -45,11 +45,11 @@
     <div class="relative flex items-center mt-auto mb-3 pt-3 pl-3 justify-between">
       <div class="opacity-20 cursor-pointer">
         <!-- see onClickOutside-->
-        <IconSettings title="Settings" v-if="showSettings" :size="20"/>
-        <IconSettings title="Settings" v-else @click="toggleSettings()" :size="20"/>
+        <IconSettings title="Settings" v-if="showSettings" width="1.3em" />
+        <IconSettings title="Settings" v-else @click="toggleSettings()" width="1.3em" />
       </div>
-      <div title="Reload all dirs" class="opacity-30 cursor-pointer mr-2" >
-        <ReloadIcon :size="18" @click="loadAllDirs" />
+      <div title="Reload all dirs" class="opacity-30 cursor-pointer mr-3" >
+        <ReloadIcon width="1.3em" @click="loadAllDirs" />
       </div>
       <ToastSaved :trigger="file_is_saved" />
     </div>
@@ -65,9 +65,9 @@
   import Settings from '@/views/Settings.vue'
   import FileClick from '../components/FileDrawer/FileClick.vue'
   // @ts-ignore
-  import ReloadIcon from 'vue-material-design-icons/Reload.vue'
+  import ReloadIcon from '@/icons/Reload.vue'
   // @ts-ignore
-  import IconSettings from 'vue-material-design-icons/Cog.vue'
+  import IconSettings from '@/icons/Settings.vue'
   import { readDir } from '@tauri-apps/api/fs'
   import { open } from '@tauri-apps/api/shell'
   import { type FileType } from '@/types/FileType'

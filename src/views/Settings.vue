@@ -75,8 +75,6 @@
   import { open } from '@tauri-apps/api/dialog'
   import { computed, toRef} from 'vue'
   import { useSettings } from '@/stores/use-settings'
-  // @ts-ignore
-  import Left from 'vue-material-design-icons/ChevronLeft.vue'
   import { readDir } from '@tauri-apps/api/fs'
     // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'

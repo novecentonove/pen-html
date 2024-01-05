@@ -1,10 +1,10 @@
 <template>
   <div class="file_click flex items-center w-full">
     <div class="flex items-center mr-auto w-full" @click="openFile" >
-      <TextFileIcon :size="12" class="mr-1" />
+      <LongTextIcon class="mr-1 w-3" />
       <span class="file_li_inner cut_text" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
     </div>
-    <CloseIcon :size="14" class="icon_close pr-2 hover:text-red-700" v-if="props.closable" @click="files.closeTab(props?.file?.path || '')" />
+    <CloseIcon width="1.5em" class="icon_close pr-2 hover:text-red-700" v-if="props.closable" @click="files.closeTab(props?.file?.path || '')" />
   </div>
 </template>
 
@@ -14,9 +14,9 @@ import { useFiles } from '@/stores/use-files'
 import { computed } from 'vue'
 import { allowedExt } from '@/types/AllowedExt'
 // @ts-ignore
-import TextFileIcon from 'vue-material-design-icons/TextLong.vue'
+import LongTextIcon from '@/icons/LongText.vue'
 // @ts-ignore
-import CloseIcon from 'vue-material-design-icons/Close.vue'
+import CloseIcon from '@/icons/Close.vue'
 import { parseFileName } from '@/composable/parseFileName'
 
 type Props = { 

@@ -15,13 +15,13 @@
             <p>path</p>
           </div> -->
           <div class="titlebar_button" @click="appWindow.minimize()">
-            <WindowMinimize :size="15" />
+            <WindowMinimize width="1em" />
           </div>
           <div class="titlebar_button" @click="appWindow.toggleMaximize()">
-            <WindowMaximize :size="15" />
+            <WindowMaximize width="1em" />
           </div>
           <div class="titlebar_button" @click="handleClose">
-            <WindowClose :size="15" />
+            <WindowClose width="1em" />
           </div>
         </div>
 
@@ -44,19 +44,13 @@
   import { onMounted, ref } from 'vue'
   import { useSettings } from '@/stores/use-settings'
   import { useFiles } from '@/stores/use-files'
- // @ts-ignore
-  import WindowMinimize from 'vue-material-design-icons/WindowMinimize.vue'
-  // @ts-ignore
-  import WindowMaximize from 'vue-material-design-icons/WindowMaximize.vue'
-  // @ts-ignore
-  import WindowClose from 'vue-material-design-icons/WindowClose.vue'
+  import WindowMinimize from '@/icons/WindowMinimize.vue'
+  import WindowMaximize from '@/icons/WindowMaximize.vue'
+  import WindowClose from '@/icons/WindowClose.vue'
   import HomeTabs from '@/views/HomeTabs.vue'
   import NotSavedDialog from './components/HomeTabs/NotSavedDialog.vue'
   import { type FileType } from '@/types/FileType'
-    // @ts-ignore
-  import { themeSettings } from '@/utils/themeSettings.js'
   import { listen } from '@tauri-apps/api/event'
-  // import { useToggle } from '@vueuse/core'
   import { debounce, throttle } from 'lodash'
   import { allowedExt } from '@/types/AllowedExt'
 

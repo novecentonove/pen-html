@@ -2,38 +2,38 @@
 
   <div v-if="editor" :class="!showButtons ? 'w-[270px]' : 'w-[390px]'" class="buttons_bar inline-flex flex-no-wrap items-center p-1 rounded-lg"> 
     <button title="Bold" @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-      <IconBold :size="size" />
+      <IconBold :width="size" />
     </button>
     <button title="Italic" @click="editor.chain().focus().toggleItalic().run()" :disabled="!editor.can().chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-      <IconItalic :size="size" />
+      <IconItalic :width="size" />
     </button>
     <button @click="editor.chain().focus().toggleUnderline().run()" :class="{ 'is-active': editor.isActive('underline') }">
-      <FormatUnderline :size="size" />
+      <FormatUnderline :width="size" />
     </button>
     <button title="Inline code" @click="editor.chain().focus().toggleCode().run()" :disabled="!editor.can().chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
-      <IconCode :size="size" />
+      <IconCode :width="size" />
     </button>
     <button title="Code block" @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
-      <IconCodeBlock :size="size" />
+      <IconCodeBlock :width="size" />
     </button>
     <button title="Strike" @click="editor.chain().focus().toggleStrike().run()" :disabled="!editor.can().chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-      <IconStrike :size="size" />
+      <IconStrike :width="size" />
     </button>
     <button title="Ul" @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
-      <IconUl :size="size" />
+      <IconUl :width="size" />
     </button>
     <button title="Clear style" @click="editor.chain().focus().clearNodes().run()">
-      <IconClearAll :size="size" />
+      <IconClearAll :width="size" />
     </button>
     <button title="Clear font color" @click="editor.chain().focus().unsetColor().run()">
       <div class="w-3 h-3 border border-neutral-400"></div>
     </button>
     <div class="inline-flex" @mouseover="showExtraButtons(true)" @mouseleave="showExtraButtons(false)">
-      <IconRight :size="15" class="p-1" />
+      <IconRight width="2em" class="p-1" />
       <transition name="slide_right">
         <div v-if="showButtons" class="flex">
           <button title="ol" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
-            <IconOl :size="size" />
+            <IconOl :width="size" />
           </button>
           <button title="Highlight" @click="editor.chain().focus().toggleHighlight({ color: 'var(--hightlight_color)' }).run()" :class="{ 'is-active': editor.isActive('highlight', { color: 'var(--hightlight_color)' }) }">
             <div class="w-2 h-1 bg-blue-400"></div>
@@ -49,7 +49,7 @@
 
     <!--
     <button @click="editor.chain().focus().unsetAllMarks().run()">
-      <IconClear :size="size" />
+      <IconClear :width="size" />
     </button> -->
     <!-- <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
       paragraph
@@ -86,30 +86,30 @@
 
 <script setup lang="ts">
   // @ts-ignore
-  import IconBold from 'vue-material-design-icons/FormatBold.vue'
+  import IconBold from '@/icons/FormatBold.vue'
   // @ts-ignore
-  import IconItalic from 'vue-material-design-icons/FormatItalic.vue'
+  import IconItalic from '@/icons/FormatItalic.vue'
   // @ts-ignore
-  import IconStrike from 'vue-material-design-icons/FormatStrikethroughVariant.vue'
+  import IconStrike from '@/icons/FormatStrike.vue'
   // @ts-ignore
-  import IconCodeBlock from 'vue-material-design-icons/CodeBraces.vue'
+  import IconCodeBlock from '@/icons/CodeBraces.vue'
   // @ts-ignore
-  import IconCode from 'vue-material-design-icons/CodeBrackets.vue'
+  import IconCode from '@/icons/CodeBrackets.vue'
   // @ts-ignore
-  import IconOl from 'vue-material-design-icons/FormatListNumbered.vue'
+  import IconOl from '@/icons/FormatListNumbered.vue'
   // @ts-ignore
-  import IconUl from 'vue-material-design-icons/FormatListBulleted.vue'
+  import IconUl from '@/icons/FormatListBulleted.vue'
   // @ts-ignore
-  import IconQuote from 'vue-material-design-icons/FormatQuoteOpen.vue'
+  import IconQuote from '@/icons/FormatQuoteOpen.vue'
   // @ts-ignore
-  // import IconClear from 'vue-material-design-icons/ClipboardOutline.vue'
+  // import IconClear from '@/icons/ClipboardOutline.vue'
     // @ts-ignore
-  import IconClearAll from 'vue-material-design-icons/ClipboardMinusOutline.vue'
-  // import Drag from 'vue-material-design-icons/Drag.vue'
+  import IconClearAll from '@/icons/ClipboardMinusOutline.vue'
+  // import Drag from '@/icons/Drag.vue'
   // @ts-ignore
-  import IconRight from 'vue-material-design-icons/ChevronRight.vue'
+  import IconRight from '@/icons/ChevronRight.vue'
     // @ts-ignore
-  import FormatUnderline from 'vue-material-design-icons/FormatUnderline.vue'
+  import FormatUnderline from '@/icons/FormatUnderline.vue'
   import { Editor, } from '@tiptap/vue-3'
   import { ref } from 'vue'
   import { debounce } from 'lodash'
@@ -122,7 +122,7 @@
 
   const props = defineProps<Props>()
   const editor = props.editor
-  const size = 18
+  const size = '1.3em'
   const colors: string[] = ['#8c7c27', '#465694', '#988bd5']
 
   const showButtons = ref(false)

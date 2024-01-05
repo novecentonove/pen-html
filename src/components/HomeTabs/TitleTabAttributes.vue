@@ -9,8 +9,6 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-// @ts-ignore
-import DragIcon from 'vue-material-design-icons/DragVertical.vue'
 import { useFiles } from '../../stores/use-files'
 import { type FileType } from '@/types/FileType'
 import { parseFileName } from '@/composable/parseFileName'
