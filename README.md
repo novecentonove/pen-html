@@ -1,6 +1,10 @@
 # tauri
 
-A md/html editor with Tiptap, Vue 3 and Vite 
+A md/html editor made with Vite, Vue 3 and TipTap
+
+https://tiptap.dev/ <br>
+https://vuejs.org/ <br>
+https://vitejs.dev/ <br>
 
 
 ## Project Setup
