@@ -1,6 +1,5 @@
 <template>
-
-  <div v-if="editor" :class="!showButtons ? 'w-[270px]' : 'w-[390px]'" class="buttons_bar inline-flex flex-no-wrap items-center p-1 rounded-lg"> 
+  <div v-if="editor" :class="!showButtons ? 'w-[270px]' : 'w-[395px]'" class="buttons_bar inline-flex flex-no-wrap items-center p-1 rounded-lg"> 
     <button title="Bold" @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
       <IconBold :width="size" />
     </button>
@@ -32,7 +31,7 @@
       <IconRight width="1.6em" class="p-0" />
       <transition name="slide_right">
         <div v-if="showButtons" class="flex [&>button]:ml-0.5">
-          <button title="ol" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
+          <button title="Ol" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
             <IconOl :width="size" />
           </button>
           <button title="Highlight" @click="editor.chain().focus().toggleHighlight({ color: 'var(--hightlight_color)' }).run()" :class="{ 'is-active': editor.isActive('highlight', { color: 'var(--hightlight_color)' }) }">
@@ -41,46 +40,9 @@
           <button v-for="(color, i) in colors" :key="i" :title="'Text color'" @click="editor.chain().focus().setColor(color).run()">
             <div class="w-3 h-3" :style="`background-color: ${color}`"></div>
           </button>
-          <!-- <button @click="editor.chain().focus().toggleTaskList().run()" :class="{ 'is-active': editor.isActive('taskList') }">
-          </button> -->
         </div>
       </transition>
     </div>
-
-    <!--
-    <button @click="editor.chain().focus().unsetAllMarks().run()">
-      <IconClear :width="size" />
-    </button> -->
-    <!-- <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
-      paragraph
-    </button> -->
-    <!-- <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-      h1
-    </button>
-    <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-      h2
-    </button>
-    <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-      h3
-    </button>
-    <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
-      h4
-    </button>
-    <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
-      h5
-    </button>
-    <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
-      h6
-    </button> -->
-    <!-- <button @click="editor.chain().focus().setHardBreak().run()">
-      hard break
-    </button> -->
-    <!-- <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
-      undo
-    </button>
-    <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
-      redo
-    </button> -->
   </div>
 </template>
 
@@ -96,8 +58,6 @@ import SquareOutline from '@/icons/SquareOutline.vue'
 import IconClearAll from '@/icons/ClipboardMinusOutline.vue'
 import IconRight from '@/icons/ChevronRight.vue'
 import FormatUnderline from '@/icons/FormatUnderline.vue'
-// import Drag from '@/icons/Drag.vue'
-// import IconQuote from '@/icons/FormatQuoteOpen.vue'
 import { Editor, } from '@tiptap/vue-3'
 import { ref } from 'vue'
 import { debounce } from 'lodash'
@@ -123,24 +83,24 @@ button {
   border-radius: 0.2rem;
   margin-right: 3px;
 }
+
 button:hover {
   background-color: #303030;
 }
+
 .buttons_bar{
   /* min-width: 405px; */
   background-color: #131313;
   border: 1px solid #3b3b3b;
 }
+
 .is-active{
   background-color: #292929;
   border-radius: .2rem;
 }
 
-.slide_right-enter-active {
-  transition: all 0.2s;
-}
-
-.slide_right-leave-active {
+.slide_right-enter-active,
+.slide_right-leave-active{
   transition: all 0.2s;
 }
 
@@ -151,6 +111,6 @@ button:hover {
 }
 
 .buttons_bar {
-  transition: width .3s; /* Applica la transizione alla larghezza con una durata di 1 secondo */
+  transition: width .2s;
 }
 </style>

@@ -71,9 +71,4 @@ const openFile = async () => {
 .file_click:hover .icon_close{
   opacity: 0.5;
 }
-.cut_text { 
-  text-overflow: ellipsis;
-  overflow: hidden; 
-  white-space: nowrap;
-}
 </style>

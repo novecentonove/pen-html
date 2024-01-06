@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col">
-    <div id="out_click" class="relative overflow-x-scroll w-full h-full pt-[36px] flex flex-col app_font TextFileIcon-sm">
+    <div id="out_click" class="relative overflow-x-scroll w-full h-full pt-[36px] flex flex-col app_font">
 
       <div class="flex flex-col h-full pl-3">
         <div v-if="openedFiles.length">
-          <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color">Open editors</p>
+          <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color select-text cut_text">Open editors</p>
           <ul>
             <li v-for="file in openedFiles" class="file_li" :key="file.path">
               <FileClick :file="file" :closable="true"/>
@@ -228,5 +228,11 @@
 .slide-leave-to {
   transform: translatex(100%);
   opacity: 0;
+}
+
+.cut_text { 
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  white-space: nowrap;
 }
 </style>

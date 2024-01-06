@@ -730,12 +730,12 @@
   margin: 0;
   font-size: 85%;
   white-space: pre;
-  background-color: #87837826;
+  background-color: #60543626;
   border-radius: 6px;
 }
 
 .markdown-body code{
-  color: #EB5757;
+  color: #c45b5b;
 }
 
 .markdown-body pre code{
