@@ -1,7 +1,7 @@
 <template>
 
   <li v-if="props.children" :style="indent" class="file_li" @click="toggleChildren()" @contextmenu.prevent="toggleMenu('dir')">
-    <FolderIcon :size="12" class="mr-1" /><span class="file_li_inner cut_text">{{ props.file.name }}</span>
+    <FolderIcon width="0.95em" class="mr-1" /><span class="file_li_inner cut_text">{{ props.file.name }}</span>
   </li>
 
   <li v-else ref="toggleMenuRef" :style="indent" class="file_li marker:relative" @contextmenu.prevent="toggleMenu()">
