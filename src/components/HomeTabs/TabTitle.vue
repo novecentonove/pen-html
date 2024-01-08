@@ -1,6 +1,8 @@
 <template>
 <li
-  :class="{ 'border-b shadow-lg inactive': selectedPath != props.file.path, 'border-t border-r border-l' :selectedPath == props.file.path}" 
+  :class="{ 'border-b shadow-lg inactive': selectedPath !== props.file.path,
+            'border-t border-r border-l' :selectedPath === props.file.path,
+            'settingTab' : isSettingPage }" 
   class="flex shrink-0 justify-center items-center align-middle rounded-t border_color cursor-pointer select-none">
   <div class="flex justify-center items-center app_font">
     <!-- Teleport here -->
@@ -23,6 +25,7 @@
   import { useFiles } from '@/stores/use-files'
   // @ts-ignore
   import { snakeCase } from 'lodash'
+  import { settingPage } from '@/types/SettingPage'
 
   type Props = {
     file: FileType
@@ -33,6 +36,7 @@
   const files = useFiles()
   const selectedPath = computed( () => files.getSelectedPath)
   const trigger = ref(0)
+  const isSettingPage = computed( () => settingPage.path === props.file.path)
 
   const closeTab = () => {
     trigger.value++
@@ -44,5 +48,10 @@
 </script>
 
 <style>
-  .inactive { color:  color-mix(in srgb, currentColor 40%, transparent); }
+.inactive { 
+  color:  color-mix(in srgb, currentColor 40%, transparent); 
+}
+.settingTab{
+  background-color: color-mix(in srgb, var(--border_color) 20%, transparent);
+}
 </style>

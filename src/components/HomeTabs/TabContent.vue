@@ -1,13 +1,15 @@
 <template>
   <div v-show="path == selectedPath">
-    <KeepAlive>
-      <component :is="editorComponent[current]"
-        v-if="componentIsReady"
-        v-model="content" 
-        :name="name" 
-        :path="path" 
-        :on-selected-path="onSelectedPath"/>
-    </KeepAlive>
+    <!-- <KeepAlive> -->
+      <Suspense>
+        <component :is="editorComponent[current]"
+          v-if="componentIsReady"
+          v-model="content" 
+          :name="name" 
+          :path="path" 
+          :on-selected-path="onSelectedPath"/>
+      </Suspense>
+    <!-- </KeepAlive> -->
   </div>
 </template>
 
@@ -17,18 +19,20 @@
   import { type FileType } from '@/types/FileType'
   import HtmlEditor from '@/components/Editor/HtmlEditor.vue'
   import TextEditor from '@/components/Editor/TextEditor.vue'
+  import Settings from '@/views/Settings.vue'
   import { readTextFile } from '@tauri-apps/api/fs'
 
-  type Current = 'HtmlEditor' | 'TextEditor'
+  type Current = 'HtmlEditor' | 'TextEditor' | 'Settings'
   const props = defineProps<FileType>()
   const files = useFiles()
   const path = toRef(props.path)
   const selectedPath = computed( () => files.getSelectedPath)
   const content = ref('')
-  const editorComponent:any = {HtmlEditor, TextEditor}
+  const editorComponent:any = {HtmlEditor, TextEditor, Settings}
   const onSelectedPath = ref(0)
   const current = ref<Current>('HtmlEditor')
   const componentIsReady = ref(false)
+  import { settingPage } from '@/types/SettingPage'
 
   watch(selectedPath, () => {
     if(path.value == selectedPath.value){
@@ -38,19 +42,30 @@
 
   onMounted( async () => {
     try {
-      const ext = props.path.split('.').pop()
+      let ext = props.path.split('.').pop()
+
+      if(props.path === settingPage.path){
+        ext = 'settings'
+      }
+      
       let defaultIfEmpty = '<p></p>'
       switch (ext) {
         case 'html':
           current.value = 'HtmlEditor'
+          break
+        case 'settings':
+          current.value = 'Settings'
           break
         default:
           current.value = 'TextEditor'
           defaultIfEmpty = ''
           break
       }
+
+      if(props.path != settingPage.path){
+        content.value = await readTextFile(props.path as string) ?? defaultIfEmpty
+      }
       
-      content.value = await readTextFile(props.path as string) ?? defaultIfEmpty
       componentIsReady.value = true
     } catch(e: any){
       content.value = ''

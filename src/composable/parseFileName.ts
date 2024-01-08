@@ -1,3 +1,5 @@
+import { settingPage } from "@/types/SettingPage"
+
 export function parseFileName(name:string): string{
   let parsedName = ''
   if(name){
@@ -14,7 +16,7 @@ export function parseFileName(name:string): string{
       parsedName = `${start}...${end}`
     }
 
-    if(ext !== 'html'){
+    if(ext !== 'html' && name !== settingPage.name){
       parsedName =`${parsedName}.${ext}`
     }
  

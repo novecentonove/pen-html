@@ -46,7 +46,7 @@
       <div class="opacity-20 cursor-pointer">
         <!-- see onClickOutside-->
         <IconSettings title="Settings" v-if="showSettings" width="1.3em" />
-        <IconSettings title="Settings" v-else @click="toggleSettings()" width="1.3em" />
+        <IconSettings title="Settings" v-else @click="files.addAndSelectPage(settingPage)" width="1.3em" />
       </div>
       <div title="Reload all dirs" class="opacity-30 cursor-pointer mr-3" >
         <ReloadIcon width="1.3em" @click="loadAllDirs" />
@@ -73,6 +73,7 @@
   import { type FileType } from '@/types/FileType'
   import { onClickOutside } from '@vueuse/core'
   import { useToggle } from '@vueuse/core'
+  import { settingPage } from '@/types/SettingPage'
 
   // TODO SISTEMARE VARIABILI FILES AND DIR
   const filesAndDir = ref<FileType[] | []>([])

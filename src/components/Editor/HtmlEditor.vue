@@ -3,8 +3,8 @@
   <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
     <TitleTabAttributes
       :unsaved="unsaved"
-      :name="name"
-      :path="path"
+      :name="props.name"
+      :path="props.path"
       :snake-case-path="snakeCasePath"
      />
   </Teleport>

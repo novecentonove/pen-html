@@ -1,42 +1,53 @@
 <template>
-  <div class="px-12">
-    <div class="settings h-full my-6 font_colors flex flex-col gap-6">
-      
-      <div class="flex flex-col">
-        <label class="mtop">Base Directory</label>
-        <button class="baseDir border h-8 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir}}</button>
-      </div>
 
-      <div class="flex flex-col">
-        <label class="mtop">
-          <input v-model="enableAppendDir" @change="settings.setEnableAppendDir(enableAppendDir)" class="accent-slate-900" type="checkbox">
-          Enable append Dir
-        </label>
-        <button class="baseDir border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir}}</button>
-      </div>
+<Teleport v-if="true" :to="`#${snakeCasePath}`">
+  <TitleTabAttributes
+    :unsaved="false"
+    :name="props.name"
+    :path="props.path"
+    :snake-case-path="snakeCasePath"
+    />
+</Teleport>
 
-      <div class="flex flex-col">
-        <label class="mtop">
-          <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" class="accent-slate-900" type="checkbox">
-          Enable append file
-        </label>
-        <button class="baseDir border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile}}</button>
-      </div>
+<div class="settings overflow-y-scroll px-12 mt-6 ml-[2%] mr-10">
 
-      <div class="flex flex-col">
-        <label class="mtop">App Font</label>
-        <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
-        <p class="text-xs py-2 text-neutral-500">Eg: 'Arial', 'Droid Sans Mono', monospace</p>
-      </div>
+  <div class="text-right">
+    <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
+  </div>
 
-      <div class="flex flex-col">
-        <label class="mtop">Editor Font</label>
-        <input v-model="selectedEditorFont" @change="selectFont('editor')">
-      </div>
+  <div class="max-w-[350px] my-6 font_colors flex flex-col gap-6">
+    <div class="input_section flex flex-col">
+      <label>
+        Base Folder<br>
+        <span class="opacity-50">Your html folder for your notes</span>
+      </label>
+      <button class="buttonFolder border h-8 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir || 'Please select a directory'}}</button>
+    </div>
 
-      <div class="flex flex-col">
-        <label class="mtop">Text color</label>
-        <div class="flex justify-between">
+    <div class="input_section flex flex-col">
+      <label>
+        <input v-model="enableAppendDir" @change="settings.setEnableAppendDir(enableAppendDir)" class="accent-slate-900" type="checkbox">
+        Add extra Folder<br>
+        <span class="opacity-50">Your extra html folder for your notes</span>
+      </label>
+      <button class="buttonFolder border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir || 'Please select a directory'}}</button>
+    </div>
+
+    <div class="input_section flex flex-col">
+      <label>
+        <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" class="accent-slate-900" type="checkbox">
+        Add extra file<br>
+        <span class="opacity-50">Your extra file for your notes</span>
+      </label>
+      <button class="buttonFolder border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile || 'Please select a file'}}</button>
+    </div>
+
+    <!-- Colors and theme-->
+    <div class="border_section mt-12 -ml-4 pl-4">
+      <label>Colors and theme</label>
+      <div class="input_section flex flex-col">
+        <label>Text color</label>
+        <div class="mt-2 flex justify-between">
           <div v-for="(color, i) in textColors" 
           :title="color.name" 
           :key="i" 
@@ -47,8 +58,54 @@
         </div>
       </div>
 
+      <div class="input_section flex flex-col mb-1">
+        <label>Theme</label>
+        <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
+          <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- APP -->
+    <div class="border_section mt-12 -ml-4 pl-4">
+      <label>App</label>
       <div class="flex flex-col">
-        <label class="mtop relative flex flex-col">Font size
+        <label class="mt-2">Font family <span class="text-xs py-2 opacity-50">Eg: 'Arial', 'Droid Sans Mono', monospace</span></label>
+        <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
+      </div>
+
+      <div class="input_section flex flex-col">
+        <label class="relative flex flex-col">Font size <i>(todo)</i>
+          <input disabled type="text" pattern="^\d+(\.\d+)?$">
+          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
+            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
+            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
+          </div>
+        </label>
+      </div>
+
+      <div class="input_section flex flex-col">
+        <label class="relative flex flex-col">Line height<i>(todo)</i>
+          <input disabled type="text" pattern="^\d+(\.\d+)?$">
+          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
+            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
+            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- EDITOR -->
+    <div class="border_section mt-12 -ml-4 pl-4">
+      <label>Editor</label>
+      <div class="flex flex-col">
+        <label class="mt-2">Font family <span class="text-xs py-2 opacity-50">Eg: 'Arial', 'Droid Sans Mono', monospace</span></label>
+        <input v-model="selectedEditorFont" @change="selectFont('editor')">
+      </div>
+
+      <div class="input_section flex flex-col">
+        <label class=" relative flex flex-col">Font size
           <input type="text" pattern="^\d+(\.\d+)?$" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
           <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
             <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)" @click="increaseFontSize('+')"></div>
@@ -57,18 +114,28 @@
         </label>
       </div>
 
-      <div class="flex flex-col mb-1">
-        <label class="mtop">Theme</label>
-        <select v-if="themeSettings" v-model="selectedTheme" @change="selectTheme">
-          <option v-for="(theme, i) in themeSettings" :key="i" :value="theme.name">{{theme.name}}</option>
-        </select>
+      <div class="input_section flex flex-col">
+        <label class="relative flex flex-col">Line height<i>(todo)</i>
+          <input disabled type="text" pattern="^\d+(\.\d+)?$">
+          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
+            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
+            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
+          </div>
+        </label>
       </div>
-
-      <div class="text-right mt-6">
-        <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
-      </div>
-    </div>
   </div>
+
+  Example:
+  <div class="editor_font editor_font_size leading-normal">
+    <p>
+      But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.
+    </p>
+  </div>
+
+  <div class="h-12"></div>
+
+  </div>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -76,9 +143,23 @@
   import { computed, toRef} from 'vue'
   import { useSettings } from '@/stores/use-settings'
   import { readDir } from '@tauri-apps/api/fs'
+  import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
     // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
   import { getVersion } from '@tauri-apps/api/app'
+  import { snakeCase } from 'lodash';
+
+
+  type Props = {
+    modelValue: string
+    name: string
+    path: string
+    onSelectedPath: number
+  }
+
+const props = defineProps<Props>()
+
+const snakeCasePath = computed( (): string => snakeCase(props.path))
 
   const settings = useSettings()
   const selectedAppFont = toRef(settings.getAppFont)
@@ -242,32 +323,38 @@
 
 
 <style>
-  /* fix overflow-y  */
-  .settings{
-    min-height: 800px;
-  }
-  .settings input:not([type='checkbox']),
-  .settings select {
-    appearance: none;
-    -webkit-appearance: none;
-    height: 30px;
-    padding-left: 0.5em;
-    border-radius: 0.2em;
-    border: 1px solid var(--border_color);
-    background-color: var(--view_color);
-    margin: 0.1rem;
-  }
 
-  /* .settings .mtop {
-    margin-top: 15px;
-  } */
+.settings input:not([type='checkbox']),
+.settings select {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 30px;
+  padding-left: 0.5em;
+  border-radius: 0.2em;
+  border: 1px solid var(--border_color);
+  background-color: var(--view_color);
+  margin-top: .5rem;
+}
 
-  .baseDir{
-    border: 1px solid var(--border_color);
-    background-color: var(--view_color);
-  }
+.border_section {
+ border-left: 3px solid var(--border_color);
+}
+.input_section{
+  margin-top: 1rem;
+}
 
-  input:invalid {
-    background-color: brown;
-  }
+.settings{
+  height: calc(100vh - 111px);
+}
+
+
+.buttonFolder{
+  margin-top: .5rem;
+  border: 1px solid var(--border_color);
+  background-color: var(--view_color);
+}
+
+input:invalid {
+  background-color: brown;
+}
 </style>
