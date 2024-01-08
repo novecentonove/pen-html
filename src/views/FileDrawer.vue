@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col">
     <div id="out_click" class="relative overflow-x-scroll w-full h-full pt-[36px] flex flex-col app_font">
-
       <div class="flex flex-col h-full pl-3">
         <div v-if="openedFiles.length">
           <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color select-text cut_text">Open editors</p>
@@ -11,7 +10,6 @@
             </li>
           </ul>
         </div>
-
         <div class="pt-2">
           <p :title="baseDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
           <FileList :files="filesAndDir"/>
@@ -31,22 +29,10 @@
           </ul>
         </div>
       </div>
-
-      <transition name="slide">
-        <div ref="settingsRef" v-if="showSettings" class="settings_panel_color overflow-y-scroll fixed h-full right-0 top-20 bottom-20 mb-20 z-10 w-[400px] border-t-4 border-l-4 border-neutral-900">
-          <Suspense>
-            <Settings />
-          </Suspense>
-        </div>
-      </transition>
-
     </div>
-
     <div class="relative flex items-center mt-auto mb-3 pt-3 pl-3 justify-between">
       <div class="opacity-20 cursor-pointer">
-        <!-- see onClickOutside-->
-        <IconSettings title="Settings" v-if="showSettings" width="1.3em" />
-        <IconSettings title="Settings" v-else @click="files.addAndSelectPage(settingPage)" width="1.3em" />
+        <IconSettings title="Settings" @click="files.addAndSelectPage(settingPage)" width="1.3em" />
       </div>
       <div title="Reload all dirs" class="opacity-30 cursor-pointer mr-3" >
         <ReloadIcon width="1.3em" @click="loadAllDirs" />
@@ -62,7 +48,6 @@
   import { useSettings } from '@/stores/use-settings'
   import FileList from '@/components/FileDrawer/FileList.vue'
   import ToastSaved from '@/components/FileDrawer/ToastSaved.vue'
-  import Settings from '@/views/Settings.vue'
   import FileClick from '../components/FileDrawer/FileClick.vue'
   // @ts-ignore
   import ReloadIcon from '@/icons/Reload.vue'
@@ -71,16 +56,12 @@
   import { readDir } from '@tauri-apps/api/fs'
   import { open } from '@tauri-apps/api/shell'
   import { type FileType } from '@/types/FileType'
-  import { onClickOutside } from '@vueuse/core'
-  import { useToggle } from '@vueuse/core'
   import { settingPage } from '@/types/SettingPage'
 
-  // TODO SISTEMARE VARIABILI FILES AND DIR
   const filesAndDir = ref<FileType[] | []>([])
   const filesAndDirAppended = ref<FileType[] | []>([])
   const files = useFiles()
   const settings = useSettings()
-  const settingsRef = ref(null)
 
   const file_is_saved = computed(() => files.getFileIsSaved)
   const openedFiles = computed( () => files.getOpenFiles)
@@ -89,11 +70,6 @@
   const fileToAppend = computed( () => settings.getfileToAppend)
   const enableAppendDir = computed( () => settings.getEnableAppendDir)
   const appendedDir = computed( () => settings.getAppendedDir)
-
-  const [showSettings, toggleSettings] = useToggle()
-
-  const closeSettings = () => showSettings.value = false
-  onClickOutside(settingsRef, closeSettings)
 
   watch(baseDir, async (value) => {
     try{

@@ -75,24 +75,22 @@
         <input type="text" v-model="selectedAppFont" @change="selectFont('app')">
       </div>
 
-      <div class="input_section flex flex-col">
-        <label class="relative flex flex-col">Font size <i>(todo)</i>
+      <div class="input_section relative flex flex-col">
+        <label>Font size <span class="text-xs py-2 opacity-50">(Rem)</span><i>(todo)</i></label>
           <input disabled type="text" pattern="^\d+(\.\d+)?$">
-          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
-            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
-            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
+          <div class="absolute right-1 bottom-1 h-[22px] flex flex-col justify-between align-middle leading-none rounded-sm">
+            <div class="w-4 h-2.5 rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
+            <div class="w-4 h-2.5 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
           </div>
-        </label>
       </div>
 
-      <div class="input_section flex flex-col">
-        <label class="relative flex flex-col">Line height<i>(todo)</i>
-          <input disabled type="text" pattern="^\d+(\.\d+)?$">
-          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
-            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
-            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
-          </div>
-        </label>
+      <div class="input_section relative flex flex-col">
+        <label>Line height <span class="text-xs py-2 opacity-50">(Rem)</span><i>(todo)</i></label>
+        <input disabled type="text" pattern="^\d+(\.\d+)?$">
+        <div class="absolute right-1 bottom-1 h-[22px] flex flex-col justify-between align-middle leading-none rounded-sm">
+          <div class="w-4 h-2.5 rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
+          <div class="w-4 h-2.5 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
+        </div>
       </div>
     </div>
 
@@ -104,30 +102,28 @@
         <input v-model="selectedEditorFont" @change="selectFont('editor')">
       </div>
 
-      <div class="input_section flex flex-col">
-        <label class=" relative flex flex-col">Font size
-          <input type="text" pattern="^\d+(\.\d+)?$" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
-          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
-            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)" @click="increaseFontSize('+')"></div>
-            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)" @click="increaseFontSize('-')"></div>
-          </div>
-        </label>
+      <div class="input_section relative flex flex-col">
+        <label>Font size <span class="text-xs py-2 opacity-50">(Rem)</span></label>
+        <input type="text" pattern="^\d+(\.\d+)?$" v-model="selectedFontSize" @change="selectFontSize($event as InputFileEvent)">
+        <div class="absolute right-1 bottom-1 h-[22px] flex flex-col justify-between align-middle leading-none rounded-sm">
+          <div class="w-4 h-2.5 rounded-sm bg_as_border_color" style="filter: brightness(90%)" @click="increaseFontSize('+')"></div>
+          <div class="w-4 h-2.5 rounded-sm bg_as_border_color" style="filter: brightness(75%)" @click="increaseFontSize('-')"></div>
+        </div>
       </div>
 
-      <div class="input_section flex flex-col">
-        <label class="relative flex flex-col">Line height<i>(todo)</i>
-          <input disabled type="text" pattern="^\d+(\.\d+)?$">
-          <div class="absolute right-1 bottom-1 flex flex-col bg-black leading-none rounded-sm">
-            <div class="w-4 h-3 mb-px rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
-            <div class="w-4 h-3 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
-          </div>
-        </label>
+      <div class="input_section relative flex flex-col">
+        <label>Line height <span class="text-xs py-2 opacity-50">(Rem)</span><i>(todo)</i></label>
+        <input disabled type="text" pattern="^\d+(\.\d+)?$">
+        <div class="absolute right-1 bottom-1 h-[22px] flex flex-col justify-between align-middle leading-none rounded-sm">
+          <div class="w-4 h-2.5 rounded-sm bg_as_border_color" style="filter: brightness(90%)"></div>
+          <div class="w-4 h-2.5 rounded-sm bg_as_border_color" style="filter: brightness(75%)"></div>
+        </div>
       </div>
   </div>
 
-  Example:
-  <div class="editor_font editor_font_size leading-normal">
-    <p>
+  <div class="editor_font editor_font_size mt-4 leading-normal">
+    <p>Editor text example:</p>
+    <p class="mt-4">
       But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.
     </p>
   </div>
