@@ -15,13 +15,13 @@
     <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
   </div>
 
-  <div class="max-w-[350px] my-6 font_colors flex flex-col gap-6">
+  <div class="max-w-[450px] ml-[5%] my-6 font_colors flex flex-col gap-6">
     <div class="input_section flex flex-col">
       <label>
         Base Folder<br>
         <span class="opacity-50">Your html folder for your notes</span>
       </label>
-      <button class="buttonFolder border h-8 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir || 'Please select a directory'}}</button>
+      <button :title="settings.getBaseDir" class="buttonFolder border h-8 cursor-pointer" @click="readFileDir('base')">{{shortBaseFilesDir || 'Please select a directory'}}</button>
     </div>
 
     <div class="input_section flex flex-col">
@@ -30,7 +30,7 @@
         Add extra Folder<br>
         <span class="opacity-50">Your extra html folder for your notes</span>
       </label>
-      <button class="buttonFolder border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir || 'Please select a directory'}}</button>
+      <button :title="settings.getAppendedDir" class="buttonFolder border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir || 'Please select a directory'}}</button>
     </div>
 
     <div class="input_section flex flex-col">
@@ -39,7 +39,7 @@
         Add extra file<br>
         <span class="opacity-50">Your extra file for your notes</span>
       </label>
-      <button class="buttonFolder border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile || 'Please select a file'}}</button>
+      <button :title="settings.getfileToAppend.path" class="buttonFolder border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile || 'Please select a file'}}</button>
     </div>
 
     <!-- Colors and theme-->
