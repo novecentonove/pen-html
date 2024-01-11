@@ -13,9 +13,7 @@ import { type FileType } from '@/types/FileType'
 import { useFiles } from '@/stores/use-files'
 import { computed } from 'vue'
 import { allowedExt } from '@/types/AllowedExt'
-// @ts-ignore
 import LongTextIcon from '@/icons/LongText.vue'
-// @ts-ignore
 import CloseIcon from '@/icons/Close.vue'
 import { parseFileName } from '@/composable/parseFileName'
 

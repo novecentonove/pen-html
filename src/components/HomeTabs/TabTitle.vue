@@ -23,9 +23,7 @@
   import NotSavedDialog from "./NotSavedDialog.vue"
   import { type FileType } from '@/types/FileType'
   import { useFiles } from '@/stores/use-files'
-  // @ts-ignore
   import { snakeCase } from 'lodash'
-  // import { settingPage } from '@/types/SettingPage'
 
   type Props = {
     file: FileType
@@ -36,7 +34,6 @@
   const files = useFiles()
   const selectedPath = computed( () => files.getSelectedPath)
   const trigger = ref(0)
-  // const isSettingPage = computed( () => settingPage.path === props.file.path)
 
   const closeTab = () => {
     trigger.value++

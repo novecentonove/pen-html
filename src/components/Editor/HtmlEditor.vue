@@ -39,7 +39,6 @@
 
 <script setup lang="ts">
 import { type Ref, onBeforeUnmount, onMounted, ref, watch, computed } from 'vue'
-// @ts-ignore
 import { snakeCase} from 'lodash'
 import { useFiles } from '../../stores/use-files'
 import EditorButtons from './EditorButtons.vue'

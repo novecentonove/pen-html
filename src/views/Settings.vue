@@ -140,11 +140,9 @@
   import { useSettings } from '@/stores/use-settings'
   import { readDir } from '@tauri-apps/api/fs'
   import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
-    // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
   import { getVersion } from '@tauri-apps/api/app'
   import { snakeCase } from 'lodash';
-
 
   type Props = {
     modelValue: string

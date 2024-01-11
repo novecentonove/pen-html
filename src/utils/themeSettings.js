@@ -1,4 +1,3 @@
-// @ts-ignore
 export const themeSettings = [
   {
     name: 'Asfalto',

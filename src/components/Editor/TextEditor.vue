@@ -41,8 +41,8 @@ const lastFileContent = ref('')
 const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.getOpenFile(props.path)
 
-// @ts-ignore
-const { history, undo, redo } = useRefHistory(content)
+
+const { /*history,*/ undo, redo } = useRefHistory(content)
 
 const doFocus = () => {
   if(text_area.value){

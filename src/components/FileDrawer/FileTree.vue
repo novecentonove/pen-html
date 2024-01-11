@@ -29,7 +29,6 @@
   import { type FileType } from '@/types/FileType'
   import FileTree from './FileTree.vue'
   import FileClick from './FileClick.vue'
-  // @ts-ignore
   import FolderIcon from '@/icons/Folder.vue'
   import { useToggle } from '@vueuse/core'
   import { onClickOutside } from '@vueuse/core'

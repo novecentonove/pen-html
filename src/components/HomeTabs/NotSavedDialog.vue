@@ -28,8 +28,6 @@
   const files = useFiles()
   const props = defineProps<Props>()
   const dialog = ref(null)
-
-  // const showDialog = ref(false)
   const default_button_dialog = ref(null)
   const getNotSavedFiles = computed( () => files.getNotSavedFiles)
 

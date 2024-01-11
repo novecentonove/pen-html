@@ -49,9 +49,7 @@
   import FileList from '@/components/FileDrawer/FileList.vue'
   import ToastSaved from '@/components/FileDrawer/ToastSaved.vue'
   import FileClick from '../components/FileDrawer/FileClick.vue'
-  // @ts-ignore
   import ReloadIcon from '@/icons/Reload.vue'
-  // @ts-ignore
   import IconSettings from '@/icons/Settings.vue'
   import { readDir } from '@tauri-apps/api/fs'
   import { open } from '@tauri-apps/api/shell'
