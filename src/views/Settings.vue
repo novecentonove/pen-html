@@ -42,6 +42,13 @@
       <button :title="settings.getfileToAppend.path" class="buttonFolder border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile || 'Please select a file'}}</button>
     </div>
 
+    <div class="input_section flex">
+      <input v-model="showFolderName" @change="settings.setShowFolderName(showFolderName)" id="show_folder_name" type="checkbox" class="accent-slate-900 mr-1">
+      <label for="show_folder_name"> Show selected folder name
+        <p class="opacity-50">The content on your folder wil be wrapped <!--(you need to reaload to take effect) --></p>
+      </label>
+    </div>
+
     <!-- Colors and theme-->
     <div class="border_section mt-12 -ml-4 pl-4">
       <label>Colors and theme</label>
@@ -140,6 +147,7 @@
   import { useSettings } from '@/stores/use-settings'
   import { readDir } from '@tauri-apps/api/fs'
   import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
+  // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
   import { getVersion } from '@tauri-apps/api/app'
   import { snakeCase } from 'lodash';
@@ -164,6 +172,7 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
   const appVersion = await getVersion()
   const enableAppendFile = toRef(settings.enableAppendFile)
   const enableAppendDir = toRef(settings.getEnableAppendDir)
+  const showFolderName = toRef(settings.showFolderName)
 
   const shortBaseFilesDir = computed(() => {
     const url = settings.getBaseDir.split('/')
@@ -234,7 +243,6 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
   }
 
   const selectTextColors = (color: string) => {
-    console.log(color)
     settings.setFontColor(color)
     settings.applySettings()
   }

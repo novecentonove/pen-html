@@ -15,6 +15,7 @@ export type RootState = {
   appendedDir: string
   enableAppendFile: boolean,
   fileToAppend: FileType,
+  showFolderName: boolean
 }
 
 export const useSettings = defineStore('settings', {
@@ -29,7 +30,8 @@ export const useSettings = defineStore('settings', {
     enableAppendDir: false,
     appendedDir: '',
     enableAppendFile: false,
-    fileToAppend: {}
+    fileToAppend: {},
+    showFolderName: true
   } as RootState),
 
   persist: true,
@@ -46,6 +48,7 @@ export const useSettings = defineStore('settings', {
     getAppendedDir:  (state) => state.appendedDir,
     getEnableAppendFile: (state) => state.enableAppendFile,
     getfileToAppend: (state) => state.fileToAppend,
+    getShowFolderName: (state) => state.showFolderName,
   },
 
   actions: {
@@ -81,6 +84,9 @@ export const useSettings = defineStore('settings', {
     },
     setfileToAppend(val: FileType){
       this.fileToAppend = val
+    },
+    setShowFolderName(val: boolean){
+      this.showFolderName = val
     },
     applySettings(){
       document.documentElement.style.setProperty('--app_font', this.appFont)

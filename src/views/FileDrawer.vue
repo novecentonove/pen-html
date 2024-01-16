@@ -60,7 +60,7 @@
   const filesAndDirAppended = ref<FileType[] | []>([])
   const files = useFiles()
   const settings = useSettings()
-
+  
   const file_is_saved = computed(() => files.getFileIsSaved)
   const openedFiles = computed( () => files.getOpenFiles)
   const baseDir = computed( () => settings.getBaseDir)
@@ -68,6 +68,7 @@
   const fileToAppend = computed( () => settings.getfileToAppend)
   const enableAppendDir = computed( () => settings.getEnableAppendDir)
   const appendedDir = computed( () => settings.getAppendedDir)
+  const showFolderName = computed( () => settings.showFolderName)
 
   watch(baseDir, async (value) => {
     try{
@@ -85,6 +86,10 @@
     } catch(e){
       console.error(e)
     }
+  })
+
+  watch(showFolderName, async () => {
+    loadAllDirs()
   })
 
   // recursive get structure // TODO : use FileType to any
@@ -126,12 +131,27 @@
   }
   
   const loadBaseDir = async (type: string) => {
+    const dir_split = baseDir.value.split("/")
+    const dir = dir_split[dir_split.length - 1]
+    
       switch (type) {
         case 'base':
           if(baseDir.value){
             try{
               const contentBase = await readDir(baseDir.value as string)
-              filesAndDir.value = await getLStructureDir(contentBase)
+              const inside = await getLStructureDir(contentBase)
+
+              if(showFolderName.value){
+                  filesAndDir.value = [
+                  {
+                    name: dir,
+                    path: baseDir.value,
+                    children: inside
+                  }
+                ]
+              } else {
+                filesAndDir.value = inside
+              }
             } catch(e){
               console.log(e)
             }
