@@ -130,28 +130,17 @@
     }
   }
   
-  const loadBaseDir = async (type: string) => {
-    const dir_split = baseDir.value.split("/")
-    const dir = dir_split[dir_split.length - 1]
-    
+  const loadBaseDir = async (type: string) => {   
       switch (type) {
         case 'base':
           if(baseDir.value){
             try{
+              const dir_split = baseDir.value.split("/")
+              const dir = dir_split[dir_split.length - 1]
               const contentBase = await readDir(baseDir.value as string)
               const inside = await getLStructureDir(contentBase)
-
-              if(showFolderName.value){
-                  filesAndDir.value = [
-                  {
-                    name: dir,
-                    path: baseDir.value,
-                    children: inside
-                  }
-                ]
-              } else {
-                filesAndDir.value = inside
-              }
+              const content = _switch_folder_name(inside, dir)
+              filesAndDir.value = content
             } catch(e){
               console.log(e)
             }
@@ -160,15 +149,33 @@
         case 'appendedDir':
           if(appendedDir.value){
             try{
+              const dir_split = appendedDir.value.split("/")
+              const dir = dir_split[dir_split.length - 1]
               const contentDir = await readDir(appendedDir.value as string)
-              filesAndDirAppended.value = await getLStructureDir(contentDir)
+              const inside = await getLStructureDir(contentDir)
+              const content = _switch_folder_name(inside, dir)
+              filesAndDirAppended.value = content
             } catch(e){
               console.log(e)
             }
           }
           break
       }
-  } 
+  }
+
+  const _switch_folder_name = (inside: [], dir: string) => {
+    if(showFolderName.value){
+        return [
+        {
+          name: dir,
+          path: baseDir.value,
+          children: inside
+        }
+      ]
+    } else {
+      return inside
+    }
+  }
 
   const loadAllDirs = () => {
     loadBaseDir('base')
