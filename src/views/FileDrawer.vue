@@ -4,7 +4,6 @@
       <div class="flex flex-col h-full pl-3">
         <div v-if="openedFiles.length">
           <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color select-text cut_text">Open editors</p>
-          <!-- <p>showF: {{ showFilesIntoFolders }}</p> -->
           <ul>
             <li v-for="file in openedFiles" class="file_li" :key="file.path">
               <FileClick :file="file" :closable="true"/>
@@ -21,7 +20,7 @@
           <FileList :files="filesAndDirAppended"/>
           <div v-if="filesAndDirAppended" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
         </div>
-        <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length">
+        <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length && fileToAppend.path">
           <p :title="fileToAppend.path" class="pb-[6px] mb-2 border-b border_color mr-4"></p>
           <ul>
             <li class="file_li">
@@ -69,29 +68,11 @@
   const fileToAppend = computed( () => settings.getfileToAppend)
   const enableAppendDir = computed( () => settings.getEnableAppendDir)
   const appendedDir = computed( () => settings.getAppendedDir)
-  const showFilesIntoFolders = computed( () => settings.getShowFilesIntoFolders)
+  const showSelectedFolder = computed( () => settings.getShowSelectedFolder)
 
-  watch(baseDir, async (value) => {
-    try{
-      const content = await readDir(value as string)
-      filesAndDir.value = await getLStructureDir(content)
-    } catch(e){
-      console.error(e)
-    }
-  })
-
-  watch(appendedDir, async (value) => {
-    try{
-      const content = await readDir(value as string)
-      filesAndDirAppended.value = await getLStructureDir(content)
-    } catch(e){
-      console.error(e)
-    }
-  })
-
-  watch(showFilesIntoFolders, async () => {
-    loadAllDirs()
-  })
+  watch(baseDir, async () => loadAllDirs() )
+  watch(appendedDir, async () => loadAllDirs() )
+  watch(showSelectedFolder, async () => loadAllDirs() )
 
   // recursive get structure // TODO : use FileType to any
   const getLStructureDir = async (content: any) => {
@@ -134,6 +115,7 @@
   const loadBaseDir = async (type: string) => {   
       switch (type) {
         case 'base':
+          filesAndDir.value = []
           if(baseDir.value){
             try{
               const dir_split = baseDir.value.split("/")
@@ -148,6 +130,7 @@
           }
           break
         case 'appendedDir':
+          filesAndDirAppended.value = []
           if(appendedDir.value){
             try{
               const dir_split = appendedDir.value.split("/")
@@ -165,7 +148,7 @@
   }
 
   const _switch_folder_name = (inside: [], dir: string) => {
-    if(!showFilesIntoFolders.value){
+    if(showSelectedFolder.value){
         return [
         {
           name: dir,

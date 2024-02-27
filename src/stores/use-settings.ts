@@ -15,7 +15,7 @@ export type RootState = {
   appendedDir: string
   enableAppendFile: boolean,
   fileToAppend: FileType,
-  showFilesIntoFolders: boolean
+  showSelectedFolder: boolean
 }
 
 export const useSettings = defineStore('settings', {
@@ -31,7 +31,7 @@ export const useSettings = defineStore('settings', {
     appendedDir: '',
     enableAppendFile: false,
     fileToAppend: {},
-    showFilesIntoFolders: true
+    showSelectedFolder: true
   } as RootState),
 
   persist: true,
@@ -48,7 +48,7 @@ export const useSettings = defineStore('settings', {
     getAppendedDir:  (state) => state.appendedDir,
     getEnableAppendFile: (state) => state.enableAppendFile,
     getfileToAppend: (state) => state.fileToAppend,
-    getShowFilesIntoFolders: (state) => state.showFilesIntoFolders,
+    getShowSelectedFolder: (state) => state.showSelectedFolder,
   },
 
   actions: {
@@ -85,8 +85,8 @@ export const useSettings = defineStore('settings', {
     setfileToAppend(val: FileType){
       this.fileToAppend = val
     },
-    setShowFilesIntoFolders(val: boolean){
-      this.showFilesIntoFolders = val
+    setShowSelectedFolder(val: boolean){
+      this.showSelectedFolder = val
     },
     applySettings(){
       document.documentElement.style.setProperty('--app_font', this.appFont)

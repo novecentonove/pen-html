@@ -1,5 +1,5 @@
 <template>
-  <div v-if="editor" :class="!showButtons ? 'w-[270px]' : 'w-[395px]'" class="buttons_bar inline-flex flex-no-wrap items-center p-1 rounded-lg"> 
+  <div v-if="editor" :class="!showButtons ? 'w-[385px]' : 'w-[385px]'" class="buttons_bar inline-flex flex-no-wrap items-center p-1 rounded-lg"> 
     <button title="Bold" @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
       <IconBold :width="size" />
     </button>
@@ -21,19 +21,19 @@
     <button title="Ul" @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
       <IconUl :width="size" />
     </button>
+    <button title="Ol" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
+      <IconOl :width="size" />
+    </button>
     <button title="Clear style" @click="editor.chain().focus().clearNodes().run()">
       <SquareOutline :width="size" />
     </button>
     <button title="Clear font color" @click="editor.chain().focus().unsetColor().run()">
       <IconClearAll :width="size" />
     </button>
-    <div class="inline-flex" @mouseover="showExtraButtons(true)" @mouseleave="showExtraButtons(false)">
-      <IconRight width="1.6em" class="p-0" />
+    <div class="inline-flex">  <!--@mouseover="showExtraButtons(true)" @mouseleave="showExtraButtons(false)"-->
+      <!-- <IconRight width="1.6em" class="p-0" /> -->
       <transition name="slide_right">
-        <div v-if="showButtons" class="flex [&>button]:ml-0.5">
-          <button title="Ol" @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
-            <IconOl :width="size" />
-          </button>
+        <div v-if="showButtons || true" class="flex [&>button]:ml-0.5">
           <button title="Highlight" @click="editor.chain().focus().toggleHighlight({ color: 'var(--hightlight_color)' }).run()" :class="{ 'is-active': editor.isActive('highlight', { color: 'var(--hightlight_color)' }) }">
             <div class="w-2 h-1 bg-blue-400"></div>
           </button>
@@ -56,7 +56,7 @@ import IconOl from '@/icons/FormatListNumbered.vue'
 import IconUl from '@/icons/FormatListBulleted.vue'
 import SquareOutline from '@/icons/SquareOutline.vue'
 import IconClearAll from '@/icons/ClipboardMinusOutline.vue'
-import IconRight from '@/icons/ChevronRight.vue'
+// import IconRight from '@/icons/ChevronRight.vue'
 import FormatUnderline from '@/icons/FormatUnderline.vue'
 import { Editor, } from '@tiptap/vue-3'
 import { ref } from 'vue'

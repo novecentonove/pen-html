@@ -28,7 +28,10 @@
       <label>
         <input v-model="enableAppendDir" @change="settings.setEnableAppendDir(enableAppendDir)" class="accent-slate-900" type="checkbox">
         Add extra Folder<br>
-        <span class="opacity-50">Your extra html folder for your notes</span>
+        <div class="flex justify-between">
+          <span class="opacity-50">Your extra html folder for your notes</span>
+          <span @click="settings.setAppendedDir(''); settings.setEnableAppendDir(false)">x</span>
+        </div>
       </label>
       <button :title="settings.getAppendedDir" class="buttonFolder border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir || 'Please select a directory'}}</button>
     </div>
@@ -37,14 +40,17 @@
       <label>
         <input v-model="enableAppendFile" @change="settings.setEnableAppendFile(enableAppendFile)" class="accent-slate-900" type="checkbox">
         Add extra file<br>
-        <span class="opacity-50">Your extra file for your notes</span>
+        <div class="flex justify-between">
+          <span class="opacity-50">Your extra file for your notes</span>
+          <span @click="settings.setfileToAppend({name: '',path: ''}); settings.setEnableAppendFile(false)">x</span>
+        </div>
       </label>
       <button :title="settings.getfileToAppend.path" class="buttonFolder border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile || 'Please select a file'}}</button>
     </div>
 
     <div class="input_section flex">
-      <input v-model="showFilesIntoFolders" @change="settings.setShowFilesIntoFolders(showFilesIntoFolders)" id="show_folder_name" type="checkbox" class="accent-slate-900 mr-1">
-      <label for="show_folder_name"> Show files within the folders
+      <input v-model="showSelectedFolder" @change="settings.setShowSelectedFolder(showSelectedFolder)" id="show_folder_name" type="checkbox" class="accent-slate-900 mr-1">
+      <label for="show_folder_name"> Show selected folders
         <p class="opacity-50">The content on your folder wil be wrapped <!--(you need to reaload to take effect) --></p>
       </label>
     </div>
@@ -172,7 +178,7 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
   const appVersion = await getVersion()
   const enableAppendFile = toRef(settings.enableAppendFile)
   const enableAppendDir = toRef(settings.getEnableAppendDir)
-  const showFilesIntoFolders = toRef(settings.getShowFilesIntoFolders)
+  const showSelectedFolder = toRef(settings.getShowSelectedFolder)
 
   const shortBaseFilesDir = computed(() => {
     const url = settings.getBaseDir.split('/')
