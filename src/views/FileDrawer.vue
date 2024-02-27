@@ -2,14 +2,6 @@
   <div class="flex flex-col">
     <div id="out_click" class="relative overflow-x-scroll w-full h-full pt-[36px] flex flex-col app_font">
       <div class="flex flex-col h-full pl-3">
-        <div v-if="openedFiles.length">
-          <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color select-text cut_text">Open editors</p>
-          <ul>
-            <li v-for="file in openedFiles" class="file_li" :key="file.path">
-              <FileClick :file="file" :closable="true"/>
-            </li>
-          </ul>
-        </div>
         <div class="pt-2">
           <p :title="baseDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
           <FileList :files="filesAndDir"/>
@@ -25,6 +17,14 @@
           <ul>
             <li class="file_li">
               <FileClick :file="fileToAppend" />
+            </li>
+          </ul>
+        </div>
+        <div v-if="openedFiles.length" class="mt-auto mb-12">
+          <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color select-text cut_text">Open editors</p>
+          <ul>
+            <li v-for="file in openedFiles" class="file_li" :key="file.path">
+              <FileClick :file="file" :closable="true"/>
             </li>
           </ul>
         </div>

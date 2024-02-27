@@ -8,7 +8,7 @@ export type RootState = {
   selectedPath: string
   clickDrawerFile: Omit<FileType, 'children'>[]
   savedFile: number,
-  notSavedFiles: string[],
+  notSavedFiles: string[], // path
   tabToDrag: string
 }
 

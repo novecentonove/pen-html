@@ -9,6 +9,10 @@
           <TabTitle :file="file" />
         </template>
         <li class="border-b border_color shadow-lg w-full min-h-[21px]"></li>
+        <!-- Close all tabs -->
+        <li class="border-b border_color shadow-lg w-5 min-h-[21px] flex">
+          <Minus title="todo" class="w-3 h-3 mt-auto mb-2" style="color: var(--border_color);" />
+        </li>
       </ul>
     </div>
     <div id="editor_section" >
@@ -24,6 +28,7 @@
   import { useFiles } from '@/stores/use-files'
   import TabContent from '@/components/HomeTabs/TabContent.vue'
   import TabTitle from '@/components/HomeTabs/TabTitle.vue'
+  import Minus from '@/icons/Minus.vue'
 
   const files = useFiles()
   const openFiles = computed(() => files.getOpenFiles)
