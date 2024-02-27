@@ -13,6 +13,12 @@ https://vitejs.dev/ <br>
 npm install
 ```
 
+### update cargo
+```sh
+cd src-tauri
+cargo update
+ ```
+
 ### Compile and Hot-Reload for Development
 
 ```sh
