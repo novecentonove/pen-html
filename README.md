@@ -13,7 +13,7 @@ https://vitejs.dev/ <br>
 npm install
 ```
 
-### update cargo
+### Update Cargo
 ```sh
 cd src-tauri
 cargo update
