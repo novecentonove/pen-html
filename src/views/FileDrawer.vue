@@ -4,6 +4,7 @@
       <div class="flex flex-col h-full pl-3">
         <div v-if="openedFiles.length">
           <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color select-text cut_text">Open editors</p>
+          <!-- <p>showF: {{ showFilesIntoFolders }}</p> -->
           <ul>
             <li v-for="file in openedFiles" class="file_li" :key="file.path">
               <FileClick :file="file" :closable="true"/>
@@ -68,7 +69,7 @@
   const fileToAppend = computed( () => settings.getfileToAppend)
   const enableAppendDir = computed( () => settings.getEnableAppendDir)
   const appendedDir = computed( () => settings.getAppendedDir)
-  const showFolderName = computed( () => settings.showFolderName)
+  const showFilesIntoFolders = computed( () => settings.getShowFilesIntoFolders)
 
   watch(baseDir, async (value) => {
     try{
@@ -88,7 +89,7 @@
     }
   })
 
-  watch(showFolderName, async () => {
+  watch(showFilesIntoFolders, async () => {
     loadAllDirs()
   })
 
@@ -164,7 +165,7 @@
   }
 
   const _switch_folder_name = (inside: [], dir: string) => {
-    if(showFolderName.value){
+    if(!showFilesIntoFolders.value){
         return [
         {
           name: dir,

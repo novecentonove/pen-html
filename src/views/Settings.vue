@@ -43,8 +43,8 @@
     </div>
 
     <div class="input_section flex">
-      <input v-model="showFolderName" @change="settings.setShowFolderName(showFolderName)" id="show_folder_name" type="checkbox" class="accent-slate-900 mr-1">
-      <label for="show_folder_name"> Show selected folder name
+      <input v-model="showFilesIntoFolders" @change="settings.setShowFilesIntoFolders(showFilesIntoFolders)" id="show_folder_name" type="checkbox" class="accent-slate-900 mr-1">
+      <label for="show_folder_name"> Show files within the folders
         <p class="opacity-50">The content on your folder wil be wrapped <!--(you need to reaload to take effect) --></p>
       </label>
     </div>
@@ -172,7 +172,7 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
   const appVersion = await getVersion()
   const enableAppendFile = toRef(settings.enableAppendFile)
   const enableAppendDir = toRef(settings.getEnableAppendDir)
-  const showFolderName = toRef(settings.showFolderName)
+  const showFilesIntoFolders = toRef(settings.getShowFilesIntoFolders)
 
   const shortBaseFilesDir = computed(() => {
     const url = settings.getBaseDir.split('/')
