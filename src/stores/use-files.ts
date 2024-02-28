@@ -8,8 +8,11 @@ export type RootState = {
   selectedPath: string
   clickDrawerFile: Omit<FileType, 'children'>[]
   savedFile: number,
+  tabToDrag: string,
   notSavedFiles: string[], // path
-  tabToDrag: string
+  fileDialogToTrigger: string,// path
+  // dialogTrigger: number,
+  dialogTriggerForAll: number
 }
 
 export const useFiles = defineStore('files', {
@@ -18,8 +21,11 @@ export const useFiles = defineStore('files', {
     selectedPath: '',
     clickDrawerFile: [],
     savedFile: 0,
+    tabToDrag: '',
     notSavedFiles: [],
-    tabToDrag: ''
+    fileDialogToTrigger: '',
+    // dialogTrigger: 0,
+    dialogTriggerForAll: 0
   } as RootState),
 
   persist: true,
@@ -30,8 +36,12 @@ export const useFiles = defineStore('files', {
     getClickDrawerFile: (state) => state.clickDrawerFile,
     getFileIsSaved: (state) => state.savedFile,
     getSelectedPath: (state) => state.selectedPath,
+    getTabToDrag: (state) => state.tabToDrag,
+    // file dialog
     getNotSavedFiles: (state) => state.notSavedFiles,
-    getTabToDrag: (state) => state.tabToDrag
+    getFileDialogToTrigger: (state) => state.fileDialogToTrigger,
+    // getDialogTrigger: (state) => state.dialogTrigger,
+    getDialogTriggerForAll: state => state.dialogTriggerForAll
   },
 
   actions: {
@@ -74,14 +84,33 @@ export const useFiles = defineStore('files', {
       }
     },
 
-    closeTab(path: string){
+    setTabToDrag(path: string) {
+      this.tabToDrag = path
+    },
+    
+    reArrangeFiles(tab_path: string, toIndex: number){
 
-      // remove from unSavedFile
-      this.removeFromNotSavedFile(path)
+      const objectToMove =  this.getOpenFiles.find((el) => el.path === tab_path)
 
-      // remove from open files
-      this.openFiles = this.openFiles.filter( tab => tab.path !== path)
+      if (objectToMove) {
+        const rearrange = this.getOpenFiles.filter(obj => obj.path !== tab_path)
+        rearrange.splice(toIndex, 0, objectToMove)
+        this.openFiles = rearrange
+      }
 
+    },
+    
+    setOpenFileError(path: string, isError: boolean, error: string ){
+      this.openFiles = this.getOpenFiles.map(file => {
+        if(file.path === path){
+          file.isError = isError,
+          file.error = error
+        }
+        return file
+      })
+    },
+
+    selectLastTab(){
       if(this.getOpenFiles.length){
         this.setSelectedPath(this.getOpenFiles[this.getOpenFiles.length-1].path)
       } else {
@@ -89,18 +118,89 @@ export const useFiles = defineStore('files', {
       }
     },
 
-    triggerFileIsSaved(){
-      this.savedFile++
+    destroyTab(path: string){
+      // remove from unSavedFile
+      this.removeFromNotSavedFile(path)
+      // remove from open files
+      this.openFiles = this.openFiles.filter( tab => tab.path !== path)
+      console.log('destroyed')
+    },
+    
+    // close tabs
+    async closeTab(path: string, action?: string){
+      return new Promise(async(resolve, reject) => {
+        try {
+          const res = await this.closeTabPromise(path, action)
+          resolve(res)
+        } catch(e){
+          // reject(e)
+          console.log(e)
+        }
+      })
     },
 
-    setNotSavedFiles(arr: string[]){
-      this.notSavedFiles = arr
+    async closeTabPromise(path: string, action?: string){
+      return new Promise((resolve, reject) => {
+
+        const isSaved = !this.checkIfFileIsNotSaved(path)
+
+        if( isSaved || action == 'discard') {
+          this.destroyTab(path)
+          this.selectLastTab()
+          resolve(true)
+        } 
+        else if(action == 'cancel'){
+          reject('cancel')
+        }
+        // Open dialog to close file
+        else {
+          this.setFileDialogToTrigger(path)
+        }
+      
+
+        // return promise if path is cleared
+        const interv = setInterval( () => {
+           if (this.getOpenFiles.filter(file => file.path === path).length < 0){
+            resolve(true)
+            clearInterval(interv)
+          }
+        }, 400)
+      })
     },
 
-    removeFromNotSavedFile(path: string){
-      const files = this.getNotSavedFiles
-      const res = files.filter(el => el !== path)
-      this.setNotSavedFiles(res)
+    setFileDialogToTrigger(path: string){
+      this.fileDialogToTrigger = path
+    },
+
+    async closeAllTabs(){
+      this.dialogTriggerForAll++
+      // const files = this.getOpenFiles
+
+      // for (const file of files) {
+      //   console.log('all init')
+      //   try {
+      //     const res = await this.closeTab(file.path)
+      //     console.log('all', res);
+      //   } catch(e){
+      //     console.log('all', e);
+      //   }
+      // }
+
+      // return new Promise((resolve /*reject*/) => {
+      //   this.dialogTriggerForAll++
+
+      //   const interv = setInterval( () => {
+      //     if (this.getNotSavedFiles.length == 0){
+      //       resolve(true)
+      //       clearInterval(interv)
+      //     }
+          
+      //   }, 400)
+      // })
+    },
+
+    checkIfFileIsNotSaved(path: string){
+      return this.getNotSavedFiles.includes(path)
     },
 
     toggleUnsavedFiles(val: {path: string, savedFile: boolean}){
@@ -122,29 +222,18 @@ export const useFiles = defineStore('files', {
       }
     },
 
-    setTabToDrag(path: string) {
-      this.tabToDrag = path
+    triggerFileIsSaved(){
+      this.savedFile++
     },
-    
-    reArrangeFiles(tab_path: string, toIndex: number){
 
-      const objectToMove =  this.getOpenFiles.find((el) => el.path === tab_path)
-
-      if (objectToMove) {
-        const rearrange = this.getOpenFiles.filter(obj => obj.path !== tab_path)
-        rearrange.splice(toIndex, 0, objectToMove)
-        this.openFiles = rearrange
-      }
-
+    _setNotSavedFiles(arr: string[]){
+      this.notSavedFiles = arr
     },
-    setOpenFileError(path: string, isError: boolean, error: string ){
-      this.openFiles = this.getOpenFiles.map(file => {
-        if(file.path === path){
-          file.isError = isError,
-          file.error = error
-        }
-        return file
-      })
-    }
+
+    removeFromNotSavedFile(path: string){
+      const res = this.getNotSavedFiles.filter(el => el !== path)
+      this._setNotSavedFiles(res)
+    }   
+
   }
 })

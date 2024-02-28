@@ -2,8 +2,8 @@
   <div class="flex flex-col">
     <div id="out_click" class="relative overflow-x-scroll w-full h-full pt-[36px] flex flex-col app_font">
       <div class="flex flex-col h-full pl-3">
-        <div class="pt-2">
-          <p :title="baseDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
+        <div class="pt-5">
+          <p :title="baseDir" class="pb-[6px] mb-2 border-b border_color"></p>
           <FileList :files="filesAndDir"/>
           <div v-if="baseDir" @click="openDir('base')" class="ml-2 open_dir"></div>
         </div>
@@ -170,7 +170,7 @@
 
   onMounted( () => {
     loadAllDirs()
-    setInterval(loadAllDirs, 1000*60*2)
+    // setInterval(loadAllDirs, 1000*60*2)
   })
 </script>
 

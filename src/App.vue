@@ -30,7 +30,7 @@
         </HomeTabs>
         
         <Teleport to="body">
-          <NotSavedDialog :file-to-close="file" :trigger="trigger" @fileDone="fileDone" />
+          <FileDialog />
         </Teleport>
 
       </div>
@@ -48,7 +48,8 @@
   import WindowMaximize from '@/icons/WindowMaximize.vue'
   import WindowClose from '@/icons/WindowClose.vue'
   import HomeTabs from '@/views/HomeTabs.vue'
-  import NotSavedDialog from './components/HomeTabs/NotSavedDialog.vue'
+  // import NotSavedDialog from './components/HomeTabs/NotSavedDialog.vue'
+  import FileDialog from './components/HomeTabs/FileDialog.vue'
   import { type FileType } from '@/types/FileType'
   import { listen } from '@tauri-apps/api/event'
   import { debounce, throttle } from 'lodash'
@@ -59,8 +60,8 @@
   const leftW = ref(160)
 
   // Check not saved
-  const trigger = ref(0)
-  const file = ref<FileType>({name: '', path: ''})
+  // const trigger = ref(0)
+  // const file = ref<FileType>({name: '', path: ''})
   const isDropping = ref(false)
 
   // Drop files
@@ -102,6 +103,19 @@
   })
 
 
+  // todo add a promise
+  const handleClose = () => {
+
+    const notSaved = files.getNotSavedFiles
+
+    if(notSaved.length){
+      alert('file non salvati')
+    } else {
+      appWindow.close()
+    }
+  }
+
+
   // Drag border
   const startDragging = (e: MouseEvent) => {
     document.addEventListener('mousemove', handleDragging)
@@ -118,25 +132,9 @@
     }
   }
 
-  // Functions
-  const fileDone = () => {
-    const notSaved = files.getNotSavedFiles
-    if(notSaved.length){
-      handleClose()
-    } else {
-      appWindow.close()
-    }
-  }
-    
-  const handleClose = () => {
-    const notSaved = files.getNotSavedFiles
-    if(notSaved.length){
-        file.value = {name: 'TODO', path: notSaved[0]}
-        trigger.value++
-    } else {
-      appWindow.close()
-    }
-  }
+
+
+
 
   onMounted( () => {
     settings.applySettings()

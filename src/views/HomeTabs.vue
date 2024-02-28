@@ -4,14 +4,14 @@
   <div class="text-xs overflow-y-scroll">
     <div class="flex">
       <div class="w-2 border-b border_color shadow-lg"></div>
-      <ul class="flex w-full list-none">
+      <ul class="flex w-full list-none" :class="openFiles.length ? '' : 'mt-3'">
         <template v-for="file in openFiles" :key="file.path" >
           <TabTitle :file="file" />
         </template>
         <li class="border-b border_color shadow-lg w-full min-h-[21px]"></li>
         <!-- Close all tabs -->
         <li class="border-b border_color shadow-lg w-5 min-h-[21px] flex">
-          <Minus title="todo" class="w-3 h-3 mt-auto mb-2" style="color: var(--border_color);" />
+          <Minus @click="files.closeAllTabs" title="todo" class="w-3 h-3 mt-auto mb-2" style="color: var(--border_color);" />
         </li>
       </ul>
     </div>
@@ -32,6 +32,9 @@
 
   const files = useFiles()
   const openFiles = computed(() => files.getOpenFiles)
+
+  // const tabPromise = ()
+
 </script>
 
 <style>

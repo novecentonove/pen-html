@@ -70,7 +70,7 @@ const handleDragging = (e: MouseEvent) => {
     })
 
     // Stop if out of place
-    if(file_drawer.contains(el) || editor_section.contains(el)) {
+    if(file_drawer && editor_section && file_drawer.contains(el) || editor_section.contains(el)) {
       document.removeEventListener('mousemove', handleDragging)
       resetStyleTab()
     }
