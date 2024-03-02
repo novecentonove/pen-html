@@ -68,6 +68,8 @@ const editorIsReady = ref(false)
 const unsaved = ref(false)
 const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.getOpenFile(props.path)
+const fileSavingTrigger = computed(() => files.getFileSavingTrigger)
+
 let lastFileContent = ref('<p></p>')
 
 type EditorVar = Editor | null
@@ -109,6 +111,12 @@ const doFocus = () => {
     }
   }
 }
+
+watch(fileSavingTrigger, (pathToTrigger) => {
+  if(pathToTrigger === props.path){
+    saveFile()
+  }
+})
 
 watch(() => props.modelValue, (value: {}) => {
   if(editor){
@@ -156,7 +164,7 @@ onMounted( () => {
           addKeyboardShortcuts() {
             return {
               Tab: () => {
-                if (editor?.isActive("codeBlock")) {
+                if (editor?.isActive("listItem") === false) {
                   return editor.commands.insertContent("\t")
                 }
               }

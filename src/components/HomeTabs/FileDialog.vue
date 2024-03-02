@@ -4,19 +4,22 @@
       <p class="mb-5 text-center"><span class="text-red-900">{{ pathToShow }} </span> is not saved. <br>Do you want to save it?<strong id="number"></strong></p>
       <div class="dialog_b flex justify-between">
         <!-- <button @click="closeTab('save')">Save</button> -->
-        <button ref="closeAnyWay" class="bg-red-900">Discard changes</button>
-        <button ref="cancelButton" class="bg-[#303030]">Cancel</button>
+        <button ref="cancelButton" class="bg-[#4b4b4b]">Cancel</button>
+        <button ref="saveButton" class="bg-red-900">save</button>
+        <button ref="closeAnyWay" class="bg-[#303030]">Discard changes</button>
       </div>
     </div>
   </dialog>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue'
 import { useFiles } from '@/stores/use-files'
 
 const files = useFiles()
 const dialog = ref(null)
+
+const saveButton = ref(null)
 const closeAnyWay = ref(null)
 const cancelButton = ref(null)
 
@@ -33,6 +36,10 @@ const showDialog = (path: string) => {
       // @ts-ignore
       dialog.value.showModal()
       // @ts-ignore
+      saveButton.value.addEventListener('click', () => {
+        resolve('save'); 
+      })
+      // @ts-ignore
       closeAnyWay.value.addEventListener('click', () => {
         resolve('discard'); 
       })
@@ -44,9 +51,10 @@ const showDialog = (path: string) => {
   }
 }
 
-watch(pathToClose, () => {
-  if(pathToClose.value) {
-    closeTab(pathToClose.value)
+watch(pathToClose, async (path) => {
+  if(path) {
+    const res = await closeTab(path)
+    console.log('await res: ', res)
   }
 })
 
@@ -55,35 +63,47 @@ watch(triggerForAll, () => {
 })
 
 const closeTab = async (path: string) => {
-  pathToShow.value = path
-  const res = await showDialog(path)
 
-  if(res == 'discard') {
-    files.closeTab(path, 'discard')
-  } else if (res == 'cancel') {
-    files.closeTab(path, 'cancel')
-  }
-
-  // @ts-ignore
-  dialog.value.close()
   // reset trigger
   files.setFileDialogToTrigger('')
+
+  return new Promise(async (resolve /*reject*/) => {
+    pathToShow.value = path
+    const res = await showDialog(path)
+    let resFromFiles = ''
+
+    switch (res) {
+      case 'save':
+        resFromFiles = await files.closeTab(path, 'save') as string
+        break;
+      case 'cancel':
+        resFromFiles = await files.closeTab(path, 'cancel') as string
+        break;
+      case 'discard':
+        resFromFiles = await files.closeTab(path, 'discard') as string
+        break;
+      default:
+        console.error('handler not found')
+        resFromFiles = await files.closeTab(path, 'cancel') as string
+        break;
+    }
+
+    // @ts-ignore
+    dialog.value.close()
+    resolve(resFromFiles)
+  })
 }
 
-// TODO Spostare in files
 const closeAllTabs = async () => {
 
   for (const file of openFiles.value) {
     const isSaved = !files.checkIfFileIsNotSaved(file.path)
     if(isSaved){
-      files.closeTab(file.path)
+      await files.closeTab(file.path)
     } else {
         files.setSelectedPath(file.path)
-        const res = await showDialog(file.path)
-
-        if(res == 'discard') files.closeTab(file.path, 'discard')
-        // @ts-ignore
-        dialog.value.close()
+        const res = await closeTab(file.path)
+        if(res == 'cancel') return
       }
   }
 }
@@ -93,13 +113,14 @@ const closeAllTabs = async () => {
 <style>
 .dialog {
   min-width: 425px;
-  max-width: 600px;
+  max-width: 1200px;
   border: 1px solid #202020;
 }
 .dialog_b button{
+  white-space: nowrap;
   width: 100%;
-    padding: 8px 10px;
-    margin: 0 8px;
-    border-radius: 5px;
+  padding: 8px 10px;
+  margin: 0 8px;
+  border-radius: 5px;
 }
 </style>

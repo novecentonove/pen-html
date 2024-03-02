@@ -109,7 +109,7 @@
     const notSaved = files.getNotSavedFiles
 
     if(notSaved.length){
-      alert('file non salvati')
+      files.closeAllTabs()
     } else {
       appWindow.close()
     }

@@ -9,9 +9,9 @@ export type RootState = {
   clickDrawerFile: Omit<FileType, 'children'>[]
   savedFile: number,
   tabToDrag: string,
-  notSavedFiles: string[], // path
-  fileDialogToTrigger: string,// path
-  // dialogTrigger: number,
+  notSavedFiles: string[],        // Array[path]
+  fileSavingTrigger: string       // path
+  fileDialogToTrigger: string,    // path
   dialogTriggerForAll: number
 }
 
@@ -23,8 +23,8 @@ export const useFiles = defineStore('files', {
     savedFile: 0,
     tabToDrag: '',
     notSavedFiles: [],
+    fileSavingTrigger: '',
     fileDialogToTrigger: '',
-    // dialogTrigger: 0,
     dialogTriggerForAll: 0
   } as RootState),
 
@@ -37,10 +37,10 @@ export const useFiles = defineStore('files', {
     getFileIsSaved: (state) => state.savedFile,
     getSelectedPath: (state) => state.selectedPath,
     getTabToDrag: (state) => state.tabToDrag,
+    getFileSavingTrigger: (state) => state.fileSavingTrigger,
     // file dialog
     getNotSavedFiles: (state) => state.notSavedFiles,
     getFileDialogToTrigger: (state) => state.fileDialogToTrigger,
-    // getDialogTrigger: (state) => state.dialogTrigger,
     getDialogTriggerForAll: state => state.dialogTriggerForAll
   },
 
@@ -127,76 +127,68 @@ export const useFiles = defineStore('files', {
     },
     
     // close tabs
+
+    // Trigger FileDialog
+    setFileDialogToTrigger(path: string){
+      this.fileDialogToTrigger = path
+    },
+    
+    async saveFilePromise(path: string){
+      return new Promise(async (resolve/*, reject*/) => {
+        this.fileSavingTrigger = path
+
+        const interval = setInterval( () => {
+            const isSaved = !this.checkIfFileIsNotSaved(path)
+
+            if(isSaved){
+              resolve(true)
+              clearInterval(interval)
+            }
+        }, 400)
+      })
+    },
+
     async closeTab(path: string, action?: string){
+
       return new Promise(async(resolve, reject) => {
         try {
-          const res = await this.closeTabPromise(path, action)
+          const res = await this.closeTabPromise(path, action) as string
           resolve(res)
         } catch(e){
-          // reject(e)
           console.log(e)
         }
       })
     },
 
     async closeTabPromise(path: string, action?: string){
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
 
         const isSaved = !this.checkIfFileIsNotSaved(path)
 
-        if( isSaved || action == 'discard') {
+        if( isSaved || action === 'discard') {
           this.destroyTab(path)
           this.selectLastTab()
-          resolve(true)
-        } 
-        else if(action == 'cancel'){
-          reject('cancel')
+          resolve('discarded')
         }
-        // Open dialog to close file
+        else if(action === 'save'){
+          await this.saveFilePromise(path)
+          this.destroyTab(path)
+          this.selectLastTab()
+          resolve('saved')
+        }
+        else if(action === 'cancel'){
+          resolve('cancelled')
+        }
+
+        // First click: Open dialog to close file
         else {
           this.setFileDialogToTrigger(path)
         }
-      
-
-        // return promise if path is cleared
-        const interv = setInterval( () => {
-           if (this.getOpenFiles.filter(file => file.path === path).length < 0){
-            resolve(true)
-            clearInterval(interv)
-          }
-        }, 400)
       })
-    },
-
-    setFileDialogToTrigger(path: string){
-      this.fileDialogToTrigger = path
     },
 
     async closeAllTabs(){
       this.dialogTriggerForAll++
-      // const files = this.getOpenFiles
-
-      // for (const file of files) {
-      //   console.log('all init')
-      //   try {
-      //     const res = await this.closeTab(file.path)
-      //     console.log('all', res);
-      //   } catch(e){
-      //     console.log('all', e);
-      //   }
-      // }
-
-      // return new Promise((resolve /*reject*/) => {
-      //   this.dialogTriggerForAll++
-
-      //   const interv = setInterval( () => {
-      //     if (this.getNotSavedFiles.length == 0){
-      //       resolve(true)
-      //       clearInterval(interv)
-      //     }
-          
-      //   }, 400)
-      // })
     },
 
     checkIfFileIsNotSaved(path: string){
@@ -226,14 +218,14 @@ export const useFiles = defineStore('files', {
       this.savedFile++
     },
 
-    _setNotSavedFiles(arr: string[]){
-      this.notSavedFiles = arr
-    },
-
     removeFromNotSavedFile(path: string){
       const res = this.getNotSavedFiles.filter(el => el !== path)
       this._setNotSavedFiles(res)
-    }   
+    },
+
+    _setNotSavedFiles(arr: string[]){
+      this.notSavedFiles = arr
+    }
 
   }
 })
