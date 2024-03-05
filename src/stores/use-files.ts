@@ -13,6 +13,7 @@ export type RootState = {
   fileSavingTrigger: string       // path
   fileDialogToTrigger: string,    // path
   dialogTriggerForAll: number
+  dialogTriggerForAllAndKeep: number
 }
 
 export const useFiles = defineStore('files', {
@@ -25,7 +26,8 @@ export const useFiles = defineStore('files', {
     notSavedFiles: [],
     fileSavingTrigger: '',
     fileDialogToTrigger: '',
-    dialogTriggerForAll: 0
+    dialogTriggerForAll: 0,
+    dialogTriggerForAllAndKeep: 0
   } as RootState),
 
   persist: true,
@@ -41,7 +43,8 @@ export const useFiles = defineStore('files', {
     // file dialog
     getNotSavedFiles: (state) => state.notSavedFiles,
     getFileDialogToTrigger: (state) => state.fileDialogToTrigger,
-    getDialogTriggerForAll: state => state.dialogTriggerForAll
+    getDialogTriggerForAll: state => state.dialogTriggerForAll,
+    getDialogTriggerForAllAndKeep: state => state.dialogTriggerForAllAndKeep
   },
 
   actions: {
@@ -148,11 +151,11 @@ export const useFiles = defineStore('files', {
       })
     },
 
-    async closeTab(path: string, action?: string){
+    async closeTab(path: string, action?: string, keepTabs?: boolean){
 
       return new Promise(async(resolve, reject) => {
         try {
-          const res = await this.closeTabPromise(path, action) as string
+          const res = await this.closeTabPromise(path, action, keepTabs) as string
           resolve(res)
         } catch(e){
           console.log(e)
@@ -160,19 +163,23 @@ export const useFiles = defineStore('files', {
       })
     },
 
-    async closeTabPromise(path: string, action?: string){
+    async closeTabPromise(path: string, action?: string, keepTabs?:boolean){
       return new Promise(async (resolve, reject) => {
 
         const isSaved = !this.checkIfFileIsNotSaved(path)
 
         if( isSaved || action === 'discard') {
-          this.destroyTab(path)
+          if(!keepTabs){
+            this.destroyTab(path)
+          }
           this.selectLastTab()
           resolve('discarded')
         }
         else if(action === 'save'){
           await this.saveFilePromise(path)
-          this.destroyTab(path)
+          if(!keepTabs){
+            this.destroyTab(path)
+          }
           this.selectLastTab()
           resolve('saved')
         }
@@ -189,6 +196,9 @@ export const useFiles = defineStore('files', {
 
     async closeAllTabs(){
       this.dialogTriggerForAll++
+    },
+    async closeAllTabsAndKeep(){
+      this.dialogTriggerForAllAndKeep++
     },
 
     checkIfFileIsNotSaved(path: string){

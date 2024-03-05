@@ -33,6 +33,10 @@
           <FileDialog />
         </Teleport>
 
+        <Teleport to="body">
+          <Dialog />
+        </Teleport>
+
       </div>
     </div>
   </div>
@@ -49,16 +53,19 @@
   import WindowClose from '@/icons/WindowClose.vue'
   import HomeTabs from '@/views/HomeTabs.vue'
   // import NotSavedDialog from './components/HomeTabs/NotSavedDialog.vue'
-  import FileDialog from './components/HomeTabs/FileDialog.vue'
+  import FileDialog from './components/Dialogs/FileDialog.vue'
+  import Dialog from './components/Dialogs/Dialog.vue'
   import { type FileType } from '@/types/FileType'
   import { listen } from '@tauri-apps/api/event'
   import { debounce, throttle } from 'lodash'
   import { allowedExt } from '@/types/AllowedExt'
+  import { useDialogs } from '@/stores/use-dialogs'
+
 
   const settings = useSettings()
   const files = useFiles()
   const leftW = ref(160)
-
+  const dialog = useDialogs()
   // Check not saved
   // const trigger = ref(0)
   // const file = ref<FileType>({name: '', path: ''})
@@ -109,7 +116,7 @@
     const notSaved = files.getNotSavedFiles
 
     if(notSaved.length){
-      files.closeAllTabs()
+      dialog.setMessage('There\'s some files not saved, please resolve this')
     } else {
       appWindow.close()
     }

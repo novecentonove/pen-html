@@ -26,8 +26,11 @@ const cancelButton = ref(null)
 const pathToShow = ref('')
 const pathToClose = computed( () => files.getFileDialogToTrigger)
 const triggerForAll = computed( () => files.getDialogTriggerForAll)
+const triggerForAllAndKeep = computed( () => files.getDialogTriggerForAllAndKeep)
 
 const openFiles = computed( () => files.getOpenFiles)
+
+// TODO RIFARE tutto con await da files!!! 
 
 const showDialog = (path: string) => {
   if(closeAnyWay.value && dialog.value){
@@ -62,7 +65,11 @@ watch(triggerForAll, () => {
   closeAllTabs()
 })
 
-const closeTab = async (path: string) => {
+watch(triggerForAllAndKeep, () => {
+  closeAllTabs(true)
+})
+
+const closeTab = async (path: string, keepTabs?: boolean) => {
 
   // reset trigger
   files.setFileDialogToTrigger('')
@@ -74,13 +81,13 @@ const closeTab = async (path: string) => {
 
     switch (res) {
       case 'save':
-        resFromFiles = await files.closeTab(path, 'save') as string
+        resFromFiles = await files.closeTab(path, 'save', keepTabs) as string
         break;
       case 'cancel':
         resFromFiles = await files.closeTab(path, 'cancel') as string
         break;
       case 'discard':
-        resFromFiles = await files.closeTab(path, 'discard') as string
+        resFromFiles = await files.closeTab(path, 'discard', keepTabs) as string
         break;
       default:
         console.error('handler not found')
@@ -94,7 +101,7 @@ const closeTab = async (path: string) => {
   })
 }
 
-const closeAllTabs = async () => {
+const closeAllTabs = async (keepTabs?: boolean) => {
 
   for (const file of openFiles.value) {
     const isSaved = !files.checkIfFileIsNotSaved(file.path)
@@ -102,7 +109,7 @@ const closeAllTabs = async () => {
       await files.closeTab(file.path)
     } else {
         files.setSelectedPath(file.path)
-        const res = await closeTab(file.path)
+        const res = await closeTab(file.path, keepTabs)
         if(res == 'cancel') return
       }
   }
