@@ -15,8 +15,9 @@
 import { computed, ref, watch } from 'vue';
 import { useDialogs } from '@/stores/use-dialogs'
 
-const dialogEl = ref(null)
+
 const dialog = useDialogs()
+const dialogEl = ref(null)
 const gotIt = ref(null)
 
 const message = computed( () => dialog.getMessage)
@@ -33,7 +34,8 @@ watch(
 
 const close = () => {
   // @ts-ignore
-  dialogEl.close()
+  dialogEl.value.close()
+  console.log('close')
 }
 
 </script>
