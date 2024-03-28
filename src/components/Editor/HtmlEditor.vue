@@ -14,7 +14,7 @@
       <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
 
-  <div v-else @click.prevent.self="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-10">
+  <div v-else @click="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-10">
     <div class="self-stretch overflow-y-scroll">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content
@@ -52,6 +52,8 @@ import { Highlight } from '@tiptap/extension-highlight'
 import { Extension } from '@tiptap/core'
 import Underline from '@tiptap/extension-underline'
 // import TaskList from '@tiptap/extension-task-list'
+import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
+import { common, createLowlight } from 'lowlight'
 
 type Props = {
   modelValue: string
@@ -144,7 +146,9 @@ onMounted( () => {
       extensions: [
         // @ts-ignore
         BubbleMenu,
-        StarterKit,
+        StarterKit.configure({
+            codeBlock: false
+        }),
         TextStyle,
         Color.configure({
           types: ['textStyle'],
@@ -170,7 +174,10 @@ onMounted( () => {
             class: 'highlight_text',
           }
         }),
-        Underline
+        Underline,
+        CodeBlockLowlight.configure({
+            lowlight: createLowlight(common)
+        })
         // TaskList
       ],
       editorProps: {
