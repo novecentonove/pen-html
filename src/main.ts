@@ -1,9 +1,9 @@
 import './assets/github-markdown-dark.css'
 import './assets/main.css'
 /* hightlight css*/ 
-import './assets/atom-one-dark.css'
-//import './assets/github-dark.css'
-// import './assets/tokyo-night-dark.css'
+import './assets/highlight/atom-one-dark.css'
+// //import './assets/highlight/github-dark.css'
+// import './assets/highlight/tokyo-night-dark.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
