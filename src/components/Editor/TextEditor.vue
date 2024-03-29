@@ -78,7 +78,7 @@ watch(content, (value: string) => {
 }, { immediate: false })
 
 watch(unsaved, (bool) => {
-    files.toggleUnsavedFiles({path: props.path, savedFile: !bool})
+    files.setToggleSavedFiles({path: props.path, savedFile: !bool})
 })
 
 watch(() => props.onSelectedPath, () => doFocus())

@@ -197,6 +197,7 @@ export const useFiles = defineStore('files', {
     async closeAllTabs(){
       this.dialogTriggerForAll++
     },
+    
     async closeAllTabsAndKeep(){
       this.dialogTriggerForAllAndKeep++
     },
@@ -205,7 +206,7 @@ export const useFiles = defineStore('files', {
       return this.getNotSavedFiles.includes(path)
     },
 
-    toggleUnsavedFiles(val: {path: string, savedFile: boolean}){
+    setToggleSavedFiles(val: {path: string, savedFile: boolean}){
       const files = this.getNotSavedFiles
       const savedFile = val.savedFile
       const path = val.path
