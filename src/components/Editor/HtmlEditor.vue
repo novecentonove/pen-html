@@ -16,9 +16,9 @@
 
   <!-- @click="doFocus($event)" -->
   <div v-else class="relative flex flex-col wrapper_editor markdown-body editor_font editor_font_size mt-6 h-full px-10">
-    <div class="absolute -top-3 right-1" @click="settings.toggleEditorWidth">
-      <WidthNormalIcon class="cursor-pointer" title="Set width to 900" v-if="settings.getToggleEditorWidth === 700"/>
-      <WidthWideIcon class="cursor-pointer" title="Set width to 700" v-else />
+    <div class="absolute bottom-3 right-3 cursor-pointer opacity-30" @click="settings.toggleEditorWidth">
+      <WidthNormalIcon title="Set width to 900" v-if="settings.getToggleEditorWidth === 700"/>
+      <WidthWideIcon title="Set width to 700" v-else />
     </div>
     <div class="self-stretch overflow-y-scroll">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
