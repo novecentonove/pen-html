@@ -23,7 +23,7 @@ export const useSettings = defineStore('settings', {
   state: () => ({ 
     appFont: 'Arial',
     editorFont: 'Consolas',
-    fontColor: '#fff',
+    fontColor: '#909090',
     editorFontSize: 0.9,
     basedir: '',
     baseFontDir: '',
