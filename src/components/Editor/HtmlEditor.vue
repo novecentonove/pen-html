@@ -14,14 +14,20 @@
       <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
 
-  <div v-else @click="doFocus($event)" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-10">
+  <!-- @click="doFocus($event)" -->
+  <div v-else class="relative flex flex-col wrapper_editor markdown-body editor_font editor_font_size mt-6 h-full px-10">
+    <div class="absolute -top-3 right-1" @click="settings.toggleEditorWidth">
+      <WidthNormalIcon class="cursor-pointer" title="Set width to 900" v-if="settings.getToggleEditorWidth === 700"/>
+      <WidthWideIcon class="cursor-pointer" title="Set width to 700" v-else />
+    </div>
     <div class="self-stretch overflow-y-scroll">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content
         :editor="editor"
         type="color"
-        @input="editor.chain().focus().setColor($event.target.value).run()"
+        @input="editor?.chain().focus().setColor($event.target.value).run()"
         :value="editor.getAttributes('textStyle').color"
+        :style="`padding: 0 calc((100% - ${settings.getToggleEditorWidth}px) / 2);`"
         />
       </div>
     </div>
@@ -54,6 +60,10 @@ import Underline from '@tiptap/extension-underline'
 // import TaskList from '@tiptap/extension-task-list'
 import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { common, createLowlight } from 'lowlight'
+import { useSettings } from '@/stores/use-settings'
+import WidthNormalIcon from '@/icons/Width-normal.vue'
+import WidthWideIcon from '@/icons/Width-wide.vue'
+
 
 type Props = {
   modelValue: string
@@ -71,6 +81,7 @@ const unsaved = ref(false)
 const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.getOpenFile(props.path)
 const triggerSaveFile = computed(() => files.getTriggerSaveFile)
+const settings = useSettings()
 
 let lastFileContent = ref('<p></p>')
 
@@ -230,9 +241,7 @@ onBeforeUnmount( () => {
   white-space: pre;
   word-break: break-word;
   margin: 0 auto;
-  /* overflow-y: scroll; */
   padding-right: 25px;
-  max-width: 700px;
 }
 </style>
 

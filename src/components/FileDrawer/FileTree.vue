@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, onMounted, ref } from 'vue'
+  import { computed, onMounted } from 'vue'
   import { type FileType } from '@/types/FileType'
   import FileTree from './FileTree.vue'
   import FileClick from './FileClick.vue'

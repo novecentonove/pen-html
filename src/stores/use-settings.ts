@@ -15,7 +15,8 @@ export type RootState = {
   appendedDir: string
   enableAppendFile: boolean,
   fileToAppend: FileType,
-  showSelectedFolder: boolean
+  showSelectedFolder: boolean,
+  editorWith: number
 }
 
 export const useSettings = defineStore('settings', {
@@ -31,7 +32,8 @@ export const useSettings = defineStore('settings', {
     appendedDir: '',
     enableAppendFile: false,
     fileToAppend: {},
-    showSelectedFolder: true
+    showSelectedFolder: true,
+    editorWith: 700
   } as RootState),
 
   persist: true,
@@ -49,6 +51,7 @@ export const useSettings = defineStore('settings', {
     getEnableAppendFile: (state) => state.enableAppendFile,
     getfileToAppend: (state) => state.fileToAppend,
     getShowSelectedFolder: (state) => state.showSelectedFolder,
+    getToggleEditorWidth: (state) => state.editorWith
   },
 
   actions: {
@@ -102,6 +105,9 @@ export const useSettings = defineStore('settings', {
       document.documentElement.style.setProperty('--settings_panel_color', theme?.colors?.settings_panel || '#202020')
       document.documentElement.style.setProperty('--border_color', theme?.colors?.border || '#525252')
       document.documentElement.style.setProperty('--markdown_pre_color', theme?.colors?.pre || '#131313')
+    },
+    toggleEditorWidth(){
+      this.editorWith === 700 ? this.editorWith = 900 : this.editorWith = 700
     }
   }
 })
