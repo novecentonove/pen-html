@@ -14,7 +14,7 @@
       <p v-if="openFile.error">{{ openFile.error }}</p>
   </div>
 
-  <div v-else @click="doFocus" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-10">
+  <div v-else @click="doFocus($event)" class="flex flex-col wrapper_editor markdown-body editor_font editor_font_size relative mt-6 h-full px-10">
     <div class="self-stretch overflow-y-scroll">
       <div v-if="editor" @keyup.ctrl.s="saveFile">
         <editor-content
@@ -104,8 +104,14 @@ const saveFile = async () => {
   }
 }
 
-const doFocus = () => {
+const doFocus = (e: any) => {
   if(editor){
+    if(e){
+    const isButtomBar = (e.target.closest('.buttons_bar'))
+    if(isButtomBar){
+      return
+    }
+  }
     if(!editor.isFocused){
       editor.commands.focus('start')
     }

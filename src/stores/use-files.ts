@@ -172,7 +172,8 @@ export const useFiles = defineStore('files', {
           const isNotSaved = this.getNotSavedFiles.find(el => el === path)
           
           if(isNotSaved){
-            this.addCloseFileHandler(path)      
+            this.addCloseFileHandler(path)
+            this.setSelectedPath(path)
             const res = await this.awaitCloseTab(path, closeTab)
             resolve(res)
           } else {
