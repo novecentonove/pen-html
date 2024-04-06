@@ -104,9 +104,9 @@ const saveFile = async () => {
   }
 }
 
-const doFocus = (e: any) => {
+const doFocus = (e:any = null) => {
   if(editor){
-    if(e){
+    if(e && e.target){
     const isButtomBar = (e.target.closest('.buttons_bar'))
     if(isButtomBar){
       return
