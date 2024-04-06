@@ -61,7 +61,7 @@
   const files = useFiles()
   const settings = useSettings()
   
-  const file_is_saved = computed(() => files.getFileIsSaved)
+  const file_is_saved = computed(() => files.showFileIsSaved)
   const openedFiles = computed( () => files.getOpenFiles)
   const baseDir = computed( () => settings.getBaseDir)
   const getEnableAppendFile = computed( () => settings.getEnableAppendFile)

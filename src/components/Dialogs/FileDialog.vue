@@ -60,16 +60,21 @@ const showDialog = (path: string) => {
   }
 }
 
-watch(triggerFileToClose, async (path) => {
-  if(path != ''){
-      pathToShow.value = path
+watch(triggerFileToClose, async (el) => {
+  if(Object.keys(el).length && el.path != ''){
+    
+    // @ts-ignore
+      pathToShow.value = el.path
       // @ts-ignore
-      const res: string = await showDialog(path)
-      files.resolveCloseFile(res, path)
+      const res: string = await showDialog(el.path)
+      // @ts-ignore
+      files.resolveCloseFile(res, el.path, el.close)
       // @ts-ignore
       dialog.value.close()
     }
-})
+  },
+  { deep: true }
+)
 
 // watch(triggerForAll, () => {
 //   closeAllTabs()

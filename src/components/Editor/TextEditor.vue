@@ -40,7 +40,7 @@ const unsaved = ref(false)
 const lastFileContent = ref('')
 const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.getOpenFile(props.path)
-const fileSavingTrigger = computed(() => files.getFileSavingTrigger)
+const triggerSaveFile = computed(() => files.getTriggerSaveFile)
 
 const { /*history,*/ undo, redo } = useRefHistory(content)
 
@@ -67,7 +67,7 @@ const saveFile = async () => {
   }
 }
 
-watch(fileSavingTrigger, async (pathToTrigger) => {
+watch(triggerSaveFile, async (pathToTrigger) => {
   return new Promise(async (resolve) => {
     if(pathToTrigger === props.path){
       await saveFile()
@@ -82,7 +82,7 @@ watch(content, (value: string) => {
 }, { immediate: false })
 
 watch(unsaved, (bool) => {
-    files.setToggleSavedFiles({path: props.path, savedFile: !bool})
+  files.setToggleSavedFiles({path: props.path, savedFile: !bool})
 })
 
 watch(() => props.onSelectedPath, () => doFocus())

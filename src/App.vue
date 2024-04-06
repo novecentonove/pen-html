@@ -111,15 +111,24 @@
 
 
   // todo add a promise
-  const handleClose = () => {
+  const handleClose = async () => {
 
-    const notSaved = files.getNotSavedFiles
+    // const notSaved = files.getNotSavedFiles
 
-    if(notSaved.length){
-      dialog.setMessage('There\'s some files not saved, please resolve this')
-    } else {
-      appWindow.close()
-    }
+    // if(notSaved.length){
+    //   const res = await files.closeAllTabs()
+    //   alert(res)
+    // } else {
+    //   appWindow.close()
+    // }
+
+
+      await files.closeAllTabs(false)
+      const notSaved = files.getNotSavedFiles
+    
+      if(!notSaved.length){
+        appWindow.close()
+      }
   }
 
 

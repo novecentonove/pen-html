@@ -70,7 +70,7 @@ const editorIsReady = ref(false)
 const unsaved = ref(false)
 const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.getOpenFile(props.path)
-const fileSavingTrigger = computed(() => files.getFileSavingTrigger)
+const triggerSaveFile = computed(() => files.getTriggerSaveFile)
 
 let lastFileContent = ref('<p></p>')
 
@@ -112,11 +112,10 @@ const doFocus = () => {
   }
 }
 
-watch(fileSavingTrigger, async (pathToTrigger) => {
+watch(triggerSaveFile, async (pathToTrigger) => {
   return new Promise(async (resolve) => {
     if(pathToTrigger === props.path){
       await saveFile()
-      console.log('da editor si è salvato')
       files.resolveHandler(props.path)
       resolve(true)
     }

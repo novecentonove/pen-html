@@ -9,6 +9,11 @@ type CloseFileHandler = {
   action?: string
 }[]
 
+type TriggerFileToClose = {
+  path: string,
+  close: boolean
+} | {}
+
 export type RootState = {
   openFiles: Omit<FileType & { isError?: boolean, error?: string}, 'children'>[]
   selectedPath: string
@@ -16,9 +21,9 @@ export type RootState = {
   savedFile: number,
   tabToDrag: string,
   closeFilesHandler: CloseFileHandler,
-  triggerFileToClose: string
-  // notSavedFiles: string[],        // Array[path]
-  fileSavingTrigger: string       // path
+  triggerFileToClose: TriggerFileToClose
+  notSavedFiles: string[],        // Array[path]
+  triggerSaveFile: string       // path
   // fileDialogToTrigger: string,    // path
   // dialogTriggerForAll: number
   // dialogTriggerForAllAndKeep: number
@@ -32,9 +37,9 @@ export const useFiles = defineStore('files', {
     savedFile: 0,
     tabToDrag: '',
     closeFilesHandler: [],
-    triggerFileToClose: '',
-    // notSavedFiles: [],
-    fileSavingTrigger: '',
+    triggerFileToClose: {},
+    notSavedFiles: [],
+    triggerSaveFile: '',
     // fileDialogToTrigger: '',
     // dialogTriggerForAll: 0,
     // dialogTriggerForAllAndKeep: 0
@@ -46,15 +51,15 @@ export const useFiles = defineStore('files', {
     getOpenFile: (state) => (path: string) => state.openFiles.find((file) => file.path === path),
     getOpenFiles: (state) => state.openFiles,
     getClickDrawerFile: (state) => state.clickDrawerFile,
-    getFileIsSaved: (state) => state.savedFile,
+    showFileIsSaved: (state) => state.savedFile, // triggers 'saved' 
     getSelectedPath: (state) => state.selectedPath,
     getTabToDrag: (state) => state.tabToDrag,
-    getFileSavingTrigger: (state) => state.fileSavingTrigger,
+    getTriggerSaveFile: (state) => state.triggerSaveFile, // triggers to editor, then it saves file
     // file dialog
     getCloseFileHandler: (state) => (path: string) => state.closeFilesHandler.find(obj => obj.path === path),
     getCloseFilesHandler: (state) => state.closeFilesHandler,
-    getTriggerFileToClose: (state) => state.triggerFileToClose
-    // getNotSavedFiles: (state) => state.notSavedFiles,
+    getTriggerFileToClose: (state) => state.triggerFileToClose,
+    getNotSavedFiles: (state) => state.notSavedFiles,
     // getFileDialogToTrigger: (state) => state.fileDialogToTrigger,
     // getDialogTriggerForAll: state => state.dialogTriggerForAll,
     // getDialogTriggerForAllAndKeep: state => state.dialogTriggerForAllAndKeep
@@ -143,22 +148,36 @@ export const useFiles = defineStore('files', {
     
     // close tabs
 
-    async closeAllTabs(){
-      const tabs = this.getOpenFiles
-      // this.closeFilesHandler = []
-      for (const tab of tabs) {
-        await this.askTocloseTab(tab.path)
-      }
+    async closeAllTabs(closeTab = true){
+      return new Promise(async(resolve) => {
+        const tabs = this.getOpenFiles
+        // this.closeFilesHandler = []
+        for (const tab of tabs) {
+          await this.askTocloseTab(tab.path, closeTab)
+          resolve(true)
+        }
+      })
     },
 
-    async askTocloseTab(path: string){
+    async askTocloseTab(path: string, closeTab = true){
 
-      return new Promise(async(resolve, reject) => {
+      return new Promise(async(resolve) => {
         try {
           await this.resetCloseTriggers()
-          this.addCloseFileHandler(path)      
-          const res = await this.awaitCloseTab(path)
-          resolve(res)
+
+          const isNotSaved = this.getNotSavedFiles.find(el => el === path)
+          
+          if(isNotSaved){
+            this.addCloseFileHandler(path)      
+            const res = await this.awaitCloseTab(path, closeTab)
+            resolve(res)
+          } else {
+            if(closeTab){
+              this.destroyTab(path)
+              this.selectLastTab()
+            }
+            resolve('already saved')
+          }
         } catch(e){
           console.warn(e)
         }
@@ -169,11 +188,11 @@ export const useFiles = defineStore('files', {
       this.closeFilesHandler.push({path: path, resolved: resolved})
     },
 
-    awaitCloseTab(path: string){
+    awaitCloseTab(path: string, closeTab: boolean){
         return new Promise(async(resolve, reject) => {
 
         // trigger file dialog
-        this.triggerFileToClose = path
+        this.triggerFileToClose = {path: path, close: closeTab}
 
         // da file dialog: resolve file
         const interval = setInterval( () => {
@@ -193,7 +212,7 @@ export const useFiles = defineStore('files', {
       this.getCloseFilesHandler.filter(el => el.path !== path);
     },
 
-    async resolveCloseFile(res: string, path: string){
+    async resolveCloseFile(res: string, path: string, close: boolean){
       const fileHandler = this.getCloseFileHandler(path)
       
       if(!fileHandler){
@@ -204,8 +223,10 @@ export const useFiles = defineStore('files', {
       switch (res) {
         case 'discard':
           this.resolveHandler(path)
-          this.destroyTab(path)
-          this.selectLastTab()
+          if(close){
+            this.destroyTab(path)
+            this.selectLastTab()
+          }
           break;
         case 'cancel':
           this.resolveHandler(path)
@@ -214,8 +235,10 @@ export const useFiles = defineStore('files', {
           console.log('SAVE')
           await this.saveFilePromise(path)
           this.resolveHandler(path)
-          this.destroyTab(path)
-          this.selectLastTab()
+          if(close){
+            this.destroyTab(path)
+            this.selectLastTab()
+          }
           break;
         default:
           break;
@@ -231,7 +254,7 @@ export const useFiles = defineStore('files', {
 
     async saveFilePromise(path: string){
       return new Promise(async (resolve/*, reject*/) => {
-        this.fileSavingTrigger = path
+        this.triggerSaveFile = path
 
         // QUA NON VEDE I CAMBIAMENTEI
         // see editors resolveCloseFile
@@ -263,14 +286,45 @@ export const useFiles = defineStore('files', {
       //reset trigger
       return new Promise(async (resolve) => {
         setTimeout(() => {
-          this.triggerFileToClose = ''
+          this.triggerFileToClose = {}
           this.closeFilesHandler = []
-          this.fileSavingTrigger = ''
+          this.triggerSaveFile = ''
           resolve(true)
         }, 250);
       })
     },
 
+    setToggleSavedFiles(val: {path: string, savedFile: boolean}){
+      const files = this.getNotSavedFiles
+      const savedFile = val.savedFile
+      const path = val.path
+      const exists = files.includes(path)
+
+      if(savedFile && exists){
+        this.removeFromNotSavedFile(path)
+      }
+
+      if(val.savedFile && !exists){
+        this.getNotSavedFiles.push(path)
+      }
+
+      if(!val.savedFile && !exists){
+        this.getNotSavedFiles.push(path)
+      }
+    },
+
+    triggerFileIsSaved(){
+      this.savedFile++
+    },
+
+    removeFromNotSavedFile(path: string){
+      const res = this.getNotSavedFiles.filter(el => el !== path)
+      this._setNotSavedFiles(res)
+    },
+
+    _setNotSavedFiles(arr: string[]){
+      this.notSavedFiles = arr
+    },
 
 
 
@@ -324,37 +378,7 @@ export const useFiles = defineStore('files', {
 
 
 
-    setToggleSavedFiles(val: {path: string, savedFile: boolean}){
-      // const files = this.getNotSavedFiles
-      // const savedFile = val.savedFile
-      // const path = val.path
-      // const exists = files.includes(path)
 
-      // if(savedFile && exists){
-      //   this.removeFromNotSavedFile(path)
-      // }
-
-      // if(val.savedFile && !exists){
-      //   this.getNotSavedFiles.push(path)
-      // }
-
-      // if(!val.savedFile && !exists){
-      //   this.getNotSavedFiles.push(path)
-      // }
-    },
-
-    triggerFileIsSaved(){
-      this.savedFile++
-    },
-
-    removeFromNotSavedFile(path: string){
-      // const res = this.getNotSavedFiles.filter(el => el !== path)
-      // this._setNotSavedFiles(res)
-    },
-
-    _setNotSavedFiles(arr: string[]){
-      // this.notSavedFiles = arr
-    }
 
   }
 })
