@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { type FileType } from '@/types/FileType'
 import { useFiles } from '@/stores/use-files'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { allowedExt } from '@/types/AllowedExt'
 import LongTextIcon from '@/icons/LongText.vue'
 import CloseIcon from '@/icons/Close.vue'
@@ -25,6 +25,10 @@ type Props = {
 const props = defineProps<Props>()
 const files = useFiles()
 const fileName = parseFileName(props?.file?.name ?? '')
+
+onMounted( () => {
+  // enableAppendDir.value
+})
 
 const isOpenable = computed( () => {
   const ext = props.file?.name.split('.').pop()

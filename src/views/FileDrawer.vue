@@ -170,7 +170,6 @@
 
   onMounted( () => {
     loadAllDirs()
-    // setInterval(loadAllDirs, 1000*60*2)
   })
 </script>
 
