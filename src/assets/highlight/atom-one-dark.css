@@ -75,7 +75,7 @@ hue-6-2: #e6c07b
 .hljs-meta,
 .hljs-selector-id,
 .hljs-title {
-  color: #61aeee
+  color: #3e8e9e /* #61aeee */
 }
 .hljs-built_in,
 .hljs-title.class_,
