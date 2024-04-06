@@ -8,7 +8,7 @@
     <!-- Teleport here -->
     <span :id="snakeCasePath(props.file.path)" class="_tab_title_el flex"></span>
   </div>
-  <CloseIcon  @click="files.closeTab(props?.file?.path || '')" :class="{ 'inactive': selectedPath != props.file.path}" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
+  <CloseIcon  @click="files.askTocloseTab(props?.file?.path || '')" :class="{ 'inactive': selectedPath != props.file.path}" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
 </li>
 
 </template>

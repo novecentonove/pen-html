@@ -4,7 +4,7 @@
       <LongTextIcon class="mr-1 w-3" />
       <span class="file_li_inner cut_text" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
     </div>
-    <CloseIcon width="1.5em" class="icon_close pr-2 hover:text-red-700" v-if="props.closable" @click="files.closeTab(props?.file?.path || '')" />
+    <CloseIcon width="1.5em" class="icon_close pr-2 hover:text-red-700" v-if="props.closable" @click="files.askTocloseTab(props?.file?.path || '')" />
   </div>
 </template>
 

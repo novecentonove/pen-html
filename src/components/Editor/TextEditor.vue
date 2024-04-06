@@ -67,10 +67,14 @@ const saveFile = async () => {
   }
 }
 
-watch(fileSavingTrigger, (pathToTrigger) => {
-  if(pathToTrigger === props.path){
-    saveFile()
-  }
+watch(fileSavingTrigger, async (pathToTrigger) => {
+  return new Promise(async (resolve) => {
+    if(pathToTrigger === props.path){
+      await saveFile()
+      files.resolveHandler(props.path)
+      resolve(true)
+    }
+  })
 })
 
 watch(content, (value: string) => {
