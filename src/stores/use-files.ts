@@ -236,7 +236,6 @@ export const useFiles = defineStore('files', {
           this.resolveHandler(path)
           break;
         case 'save':
-          console.log('SAVE')
           await this.saveFilePromise(path)
           this.resolveHandler(path)
           if(close){
@@ -264,10 +263,8 @@ export const useFiles = defineStore('files', {
         // see editors resolveCloseFile
         const interval = setInterval( () => {
           const fileHandler = this.getCloseFileHandler(path)
-          console.log('saving... ', fileHandler)
             if(fileHandler?.resolved){
               clearInterval(interval)
-              console.log('SAVED RESOLVED')
               resolve(true)
             }
         }, 400)
@@ -278,11 +275,10 @@ export const useFiles = defineStore('files', {
       if(resolved == undefined){
         resolved = true
       }
-      console.log('resolveHandler', resolved)
+
       const fileHandler = this.getCloseFileHandler(path)
       if(fileHandler){
         fileHandler.resolved = resolved
-          console.log('resolveHandler a posto')
       }
     },
 

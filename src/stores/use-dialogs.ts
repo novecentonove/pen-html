@@ -16,7 +16,6 @@ export const useDialogs = defineStore('dialogs', {
 
   actions: {
     setMessage(text: string) {
-      console.log('setMessage')
       this.message.text = text
       this.message.trigger++
     }

@@ -24,8 +24,7 @@ const message = computed( () => dialog.getMessage)
 
 watch( 
   message, 
-  (val) => {
-    console.log(val)
+  () => {
     // @ts-ignore
     dialogEl.value.showModal()
   },
@@ -35,7 +34,6 @@ watch(
 const close = () => {
   // @ts-ignore
   dialogEl.value.close()
-  console.log('close')
 }
 
 </script>
