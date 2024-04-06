@@ -3,20 +3,20 @@
     <div id="out_click" class="relative overflow-x-scroll w-full h-full pt-[36px] flex flex-col app_font">
       <div class="flex flex-col h-full pl-3">
         <div class="pt-5">
-          <p :title="baseDir" class="pb-[6px] mb-2 border-b border_color"></p>
+          <p class="pb-[6px] mb-2 border-b border_color"></p>
           <FileList :files="filesAndDir"/>
-          <div v-if="baseDir" @click="openDir('base')" class="ml-2 open_dir"></div>
+          <div v-if="baseDir" :title="baseDir" @click="openDir('base')" class="ml-2 open_dir"></div>
         </div>
         <div v-if="enableAppendDir && appendedDir" class="pt-2">
-          <p :title="appendedDir" class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
+          <p class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
           <FileList :files="filesAndDirAppended"/>
-          <div v-if="filesAndDirAppended" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
+          <div v-if="filesAndDirAppended" :title="appendedDir" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
         </div>
         <div v-if="getEnableAppendFile && Object.keys(settings.getfileToAppend).length && fileToAppend.path">
-          <p :title="fileToAppend.path" class="pb-[6px] mb-2 border-b border_color mr-4"></p>
+          <p class="pb-[6px] mb-2 border-b border_color mr-4"></p>
           <ul>
             <li class="file_li">
-              <FileClick :file="fileToAppend" />
+              <FileClick :file="fileToAppend" :title="fileToAppend.path"/>
             </li>
           </ul>
         </div>
