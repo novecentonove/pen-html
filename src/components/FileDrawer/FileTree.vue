@@ -32,15 +32,14 @@
   }>()
 
   const settings = useSettings()
-  const enableAppendDir = computed( () => settings.getEnableAppendDir)
-
+  const getShowSelectedFolder = computed( () => settings.getShowSelectedFolder)
   const [showChildren, toggleChildren] = useToggle()
 
   const indent = computed( () => `transform: translate(${props.depth * 10}px)` )
 
   onMounted( () => {
-    if(enableAppendDir.value && props.depth == 0){
+    if(getShowSelectedFolder.value && props.depth == 0){
       toggleChildren()
-    }
+    } 
   })
 </script>
