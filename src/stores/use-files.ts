@@ -152,8 +152,12 @@ export const useFiles = defineStore('files', {
       return new Promise(async(resolve) => {
         const tabs = this.getOpenFiles
         // this.closeFilesHandler = []
-        for (const tab of tabs) {
-          await this.askTocloseTab(tab.path, closeTab)
+        if(tabs.length){
+          for (const tab of tabs) {
+            await this.askTocloseTab(tab.path, closeTab)
+            resolve(true)
+          }
+        } else {
           resolve(true)
         }
       })
