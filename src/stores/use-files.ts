@@ -146,7 +146,7 @@ export const useFiles = defineStore('files', {
       this.openFiles = this.openFiles.filter( tab => tab.path !== path)
     },
     
-    // close tabs
+    // # close tabs
 
     async closeAllTabs(closeTab = true){
       return new Promise(async(resolve) => {
@@ -248,19 +248,10 @@ export const useFiles = defineStore('files', {
       }
     },
 
-    // closeResolve(path: string){
-    //   const fileHandler = this.getCloseFileHandler(path)
-    //   if(fileHandler){
-    //     fileHandler.resolved = true
-    //   }
-    // },
-
     async saveFilePromise(path: string){
       return new Promise(async (resolve/*, reject*/) => {
         this.triggerSaveFile = path
 
-        // QUA NON VEDE I CAMBIAMENTEI
-        // see editors resolveCloseFile
         const interval = setInterval( () => {
           const fileHandler = this.getCloseFileHandler(path)
             if(fileHandler?.resolved){
@@ -324,61 +315,7 @@ export const useFiles = defineStore('files', {
 
     _setNotSavedFiles(arr: string[]){
       this.notSavedFiles = arr
-    },
-
-
-
-
-    // OLD
-    // Trigger FileDialog
-    setFileDialogToTrigger(path: string){
-      // this.fileDialogToTrigger = path
-    },
-    
-
-
-    
-
-    async closeTabPromise(path: string, action?: string, keepTabs?:boolean){
-      // return new Promise(async (resolve, reject) => {
-
-      //   const isSaved = !this.checkIfFileIsNotSaved(path)
-
-      //   if( isSaved || action === 'discard') {
-      //     if(!keepTabs){
-      //       this.destroyTab(path)
-      //     }
-      //     this.selectLastTab()
-      //     resolve('discarded')
-      //   }
-      //   else if(action === 'save'){
-      //     await this.saveFilePromise(path)
-      //     if(!keepTabs){
-      //       this.destroyTab(path)
-      //     }
-      //     this.selectLastTab()
-      //     resolve('saved')
-      //   }
-      //   else if(action === 'cancel'){
-      //     resolve('cancelled')
-      //   }
-
-      //   // First click: Open dialog to close file
-      //   else {
-      //     this.setFileDialogToTrigger(path)
-      //   }
-      // })
-    },
-
-
-    
-    async closeAllTabsAndKeep(){
-      // this.dialogTriggerForAllAndKeep++
-    },
-
-
-
-
+    }
 
   }
 })

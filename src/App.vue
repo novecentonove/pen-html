@@ -52,23 +52,18 @@
   import WindowMaximize from '@/icons/WindowMaximize.vue'
   import WindowClose from '@/icons/WindowClose.vue'
   import HomeTabs from '@/views/HomeTabs.vue'
-  // import NotSavedDialog from './components/HomeTabs/NotSavedDialog.vue'
   import FileDialog from './components/Dialogs/FileDialog.vue'
   import Dialog from './components/Dialogs/Dialog.vue'
   import { type FileType } from '@/types/FileType'
   import { listen } from '@tauri-apps/api/event'
   import { debounce, throttle } from 'lodash'
   import { allowedExt } from '@/types/AllowedExt'
-  import { useDialogs } from '@/stores/use-dialogs'
-
 
   const settings = useSettings()
   const files = useFiles()
   const leftW = ref(160)
-  const dialog = useDialogs()
-  // Check not saved
-  // const trigger = ref(0)
-  // const file = ref<FileType>({name: '', path: ''})
+
+
   const isDropping = ref(false)
 
   // Drop files
@@ -137,11 +132,7 @@
       leftW.value = e.pageX
     }
   }
-
-
-
-
-
+  
   onMounted( () => {
     settings.applySettings()
     settings.applyTheme()

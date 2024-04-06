@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useFiles } from '@/stores/use-files'
 
 const files = useFiles()
@@ -26,17 +26,6 @@ const cancelButton = ref(null)
 const pathToShow = ref('')
 
 const triggerFileToClose = computed(() => files.getTriggerFileToClose)
-// const pathToClose = computed( () => files.getFileDialogToTrigger)
-// const triggerForAll = computed( () => files.getDialogTriggerForAll)
-// const triggerForAllAndKeep = computed( () => files.getDialogTriggerForAllAndKeep)
-
-// const openFiles = computed( () => files.getOpenFiles)
-
-// TODO RIFARE tutto con await da files!!! 
-
-// onMounted( async () => {
-//   await showDialog('test')
-// })
 
 const showDialog = (path: string) => {
   if(closeAnyWay.value && dialog.value){
@@ -61,6 +50,7 @@ const showDialog = (path: string) => {
 }
 
 watch(triggerFileToClose, async (el) => {
+  // @ts-ignore
   if(Object.keys(el).length && el.path != ''){
     
     // @ts-ignore
@@ -75,61 +65,6 @@ watch(triggerFileToClose, async (el) => {
   },
   { deep: true }
 )
-
-// watch(triggerForAll, () => {
-//   closeAllTabs()
-// })
-
-// watch(triggerForAllAndKeep, () => {
-//   closeAllTabs(true)
-// })
-
-// const closeTab = async (path: string, keepTabs?: boolean) => {
-
-//   // reset trigger
-//   files.setFileDialogToTrigger('')
-
-//   return new Promise(async (resolve /*reject*/) => {
-//     pathToShow.value = path
-//     const res = await showDialog(path)
-//     let resFromFiles = ''
-
-//     switch (res) {
-//       case 'save':
-//         resFromFiles = await files.closeTab(path, 'save', keepTabs) as string
-//         break;
-//       case 'cancel':
-//         resFromFiles = await files.closeTab(path, 'cancel') as string
-//         break;
-//       case 'discard':
-//         resFromFiles = await files.closeTab(path, 'discard', keepTabs) as string
-//         break;
-//       default:
-//         console.error('handler not found')
-//         resFromFiles = await files.closeTab(path, 'cancel') as string
-//         break;
-//     }
-
-//     // @ts-ignore
-//     dialog.value.close()
-//     resolve(resFromFiles)
-//   })
-// }
-
-// const closeAllTabs = async (keepTabs?: boolean) => {
-
-//   for (const file of openFiles.value) {
-//     const isSaved = !files.checkIfFileIsNotSaved(file.path)
-//     if(isSaved){
-//       await files.closeTab(file.path)
-//     } else {
-//         files.setSelectedPath(file.path)
-//         const res = await closeTab(file.path, keepTabs)
-//         if(res == 'cancel') return
-//       }
-//   }
-// }
-
 </script>
 
 <style>

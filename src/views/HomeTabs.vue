@@ -33,8 +33,6 @@
   const files = useFiles()
   const openFiles = computed(() => files.getOpenFiles)
 
-  // const tabPromise = ()
-
 </script>
 
 <style>
