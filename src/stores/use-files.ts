@@ -154,9 +154,9 @@ export const useFiles = defineStore('files', {
         // this.closeFilesHandler = []
         if(tabs.length){
           for (const tab of tabs) {
-            await this.askTocloseTab(tab.path, closeTab)
-            resolve(true)
+             await this.askTocloseTab(tab.path, closeTab)
           }
+          resolve(true)
         } else {
           resolve(true)
         }
