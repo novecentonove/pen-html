@@ -208,7 +208,7 @@ export const useFiles = defineStore('files', {
             clearInterval(interval)
             resolve(true)
           }
-        }, 400)
+        }, 200)
 
       })
     },
@@ -259,7 +259,7 @@ export const useFiles = defineStore('files', {
               clearInterval(interval)
               resolve(true)
             }
-        }, 400)
+        }, 200)
       })
     },
 
@@ -282,7 +282,7 @@ export const useFiles = defineStore('files', {
           this.closeFilesHandler = []
           this.triggerSaveFile = ''
           resolve(true)
-        }, 250);
+        }, 200);
       })
     },
 
