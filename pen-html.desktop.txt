@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=pen-html
+Exec=/usr/bin/pen-html %f
+Icon=pen-html
+Terminal=false
+MimeType=text/html

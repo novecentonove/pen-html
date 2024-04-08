@@ -48,7 +48,7 @@
       "shell": {
         "execute": true,
         "sidecar": true,
-        "open": "^"
+        "open": true
       },
       "process": {
         "relaunch": true
@@ -107,6 +107,23 @@
     "systemTray": {
       "iconPath": "icons/app-icon.png",
       "iconAsTemplate": true
+    },
+    "cli": {
+      "description": "path to open",
+      "longDescription": "",
+      "beforeHelp": "",
+      "afterHelp": "",
+      "args": [
+        {
+          "name": "path",
+          "index": 1,
+          "takesValue": true
+        }
+      ], 
+      "subcommands": {
+        "subcommand-name": {
+        }
+      }
     }
   }
 }

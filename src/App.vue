@@ -45,6 +45,8 @@
 <script setup lang="ts">
   import FileDrawer from '@/views/FileDrawer.vue'
   import { appWindow } from '@tauri-apps/api/window'
+  import { getMatches } from '@tauri-apps/api/cli'
+  import { listen } from '@tauri-apps/api/event'
   import { onMounted, ref } from 'vue'
   import { useSettings } from '@/stores/use-settings'
   import { useFiles } from '@/stores/use-files'
@@ -55,7 +57,6 @@
   import FileDialog from './components/Dialogs/FileDialog.vue'
   import Dialog from './components/Dialogs/Dialog.vue'
   import { type FileType } from '@/types/FileType'
-  import { listen } from '@tauri-apps/api/event'
   import { debounce, throttle } from 'lodash'
   import { allowedExt } from '@/types/AllowedExt'
 
@@ -65,6 +66,20 @@
 
 
   const isDropping = ref(false)
+
+
+getMatches().then((matches) => {
+  const path = matches.args.path.value as string
+  if(path){
+    const name: string = path.substring(path.lastIndexOf('/')+1)
+    const ext: string = path.split('.').pop() ?? ''
+
+    if(allowedExt.includes(ext ?? '')){
+      addPagesFromDrop({name: name, path: path})
+    }
+  }
+})
+
 
   // Drop files
   const toggleDropHover = debounce((boolean = null) => {
