@@ -51,6 +51,15 @@ jobs:
       - name: install frontend dependencies
         run: npm install # change this releaseto npm, pnpm or bun depending on which one you use.
 
+      - name: Build Tauri Application
+        run: npm run tauri:build # assuming this command builds your Tauri application
+
+      - name: Upload Release Assets
+        uses: actions/upload-artifact@v2
+        with:
+          name: tauri-assets
+          path: ./target/release/*
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
