@@ -36,7 +36,6 @@
         <Teleport to="body">
           <Dialog />
         </Teleport>
-
       </div>
     </div>
   </div>
@@ -63,23 +62,19 @@
   const settings = useSettings()
   const files = useFiles()
   const leftW = ref(160)
-
-
   const isDropping = ref(false)
 
+  getMatches().then((matches) => {
+    const path = matches.args.path.value as string
+    if(path){
+      const name: string = path.substring(path.lastIndexOf('/')+1)
+      const ext: string = path.split('.').pop() ?? ''
 
-getMatches().then((matches) => {
-  const path = matches.args.path.value as string
-  if(path){
-    const name: string = path.substring(path.lastIndexOf('/')+1)
-    const ext: string = path.split('.').pop() ?? ''
-
-    if(allowedExt.includes(ext ?? '')){
-      addPagesFromDrop({name: name, path: path})
+      if(allowedExt.includes(ext ?? '')){
+        addPagesFromDrop({name: name, path: path})
+      }
     }
-  }
-})
-
+  })
 
   // Drop files
   const toggleDropHover = debounce((boolean = null) => {
@@ -120,17 +115,14 @@ getMatches().then((matches) => {
   })
 
 
-  // todo add a promise
   const handleClose = async () => {
+    await files.closeAllTabs(false)
+    const notSaved = files.getNotSavedFiles
 
-      await files.closeAllTabs(false)
-      const notSaved = files.getNotSavedFiles
-
-      if(!notSaved.length){
-        appWindow.close()
-      }
+    if(!notSaved.length){
+      appWindow.close()
+    }
   }
-
 
   // Drag border
   const startDragging = (e: MouseEvent) => {
