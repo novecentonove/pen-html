@@ -21,7 +21,7 @@
       <WidthWideIcon title="Set width to 700" v-else />
     </div>
     <div class="self-stretch overflow-y-scroll">
-      <div v-if="editor" @keyup.ctrl.s="saveFile">
+      <div v-if="editor">
         <editor-content
         :editor="editor"
         type="color"
@@ -79,7 +79,7 @@ const isSame = <Ref>ref(null)
 const editorIsReady = ref(false)
 const unsaved = ref(false)
 const snakeCasePath = computed( (): string => snakeCase(props.path))
-const openFile = files.getOpenFile(props.path)
+const openFile = files.findInOpenFiles(props.path)
 const triggerSaveFile = computed(() => files.getTriggerSaveFile)
 const settings = useSettings()
 

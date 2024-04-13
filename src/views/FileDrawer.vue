@@ -87,8 +87,11 @@
           }
         }
       }
+
+      // Remove hidden files
+      const noHidden = content.filter(file => !file.name.startsWith('.'));
       // Sort alphabetically
-      const alpha = content.sort( (a: any, b:any) =>a.name.localeCompare(b.name))
+      const alpha = noHidden.sort( (a: any, b:any) =>a.name.localeCompare(b.name))
       // Sort DIR
       return alpha.sort( (a:any) => typeof a.children === 'object' ? -1 : 1)
   }

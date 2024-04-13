@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { type FileType } from '@/types/FileType'
 import { useFiles } from '@/stores/use-files'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { allowedExt } from '@/types/AllowedExt'
 import LongTextIcon from '@/icons/LongText.vue'
 import CloseIcon from '@/icons/Close.vue'
@@ -26,9 +26,9 @@ const props = defineProps<Props>()
 const files = useFiles()
 const fileName = parseFileName(props?.file?.name ?? '')
 
-onMounted( () => {
-  // enableAppendDir.value
-})
+// onMounted( () => {
+//   // enableAppendDir.value
+// })
 
 const isOpenable = computed( () => {
   const ext = props.file?.name.split('.').pop()
@@ -36,8 +36,8 @@ const isOpenable = computed( () => {
 })
 
 const openFile = async () => {
-  if(isOpenable && props.file){
-      files.addAndSelectPage(props.file)
+  if(isOpenable.value && props.file){
+    files.addAndSelectPage(props.file)
   }
 }
 </script>

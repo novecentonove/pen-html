@@ -48,7 +48,7 @@ export const useFiles = defineStore('files', {
   persist: true,
 
   getters: {
-    getOpenFile: (state) => (path: string) => state.openFiles.find((file) => file.path === path),
+    findInOpenFiles: (state) => (path: string) => state.openFiles.find((file) => file.path === path),
     getOpenFiles: (state) => state.openFiles,
     getClickDrawerFile: (state) => state.clickDrawerFile,
     showFileIsSaved: (state) => state.savedFile, // triggers 'saved' 
@@ -144,6 +144,18 @@ export const useFiles = defineStore('files', {
       this.removeFromNotSavedFile(path)
       // remove from open files
       this.openFiles = this.openFiles.filter( tab => tab.path !== path)
+    },
+
+    async saveActiveTab(){
+      this.triggerSaveFile = ''
+       
+       setTimeout(() => {
+         this.saveFilePromise(this.getSelectedPath)
+       }, 200);
+
+       setTimeout(() => {
+        this.triggerSaveFile = ''
+      }, 200);
     },
     
     // # close tabs
