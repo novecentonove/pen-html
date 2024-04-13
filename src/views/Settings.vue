@@ -157,6 +157,7 @@
   import { themeSettings } from '@/utils/themeSettings.js'
   import { getVersion } from '@tauri-apps/api/app'
   import { snakeCase } from 'lodash';
+  import { getDefaultPath } from '@/composable/getDefaultPath.ts'
 
   type Props = {
     modelValue: string
@@ -276,11 +277,23 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
   }
 
   const readFileDir = async (type: string) => {
+
+      let path = ''
+    
+        switch (type) {
+          case 'append':
+            path = settings.getAppendedDir
+            break
+          case 'base':
+            path = settings.getBaseDir
+            break
+        }
     try{
         const selecteDir = await open({
           multiple: false,
-          title: 'Open Dir',
-          directory: true
+          title: 'Choose base folder',
+          directory: true,
+          defaultPath: await getDefaultPath(path)
         })
         if(selecteDir){
           switch (type) {
@@ -302,7 +315,8 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
         const selecteFile = await open({
           multiple: false,
           title: 'Open file',
-          directory: false
+          directory: false,
+          defaultPath: await getDefaultPath('') // TODO
         })
         if(selecteFile){
           const name = (selecteFile as string).substring(selecteFile.lastIndexOf('/')+1)

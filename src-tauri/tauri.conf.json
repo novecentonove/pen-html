@@ -45,6 +45,9 @@
       "path": {
         "all": true
       },
+      "os": {
+        "all": true
+      },
       "shell": {
         "execute": true,
         "sidecar": true,
