@@ -69,10 +69,12 @@
   const enableAppendDir = computed( () => settings.getEnableAppendDir)
   const appendedDir = computed( () => settings.getAppendedDir)
   const showSelectedFolder = computed( () => settings.getShowSelectedFolder)
+  const getTriggerReloadAllDirs = computed( () => files.getTriggerReloadAllDirs )
 
   watch(baseDir, async () => loadAllDirs() )
   watch(appendedDir, async () => loadAllDirs() )
   watch(showSelectedFolder, async () => loadAllDirs() )
+  watch(() => getTriggerReloadAllDirs.value, async () => loadAllDirs() )
 
   // recursive get structure // TODO : use FileType to any
   const getLStructureDir = async (content: any) => {
@@ -89,7 +91,7 @@
       }
 
       // Remove hidden files
-      const noHidden = content.filter(file => !file.name.startsWith('.'));
+      const noHidden = content.filter((file: File) => !file.name.startsWith('.'));
       // Sort alphabetically
       const alpha = noHidden.sort( (a: any, b:any) =>a.name.localeCompare(b.name))
       // Sort DIR

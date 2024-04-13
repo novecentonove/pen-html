@@ -3,6 +3,7 @@
 
 fn main() {
   tauri::Builder::default()
+    .plugin(tauri_plugin_context_menu::init())
     .setup(|app| {
       match app.get_cli_matches() {
         // `matches` here is a Struct with { args, subcommand }.

@@ -24,6 +24,7 @@ export type RootState = {
   triggerFileToClose: TriggerFileToClose
   notSavedFiles: string[],        // Array[path]
   triggerSaveFile: string       // path
+  triggerReloadAllDirs: number
   // fileDialogToTrigger: string,    // path
   // dialogTriggerForAll: number
   // dialogTriggerForAllAndKeep: number
@@ -40,6 +41,7 @@ export const useFiles = defineStore('files', {
     triggerFileToClose: {},
     notSavedFiles: [],
     triggerSaveFile: '',
+    triggerReloadAllDirs: 0
     // fileDialogToTrigger: '',
     // dialogTriggerForAll: 0,
     // dialogTriggerForAllAndKeep: 0
@@ -60,6 +62,7 @@ export const useFiles = defineStore('files', {
     getCloseFilesHandler: (state) => state.closeFilesHandler,
     getTriggerFileToClose: (state) => state.triggerFileToClose,
     getNotSavedFiles: (state) => state.notSavedFiles,
+    getTriggerReloadAllDirs: (state) => state.triggerReloadAllDirs
     // getFileDialogToTrigger: (state) => state.fileDialogToTrigger,
     // getDialogTriggerForAll: state => state.dialogTriggerForAll,
     // getDialogTriggerForAllAndKeep: state => state.dialogTriggerForAllAndKeep
@@ -156,6 +159,10 @@ export const useFiles = defineStore('files', {
        setTimeout(() => {
         this.triggerSaveFile = ''
       }, 200);
+    },
+
+    setTriggerReloadAllDirs(){
+      this.triggerReloadAllDirs++
     },
     
     // # close tabs

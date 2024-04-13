@@ -8,7 +8,6 @@
     <div class="flex">
       
       <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0 select-none" :style="`width: ${leftW}px`" />
-      <div @contextmenu.prevent="showMenu($event)">test</div>
       <div id="rightV" class="relative grow view_color select-none">
         <div data-tauri-drag-region class="titlebar text_color">
           <!-- <div class="ml-3 mr-auto pt-1 text-xs">
@@ -46,7 +45,7 @@
   import { appWindow } from '@tauri-apps/api/window'
   import { getMatches } from '@tauri-apps/api/cli'
   import { listen } from '@tauri-apps/api/event'
-  import { computed, onMounted, ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { useSettings } from '@/stores/use-settings'
   import { useFiles } from '@/stores/use-files'
   import WindowMinimize from '@/icons/WindowMinimize.vue'
@@ -58,10 +57,6 @@
   import { type FileType } from '@/types/FileType'
   import { debounce, throttle } from 'lodash'
   import { allowedExt } from '@/types/AllowedExt'
-
-  import { invoke } from "@tauri-apps/api";
-import { resolveResource } from "@tauri-apps/api/path";
-import { showMenu } from "tauri-plugin-context-menu";
 
   const settings = useSettings()
   const files = useFiles()
@@ -164,22 +159,6 @@ import { showMenu } from "tauri-plugin-context-menu";
     settings.applyTheme()
   })
 
-
-  
-  const showMenu = (event: MouseEvent) => {
-  // Determina la posizione del menu in base all'evento click
-  const position = { x: event.clientX, y: event.clientY };
-
-  // Definisci gli elementi del menu (adatta e personalizza come necessario)
-  const items = [
-    { label: 'Item 1', event: () => console.log('Item 1 cliccato') },
-    { label: 'Item 2', disabled: true },
-    { label: '---' }, // Separatore
-    { label: 'Esci', event: () => window.close() }, // Aggiungi azioni per i tuoi elementi
-  ];
-
-  invoke('plugin:context_menu|show_context_menu', { items, position });
-};
  </script>
 
 <style>
