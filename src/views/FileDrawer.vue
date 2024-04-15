@@ -20,14 +20,14 @@
             </li>
           </ul>
         </div>
-        <div v-if="openedFiles.length" class="mt-auto mb-12">
+        <!-- <div v-if="openedFiles.length" class="mt-auto mb-12">
           <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color select-text cut_text">Open editors</p>
           <ul>
             <li v-for="file in openedFiles" class="file_li" :key="file.path">
               <FileClick :file="file" :closable="true"/>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="relative flex items-center mt-auto mb-3 pt-3 pl-3 justify-between">
@@ -62,7 +62,6 @@
   const settings = useSettings()
   
   const file_is_saved = computed(() => files.showFileIsSaved)
-  const openedFiles = computed( () => files.getOpenFiles)
   const baseDir = computed( () => settings.getBaseDir)
   const getEnableAppendFile = computed( () => settings.getEnableAppendFile)
   const fileToAppend = computed( () => settings.getfileToAppend)

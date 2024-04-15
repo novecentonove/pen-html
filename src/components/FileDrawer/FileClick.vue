@@ -1,8 +1,11 @@
 <template>
   <div class="file_click flex items-center w-full">
-    <div class="flex items-center mr-auto w-full" @click="openFile" >
+    <div class="relative flex items-center mr-auto w-full" @click="openFile" >
+        <span v-if="isTabInEditor" class="absolute right-0 mt-1" style="color: var(--border_color)">
+            ・
+        </span>
       <LongTextIcon class="mr-1 w-3" />
-      <span class="file_li_inner cut_text" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
+      <span class="file_li_inner cut_text" :style="''/*isTabInEditor ? 'filter: brightness(1.4)': ''*/" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
     </div>
     <CloseIcon width="1.5em" class="icon_close pr-2 hover:text-red-700" v-if="props.closable" @click="files.askTocloseTab(props?.file?.path || '')" />
   </div>
@@ -26,9 +29,7 @@ const props = defineProps<Props>()
 const files = useFiles()
 const fileName = parseFileName(props?.file?.name ?? '')
 
-// onMounted( () => {
-//   // enableAppendDir.value
-// })
+const isTabInEditor = computed( () => files.findInOpenFiles(props?.file?.path ?? ''))
 
 const isOpenable = computed( () => {
   const ext = props.file?.name.split('.').pop()

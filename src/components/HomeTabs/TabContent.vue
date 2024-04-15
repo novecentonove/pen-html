@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+  import { exists, BaseDirectory } from '@tauri-apps/api/fs';
   import { computed, onMounted, ref, toRef, watch } from 'vue'
   import { useFiles } from '@/stores/use-files'
   import { type FileType } from '@/types/FileType'
@@ -63,6 +64,16 @@
       }
 
       if(props.path != settingPage.path){
+
+        const doExists = await exists(props.path, { dir: BaseDirectory.AppData })
+
+        if(!doExists){
+            files.destroyTab(props.path)
+            //TODO TOAST TO
+            console.error(`File ${props.path} not exists`)
+            return
+        }
+
         content.value = await readTextFile(props.path as string) ?? defaultIfEmpty
       }
       

@@ -35,7 +35,7 @@
   const getShowSelectedFolder = computed( () => settings.getShowSelectedFolder)
   const [showChildren, toggleChildren] = useToggle()
 
-  const indent = computed( () => `transform: translate(${props.depth * 10}px)` )
+  const indent = computed( () => `padding-left: ${props.depth * 10}px` )
 
   onMounted( () => {
     if(getShowSelectedFolder.value && props.depth == 0){
