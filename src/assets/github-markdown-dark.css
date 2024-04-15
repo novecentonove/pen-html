@@ -347,12 +347,11 @@
   margin-left: 0;
 }
 
-.markdown-body tt,
+/* .markdown-body tt,
 .markdown-body code,
 .markdown-body samp {
-  /* font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace; */
   font-size: 12px;
-}
+} */
 
 .markdown-body pre {
   margin-top: 0;
@@ -729,9 +728,10 @@
   padding: .2em .4em;
   margin: 0;
   font-size: 85%;
-  white-space: pre;
   background-color: #60543626;
   border-radius: 6px;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .markdown-body code{
@@ -1104,8 +1104,8 @@
 /** OVERRIDE **/
 pre code {
   word-break: normal;
-                line-break: strict;
-                hyphens: none;
+  line-break: strict;
+  hyphens: none;
 }
 
 /*

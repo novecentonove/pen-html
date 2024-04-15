@@ -4,7 +4,7 @@
   <div v-if="isDropping" class="fixed h-full w-full bg-black/50 z-10"></div>
 </transition>
 
-  <div class="main main_color view_color h-screen text_color" @mouseup="endDragging" @keyup="handleKeyDown($event)">
+  <div class="main main_color view_color h-screen text_color" @mouseup="endDragging">
     <div class="flex">
       
       <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0 select-none" :style="`width: ${leftW}px`" />
@@ -65,18 +65,14 @@
   const isDropping = ref(false)
 
 
- const handleKeyDown = (ev: any) => {
-  if (ev.ctrlKey || ev.metaKey) {
-    switch (ev.key) {
-      case 's':
-        saveActiveTab()
-        break;
+  const handleKeyDown = (ev: any) => {
+    if (ev.ctrlKey || ev.metaKey) {
+      switch (ev.key) {
+        case 's':
+          files.saveActiveTab()
+          break;
+      }
     }
-  }
-}
-
-  const saveActiveTab = async () => {
-    files.saveActiveTab()
   }
 
   getMatches().then((matches) => {
@@ -158,6 +154,8 @@
   onMounted( () => {
     settings.applySettings()
     settings.applyTheme()
+
+    window.addEventListener('keyup', handleKeyDown)
   })
 
  </script>

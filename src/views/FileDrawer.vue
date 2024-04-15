@@ -89,7 +89,7 @@
       }
 
       // Remove hidden files
-      const noHidden = content.filter(file => !file.name.startsWith('.'));
+      const noHidden = content.filter((file:any) => !file.name.startsWith('.'));
       // Sort alphabetically
       const alpha = noHidden.sort( (a: any, b:any) =>a.name.localeCompare(b.name))
       // Sort DIR
