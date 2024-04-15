@@ -5,7 +5,7 @@ export type RootState = {
   message: {trigger: number, text: string}
 }
 
-export const useDialogs = defineStore('dialogs', {
+export const useDialog = defineStore('dialogs', {
   state: () => ({ 
     message: {trigger: 0, text: ''},
   } as RootState),

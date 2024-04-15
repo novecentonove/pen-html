@@ -13,10 +13,10 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useDialogs } from '@/stores/use-dialogs'
+import { useDialog } from '@/stores/use-dialogs'
 
 
-const dialog = useDialogs()
+const dialog = useDialog()
 const dialogEl = ref(null)
 const gotIt = ref(null)
 

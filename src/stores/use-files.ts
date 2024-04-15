@@ -63,9 +63,6 @@ export const useFiles = defineStore('files', {
     getTriggerFileToClose: (state) => state.triggerFileToClose,
     getNotSavedFiles: (state) => state.notSavedFiles,
     getTriggerReloadAllDirs: (state) => state.triggerReloadAllDirs
-    // getFileDialogToTrigger: (state) => state.fileDialogToTrigger,
-    // getDialogTriggerForAll: state => state.dialogTriggerForAll,
-    // getDialogTriggerForAllAndKeep: state => state.dialogTriggerForAllAndKeep
   },
 
   actions: {
@@ -164,7 +161,23 @@ export const useFiles = defineStore('files', {
     setTriggerReloadAllDirs(){
       this.triggerReloadAllDirs++
     },
-    
+    // fs - rename 
+    renameOpenTab(oldFile: string, newFile: string){
+      console.log(oldFile, newFile)
+     const files = this.getOpenFiles
+
+     const lastIndex = newFile.lastIndexOf('/');
+     const newFileName = newFile.substring(lastIndex + 1);
+
+     files.map( file => {
+      if(file.path ===  oldFile){
+        file.path = newFile
+        file.name = newFileName
+      }
+     })
+     console.log(this.getOpenFiles)
+    },
+
     // # close tabs
 
     async closeAllTabs(closeTab = true){
