@@ -157,7 +157,7 @@
   import { themeSettings } from '@/utils/themeSettings.js'
   import { getVersion } from '@tauri-apps/api/app'
   import { snakeCase } from 'lodash';
-  import { getDefaultPath } from '@/composable/getDefaultPath.ts'
+  import { getDefaultPath } from '@/composable/getDefaultPath'
 
   type Props = {
     modelValue: string
@@ -166,9 +166,9 @@
     onSelectedPath: number
   }
 
-const props = defineProps<Props>()
+  const props = defineProps<Props>()
 
-const snakeCasePath = computed( (): string => snakeCase(props.path))
+  const snakeCasePath = computed( (): string => snakeCase(props.path))
 
   const settings = useSettings()
   const selectedAppFont = toRef(settings.getAppFont)
@@ -278,33 +278,35 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
 
   const readFileDir = async (type: string) => {
 
-      let path = ''
+    let path = ''
     
+    switch (type) {
+      case 'append':
+        path = settings.getAppendedDir
+        break
+      case 'base':
+        path = settings.getBaseDir
+        break
+    }
+
+    try{
+      const selecteDir = await open({
+        multiple: false,
+        title: 'Choose base folder',
+        directory: true,
+        defaultPath: await getDefaultPath(path)
+      })
+
+      if(selecteDir){
         switch (type) {
           case 'append':
-            path = settings.getAppendedDir
+            settings.setAppendedDir(selecteDir as string)
             break
           case 'base':
-            path = settings.getBaseDir
+            settings.setBaseDir(selecteDir as string)
             break
         }
-    try{
-        const selecteDir = await open({
-          multiple: false,
-          title: 'Choose base folder',
-          directory: true,
-          defaultPath: await getDefaultPath(path)
-        })
-        if(selecteDir){
-          switch (type) {
-            case 'append':
-              settings.setAppendedDir(selecteDir as string)
-              break
-            case 'base':
-              settings.setBaseDir(selecteDir as string)
-              break
-          }
-        }
+      }
     } catch(e){
         console.error(e)
     }
@@ -312,20 +314,20 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
 
   const readFile = async () => {
     try{
-        const selecteFile = await open({
-          multiple: false,
-          title: 'Open file',
-          directory: false,
-          defaultPath: await getDefaultPath('') // TODO
-        })
-        if(selecteFile){
-          const name = (selecteFile as string).substring(selecteFile.lastIndexOf('/')+1)
-          const val = {
-            name: name,
-            path: selecteFile as string
-          }
-          settings.setfileToAppend(val)
+      const selecteFile = await open({
+        multiple: false,
+        title: 'Open file',
+        directory: false,
+        defaultPath: await getDefaultPath('') // TODO
+      })
+      if(selecteFile){
+        const name = (selecteFile as string).substring(selecteFile.lastIndexOf('/')+1)
+        const val = {
+          name: name,
+          path: selecteFile as string
         }
+        settings.setfileToAppend(val)
+      }
     } catch(e){
         console.error(e)
     }
@@ -333,13 +335,13 @@ const snakeCasePath = computed( (): string => snakeCase(props.path))
 
   const getLStructureDir = async (content: any) => { 
     for (const file of content) {
-        if(typeof file.children === 'object'){
-          const inside = await readDir((file.path as string))
-          getLStructureDir(inside)
-          file.children = (inside)
-        }
+      if(typeof file.children === 'object'){
+        const inside = await readDir((file.path as string))
+        getLStructureDir(inside)
+        file.children = (inside)
       }
-      return content
+    }
+    return content
   }
 </script>
 
