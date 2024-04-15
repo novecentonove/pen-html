@@ -51,7 +51,7 @@
       "shell": {
         "execute": true,
         "sidecar": true,
-        "open": true
+        "open": "^\/[^\/]+(\/[^\/]+)*$"
       },
       "process": {
         "relaunch": true
