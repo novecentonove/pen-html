@@ -29,7 +29,7 @@
       <div title="Reload all dirs" class="opacity-30 cursor-pointer mr-3" >
         <ReloadIcon width="1.3em" @click="loadAllDirs" />
       </div>
-      <ToastSaved :trigger="file_is_saved" />
+      <MiniToast :trigger="file_is_saved" />
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@
   import { useFiles } from '@/stores/use-files'
   import { useSettings } from '@/stores/use-settings'
   import FileList from '@/components/FileDrawer/FileList.vue'
-  import ToastSaved from '@/components/FileDrawer/ToastSaved.vue'
+  import MiniToast from '@/components/FileDrawer/MiniToast.vue'
   import FileClick from '../components/FileDrawer/FileClick.vue'
   import ReloadIcon from '@/icons/Reload.vue'
   import IconSettings from '@/icons/Settings.vue'
@@ -54,7 +54,7 @@
   const files = useFiles()
   const settings = useSettings()
 
-  const file_is_saved = computed(() => files.showFileIsSaved)
+  const file_is_saved = computed(() => files.getTriggerMiniToast)
   const baseDir = computed( () => settings.getBaseDir)
   const getEnableAppendFile = computed( () => settings.getEnableAppendFile)
   const fileToAppend = computed( () => settings.getfileToAppend)
@@ -66,7 +66,6 @@
     loadAllDirs()
     startWatchingFs('base')
     startWatchingFs('appended')
-
   })
 
   // recursive get structure // TODO : use FileType to any

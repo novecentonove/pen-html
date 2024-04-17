@@ -18,7 +18,7 @@ export type RootState = {
   openFiles: Omit<FileType & { isError?: boolean, error?: string}, 'children'>[]
   selectedPath: string
   clickDrawerFile: Omit<FileType, 'children'>[]
-  savedFile: number,
+  triggerMiniToast: {trigger: number, message: string},
   tabToDrag: string,
   closeFilesHandler: CloseFileHandler,
   triggerFileToClose: TriggerFileToClose
@@ -32,7 +32,7 @@ export const useFiles = defineStore('files', {
     openFiles: [],
     selectedPath: '',
     clickDrawerFile: [],
-    savedFile: 0,
+    triggerMiniToast: {trigger: 0, message: ''},
     tabToDrag: '',
     closeFilesHandler: [],
     triggerFileToClose: {},
@@ -50,7 +50,7 @@ export const useFiles = defineStore('files', {
     findInOpenFiles: (state) => (path: string) => state.openFiles.find((file) => file.path === path),
     getOpenFiles: (state) => state.openFiles,
     getClickDrawerFile: (state) => state.clickDrawerFile,
-    showFileIsSaved: (state) => state.savedFile, // triggers 'saved' 
+    getTriggerMiniToast: (state) => state.triggerMiniToast, // triggers 'saved' 
     getSelectedPath: (state) => state.selectedPath,
     getTabToDrag: (state) => state.tabToDrag,
     getTriggerSaveFile: (state) => state.triggerSaveFile, // triggers to editor, then it saves file
@@ -328,8 +328,9 @@ export const useFiles = defineStore('files', {
       }
     },
 
-    triggerFileIsSaved(){
-      this.savedFile++
+    setTriggerMiniToast(message = '', position = ''){
+      this.triggerMiniToast.trigger++
+      this.triggerMiniToast.message = message
     },
 
     removeFromNotSavedFile(path: string){

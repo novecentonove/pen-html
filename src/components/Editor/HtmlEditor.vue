@@ -105,7 +105,7 @@ const saveFile = async () => {
         path: props.path,
       }
     )
-    files.triggerFileIsSaved()
+    files.setTriggerMiniToast()
     if(editor){
       lastFileContent.value = editor.getHTML()
       unsaved.value = false

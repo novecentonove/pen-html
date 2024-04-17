@@ -59,7 +59,7 @@ const saveFile = async () => {
         path: props.path,
       }
     )
-    files.triggerFileIsSaved()
+    files.setTriggerMiniToast()
     lastFileContent.value = content.value
     unsaved.value = false
   } catch (e) {

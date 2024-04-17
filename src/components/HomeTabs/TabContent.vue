@@ -70,7 +70,8 @@
         if(!doExists){
             files.destroyTab(props.path)
             //TODO TOAST TO
-            console.error(`File ${props.path} not exists`)
+            // files.setTriggerMiniToast(`File ${props.path} not exists`)
+            console.error(`File ${props.path} not exists`, 'right')
             return
         }
 

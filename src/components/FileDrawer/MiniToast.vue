@@ -1,6 +1,6 @@
 <template>
   <transition name="saved_file"> 
-    <div v-if="show" style="font-size: 0.8rem;" class="absolute right-3 bottom-[1px] text-neutral-950 px-2 bg-orange-800 rounded-md">saved!</div>
+    <div v-if="show" style="font-size: 0.8rem;" class="absolute right-3 bottom-[1px] text-neutral-950 px-2 bg-orange-800 rounded-md">{{props.trigger.message || 'saved!'}}</div>
   </transition> 
 </template>
 
@@ -8,19 +8,23 @@
   import { ref, watch } from 'vue'
 
   type Props = {
-    trigger: number,
+    trigger: {trigger: number, message:string},
   }
-
+  // ,
   const props = defineProps<Props>()
 
   const show = ref(false)
 
-  watch(() => props.trigger, () => {
-    show.value = true
-    setTimeout(() => {
-      show.value = false
-    }, 2000)
-  })
+  watch(() => props.trigger, (val) => {
+    // console.log(prev.trigger, val.trigger )
+    // if(prev.trigger < val.trigger){
+      show.value = true
+      setTimeout(() => {
+        show.value = false
+      }, 2000)
+    // }
+  },
+{ deep: true})
   </script>
 
 <style>
