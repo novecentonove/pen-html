@@ -7,7 +7,7 @@
           <FileList :files="filesAndDir"/>
           <div v-if="baseDir" :title="baseDir" @click="openDir('base')" class="ml-2 open_dir"></div>
         </div>
-        <div v-if="enableAppendDir && appendedDir" class="pt-2">
+        <div v-if="enableAppendDir && appendedDir " class="pt-2">
           <p class="pb-[6px] mb-2 mr-4 border-b border_color"></p>
           <FileList :files="filesAndDirAppended"/>
           <div v-if="filesAndDirAppended" :title="appendedDir" @click="openDir('appendedDir')" class="ml-2 open_dir"></div>
@@ -20,14 +20,6 @@
             </li>
           </ul>
         </div>
-        <!-- <div v-if="openedFiles.length" class="mt-auto mb-12">
-          <p class="pb-[0.25rem] pl-[0.6rem] mb-2 border-b border_color select-text cut_text">Open editors</p>
-          <ul>
-            <li v-for="file in openedFiles" class="file_li" :key="file.path">
-              <FileClick :file="file" :closable="true"/>
-            </li>
-          </ul>
-        </div> -->
       </div>
     </div>
     <div class="relative flex items-center mt-auto mb-3 pt-3 pl-3 justify-between">
@@ -53,6 +45,7 @@
   import IconSettings from '@/icons/Settings.vue'
   import { readDir } from '@tauri-apps/api/fs'
   import { open } from '@tauri-apps/api/shell'
+  import { watch as fs_watch } from "tauri-plugin-fs-watch-api"
   import { type FileType } from '@/types/FileType'
   import { settingPage } from '@/types/SettingPage'
 
@@ -60,7 +53,7 @@
   const filesAndDirAppended = ref<FileType[] | []>([])
   const files = useFiles()
   const settings = useSettings()
-  
+
   const file_is_saved = computed(() => files.showFileIsSaved)
   const baseDir = computed( () => settings.getBaseDir)
   const getEnableAppendFile = computed( () => settings.getEnableAppendFile)
@@ -69,9 +62,12 @@
   const appendedDir = computed( () => settings.getAppendedDir)
   const showSelectedFolder = computed( () => settings.getShowSelectedFolder)
 
-  watch(baseDir, async () => loadAllDirs() )
-  watch(appendedDir, async () => loadAllDirs() )
-  watch(showSelectedFolder, async () => loadAllDirs() )
+  onMounted( () => {
+    loadAllDirs()
+    startWatchingFs('base')
+    startWatchingFs('appended')
+
+  })
 
   // recursive get structure // TODO : use FileType to any
   const getLStructureDir = async (content: any) => {
@@ -88,7 +84,7 @@
       }
 
       // Remove hidden files
-      const noHidden = content.filter((file:any) => !file.name.startsWith('.'));
+      const noHidden = content.filter((file:any) => !file.name.startsWith('.'))
       // Sort alphabetically
       const alpha = noHidden.sort( (a: any, b:any) =>a.name.localeCompare(b.name))
       // Sort DIR
@@ -113,8 +109,8 @@
       }
     }
   }
-  
-  const loadBaseDir = async (type: string) => {   
+
+  const loadBaseDir = async (type: string) => {
       switch (type) {
         case 'base':
           filesAndDir.value = []
@@ -170,9 +166,71 @@
     }
   }
 
-  onMounted( () => {
+  // watchers
+  watch(baseDir, async () => {
     loadAllDirs()
+    startWatchingFs('base')
   })
+
+  watch(appendedDir, async () => {
+    loadAllDirs()
+    startWatchingFs('appended')
+  })
+
+  watch(enableAppendDir, async () => {
+    loadAllDirs()
+    startWatchingFs('appended')
+  })
+
+  watch(showSelectedFolder, async () => loadAllDirs() )
+
+  const startWatchingFs = async (type: string) => {
+
+    // stop workers
+    const ws = files.getActiveWatchers
+
+    ws.forEach( w => {
+      if( (w?.type === type) && w.watcher ){
+        w?.watcher()
+        files.removeWatcher(type)
+        // console.log('rimosso watcher', type)
+      }
+    })
+
+    if(type === 'base'){
+      if (!baseDir.value) return;
+    }
+    if(type === 'appended'){
+      if (!appendedDir.value || !enableAppendDir.value) return;
+    }
+    
+    let path = '';
+    switch (type) {
+      case 'base':
+        path = baseDir.value
+        break;
+      case 'appended':
+        path = appendedDir.value
+        break;
+    }
+
+    // Start watcher
+    const watcher = await fs_watch(
+      path,
+      (/*event*/) => {
+        loadAllDirs()
+        // console.log(event)
+      },
+      { recursive: true }
+    )
+
+    // console.log(typeof(watcher))
+    files.setActiveWatchers({watcher: watcher, type: type})
+
+    // console.log('dopo', type, files.getActiveWatchers)
+
+  }
+
 </script>
 
 <style>
@@ -217,9 +275,9 @@
   opacity: 0;
 }
 
-.cut_text { 
+.cut_text {
   text-overflow: ellipsis;
-  overflow: hidden; 
+  overflow: hidden;
   white-space: nowrap;
 }
 </style>

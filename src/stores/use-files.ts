@@ -23,10 +23,8 @@ export type RootState = {
   closeFilesHandler: CloseFileHandler,
   triggerFileToClose: TriggerFileToClose
   notSavedFiles: string[],        // Array[path]
-  triggerSaveFile: string       // path
-  // fileDialogToTrigger: string,    // path
-  // dialogTriggerForAll: number
-  // dialogTriggerForAllAndKeep: number
+  triggerSaveFile: string,        // path
+  activeWatchers: [{watcher?: Function, type?: string}?],
 }
 
 export const useFiles = defineStore('files', {
@@ -40,6 +38,7 @@ export const useFiles = defineStore('files', {
     triggerFileToClose: {},
     notSavedFiles: [],
     triggerSaveFile: '',
+    activeWatchers: []
     // fileDialogToTrigger: '',
     // dialogTriggerForAll: 0,
     // dialogTriggerForAllAndKeep: 0
@@ -60,6 +59,7 @@ export const useFiles = defineStore('files', {
     getCloseFilesHandler: (state) => state.closeFilesHandler,
     getTriggerFileToClose: (state) => state.triggerFileToClose,
     getNotSavedFiles: (state) => state.notSavedFiles,
+    getActiveWatchers: (state) => state.activeWatchers
     // getFileDialogToTrigger: (state) => state.fileDialogToTrigger,
     // getDialogTriggerForAll: state => state.dialogTriggerForAll,
     // getDialogTriggerForAllAndKeep: state => state.dialogTriggerForAllAndKeep
@@ -156,6 +156,17 @@ export const useFiles = defineStore('files', {
        setTimeout(() => {
         this.triggerSaveFile = ''
       }, 200);
+    },
+
+    // watchers 
+    setActiveWatchers(watcher: {watcher: Function, type: string}){
+      if(watcher.watcher){
+        this.activeWatchers.push(watcher)
+      }
+    },
+
+    removeWatcher(type: string){
+      this.activeWatchers = this.activeWatchers.filter(w => w?.type !== type)
     },
     
     // # close tabs
