@@ -1,14 +1,14 @@
 <template>
 <li
-  :class="{ 'border-b shadow-lg inactive': selectedPath !== props.file.path,
-            'border-t border-r border-l' :selectedPath === props.file.path
+  :class="{ 'border-b shadow-lg inactive': activeTab !== props.file.path,
+            'border-t border-r border-l' :activeTab === props.file.path
           }" 
   class="flex shrink-0 justify-center items-center align-middle rounded-t border_color cursor-pointer select-none">
   <div class="flex justify-center items-center app_font">
     <!-- Teleport here -->
     <span :id="snakeCasePath(props.file.path)" class="_tab_title_el flex"></span>
   </div>
-  <CloseIcon  @click="files.askTocloseTab(props?.file?.path || '')" :class="{ 'inactive': selectedPath != props.file.path}" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
+  <CloseIcon  @click="files.askTocloseTab(props?.file?.path || '')" :class="{ 'inactive': activeTab != props.file.path}" class="ml-1 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
 </li>
 
 </template>
@@ -26,7 +26,7 @@
 
   const props = defineProps<Props>()
   const files = useFiles()
-  const selectedPath = computed( () => files.getSelectedPath)
+  const activeTab = computed( () => files.getActiveTab)
 
   const snakeCasePath = (path: string) => {
     return snakeCase(path)

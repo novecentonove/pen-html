@@ -29,7 +29,7 @@ const props = defineProps<Props>()
 const files = useFiles()
 const fileName = parseFileName(props?.file?.name ?? '')
 
-const isTabInEditor = computed( () => files.findInOpenFiles(props?.file?.path ?? ''))
+const isTabInEditor = computed( () => files.findInTabsList(props?.file?.path ?? ''))
 
 const isOpenable = computed( () => {
   const ext = props.file?.name.split('.').pop()

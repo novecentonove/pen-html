@@ -4,8 +4,8 @@
   <div class="text-xs overflow-y-scroll">
     <div class="flex">
       <div class="w-2 border-b border_color shadow-lg"></div>
-      <ul class="flex w-full list-none" :class="openFiles.length ? '' : 'mt-3'">
-        <template v-for="file in openFiles" :key="file.path" >
+      <ul class="flex w-full list-none" :class="tabList.length ? '' : 'mt-3'">
+        <template v-for="file in tabList" :key="file.path" >
           <TabTitle :file="file" />
         </template>
         <li class="border-b border_color shadow-lg w-full min-h-[21px]"></li>
@@ -16,7 +16,7 @@
       </ul>
     </div>
     <div id="editor_section" >
-      <section v-for="file in openFiles" :key="file.path">
+      <section v-for="file in tabList" :key="file.path">
         <TabContent :name="file.name" :path="file.path" />
       </section>
     </div>
@@ -31,7 +31,7 @@
   import Circle from '@/icons/Circle.vue'
 
   const files = useFiles()
-  const openFiles = computed(() => files.getOpenFiles)
+  const tabList = computed(() => files.getTabList)
 
 </script>
 

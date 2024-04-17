@@ -1,5 +1,5 @@
 <template>
-  <div v-show="path == selectedPath">
+  <div v-show="path == activeTab">
     <!-- <KeepAlive> -->
       <Suspense>
         <component :is="editorComponent[current]"
@@ -27,7 +27,7 @@
   const props = defineProps<FileType>()
   const files = useFiles()
   const path = toRef(props.path)
-  const selectedPath = computed( () => files.getSelectedPath)
+  const activeTab = computed( () => files.getActiveTab)
   const content = ref('')
   const editorComponent:any = {HtmlEditor, TextEditor, Settings}
   const onSelectedPath = ref(0)
@@ -35,8 +35,8 @@
   const componentIsReady = ref(false)
   import { settingPage } from '@/types/SettingPage'
 
-  watch(selectedPath, () => {
-    if(path.value == selectedPath.value){
+  watch(activeTab, () => {
+    if(path.value == activeTab.value){
       onSelectedPath.value++
     }
   })

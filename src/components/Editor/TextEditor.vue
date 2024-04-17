@@ -39,7 +39,7 @@ const content = ref(props.modelValue)
 const unsaved = ref(false)
 const lastFileContent = ref('')
 const snakeCasePath = computed( (): string => snakeCase(props.path))
-const openFile = files.findInOpenFiles(props.path)
+const openFile = files.findInTabsList(props.path)
 const triggerSaveFile = computed(() => files.getTriggerSaveFile)
 
 const { /*history,*/ undo, redo } = useRefHistory(content)

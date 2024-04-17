@@ -79,7 +79,7 @@ const isSame = <Ref>ref(null)
 const editorIsReady = ref(false)
 const unsaved = ref(false)
 const snakeCasePath = computed( (): string => snakeCase(props.path))
-const openFile = files.findInOpenFiles(props.path)
+const openFile = files.findInTabsList(props.path)
 const triggerSaveFile = computed(() => files.getTriggerSaveFile)
 const settings = useSettings()
 

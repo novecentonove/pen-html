@@ -31,7 +31,7 @@ const fileName = parseFileName(props?.name ?? '')
 
 const openFile = async (file: FileType | null) => {
   if(file){
-    files.setSelectedPath(file.path)
+    files.setActiveTab(file.path)
   }
 }
 

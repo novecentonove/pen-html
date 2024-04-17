@@ -15,8 +15,8 @@ type TriggerFileToClose = {
 } | {}
 
 export type RootState = {
-  openFiles: Omit<FileType & { isError?: boolean, error?: string}, 'children'>[]
-  selectedPath: string
+  tabList: Omit<FileType & { isError?: boolean, error?: string}, 'children'>[]
+  activeTab: string
   clickDrawerFile: Omit<FileType, 'children'>[]
   triggerMiniToast: {trigger: number, message: string},
   tabToDrag: string,
@@ -29,8 +29,8 @@ export type RootState = {
 
 export const useFiles = defineStore('files', {
   state: () => ({ 
-    openFiles: [],
-    selectedPath: '',
+    tabList: [],
+    activeTab: '',
     clickDrawerFile: [],
     triggerMiniToast: {trigger: 0, message: ''},
     tabToDrag: '',
@@ -39,19 +39,16 @@ export const useFiles = defineStore('files', {
     notSavedFiles: [],
     triggerSaveFile: '',
     activeWatchers: []
-    // fileDialogToTrigger: '',
-    // dialogTriggerForAll: 0,
-    // dialogTriggerForAllAndKeep: 0
   } as RootState),
 
   persist: true,
 
   getters: {
-    findInOpenFiles: (state) => (path: string) => state.openFiles.find((file) => file.path === path),
-    getOpenFiles: (state) => state.openFiles,
+    findInTabsList: (state) => (path: string) => state.tabList.find((file) => file.path === path),
+    getTabList: (state) => state.tabList,
     getClickDrawerFile: (state) => state.clickDrawerFile,
     getTriggerMiniToast: (state) => state.triggerMiniToast, // triggers 'saved' 
-    getSelectedPath: (state) => state.selectedPath,
+    getActiveTab: (state) => state.activeTab,
     getTabToDrag: (state) => state.tabToDrag,
     getTriggerSaveFile: (state) => state.triggerSaveFile, // triggers to editor, then it saves file
     // file dialog
@@ -66,29 +63,29 @@ export const useFiles = defineStore('files', {
   },
 
   actions: {
-    setSelectedPath(path: string) {
+    setActiveTab(path: string) {
 
-      if(this.selectedPath == path){
+      if(this.activeTab == path){
         this.highlightTabTitle(path)
       }
 
-      this.selectedPath = path
+      this.activeTab = path
     },
     
     addAndSelectPage(file: Omit<FileType, 'children'>) {
       let exists = false
-      this.openFiles.forEach(tab => {
+      this.tabList.forEach(tab => {
         if(tab.path === file.path){
           exists = true
           // @ts-ignore
           this.clickDrawerFile = file
-          this.setSelectedPath(file.path)
+          this.setActiveTab(file.path)
         }
       })
 
       if(!exists) {
-        this.openFiles.push(file)
-        this.setSelectedPath(file.path)
+        this.tabList.push(file)
+        this.setActiveTab(file.path)
       }
     },
 
@@ -111,18 +108,18 @@ export const useFiles = defineStore('files', {
     
     reArrangeFiles(tab_path: string, toIndex: number){
 
-      const objectToMove =  this.getOpenFiles.find((el) => el.path === tab_path)
+      const objectToMove =  this.getTabList.find((el) => el.path === tab_path)
 
       if (objectToMove) {
-        const rearrange = this.getOpenFiles.filter(obj => obj.path !== tab_path)
+        const rearrange = this.getTabList.filter(obj => obj.path !== tab_path)
         rearrange.splice(toIndex, 0, objectToMove)
-        this.openFiles = rearrange
+        this.tabList = rearrange
       }
 
     },
     
     setOpenFileError(path: string, isError: boolean, error: string ){
-      this.openFiles = this.getOpenFiles.map(file => {
+      this.tabList = this.getTabList.map(file => {
         if(file.path === path){
           file.isError = isError,
           file.error = error
@@ -132,10 +129,10 @@ export const useFiles = defineStore('files', {
     },
 
     selectLastTab(){
-      if(this.getOpenFiles.length){
-        this.setSelectedPath(this.getOpenFiles[this.getOpenFiles.length-1].path)
+      if(this.getTabList.length){
+        this.setActiveTab(this.getTabList[this.getTabList.length-1].path)
       } else {
-        this.setSelectedPath('')
+        this.setActiveTab('')
       }
     },
 
@@ -143,14 +140,14 @@ export const useFiles = defineStore('files', {
       // remove from unSavedFile
       this.removeFromNotSavedFile(path)
       // remove from open files
-      this.openFiles = this.openFiles.filter( tab => tab.path !== path)
+      this.tabList = this.tabList.filter( tab => tab.path !== path)
     },
 
     async saveActiveTab(){
       this.triggerSaveFile = ''
        
        setTimeout(() => {
-         this.saveFilePromise(this.getSelectedPath)
+         this.saveFilePromise(this.getActiveTab)
        }, 200);
 
        setTimeout(() => {
@@ -173,7 +170,7 @@ export const useFiles = defineStore('files', {
 
     async closeAllTabs(closeTab = true){
       return new Promise(async(resolve) => {
-        const tabs = this.getOpenFiles
+        const tabs = this.getTabList
         // this.closeFilesHandler = []
         if(tabs.length){
           for (const tab of tabs) {
@@ -196,7 +193,7 @@ export const useFiles = defineStore('files', {
           
           if(isNotSaved){
             this.addCloseFileHandler(path)
-            this.setSelectedPath(path)
+            this.setActiveTab(path)
             const res = await this.awaitCloseTab(path, closeTab)
             resolve(res)
           } else {
