@@ -24,7 +24,7 @@ export type RootState = {
   triggerFileToClose: TriggerFileToClose
   notSavedFiles: string[],        // Array[path]
   triggerSaveFile: string,        // path
-  activeWatchers: [{watcher?: Function, type?: string}?],
+  activeWatchers: {watcher?: Function, type?: string}[],
 }
 
 export const useFiles = defineStore('files', {
