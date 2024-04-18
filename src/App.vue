@@ -12,7 +12,7 @@
       <div id="rightV" class="relative grow view_color select-none">
         <div data-tauri-drag-region class="titlebar text_color">
           <!-- <div class="ml-3 mr-auto pt-1 text-xs">
-            <p>path</p>
+            <p>pathlisten('tauri:</p>
           </div> -->
           <div class="titlebar_button" @click="appWindow.minimize()">
             <WindowMinimize width="1em" />
@@ -76,6 +76,7 @@
     }
   }
 
+  // Open With
   getMatches().then((matches) => {
     const path = matches.args.path.value as string
     if(path){
@@ -88,6 +89,22 @@
     }
   })
 
+
+listen('single-instance', (event: {payload: []} ) => {
+
+  let payload: any = event.payload
+
+  const path = payload.args[1] as string
+    if(path){
+      const name: string = path.substring(path.lastIndexOf('/')+1)
+      const ext: string = path.split('.').pop() ?? ''
+
+      if(allowedExt.includes(ext ?? '')){
+        addPagesFromDrop({name: name, path: path})
+      }
+    }
+})
+ 
   // Drop files
   const toggleDropHover = debounce((boolean = null) => {
     if(boolean === null){
