@@ -24,7 +24,7 @@
     </div>
     <div class="relative flex items-center mt-auto mb-3 pt-3 pl-3 justify-between">
       <div class="opacity-20 cursor-pointer">
-        <IconSettings title="Settings" @click="files.addAndSelectPage(settingPage)" width="1.3em" />
+        <IconSettings title="Settings" @click="files.addAndSelectPage(settingFile)" width="1.3em" />
       </div>
       <div title="Reload all dirs" class="opacity-30 cursor-pointer mr-3" >
         <ReloadIcon width="1.3em" @click="loadAllDirs" />
@@ -47,7 +47,7 @@
   import { open } from '@tauri-apps/api/shell'
   import { watch as fs_watch } from "tauri-plugin-fs-watch-api"
   import { type FileType } from '@/types/FileType'
-  import { settingPage } from '@/types/SettingPage'
+  import { settingFile } from '@/types/SettingFile'
 
   const filesAndDir = ref<FileType[] | []>([])
   const filesAndDirAppended = ref<FileType[] | []>([])

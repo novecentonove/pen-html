@@ -13,9 +13,10 @@
 
   <div class="text-right">
     <p class="text-xs opacity-50">Pen html - v. {{ appVersion }}</p>
+    <p class="relative mt-2 cursor-pointer underline" @click="files.addAndSelectPage(howToFile)">How it works</p>
   </div>
 
-  <div class="max-w-[450px] ml-[5%] my-6 font_colors flex flex-col gap-6">
+  <div class="max-w-[450px] ml-[5%] mb-6 font_colors flex flex-col gap-6">
     <div class="input_section flex flex-col">
       <label>
         Base Folder<br>
@@ -30,7 +31,6 @@
         Add extra Folder<br>
         <div class="flex justify-between">
           <span class="opacity-50">Your extra html folder for your notes</span>
-          <span @click="settings.setAppendedDir(''); settings.setEnableAppendDir(false)">x</span>
         </div>
       </label>
       <button :title="settings.getAppendedDir" class="buttonFolder border h-8 cursor-pointer" @click="readFileDir('append')">{{shortBaseAppededDir || 'Please select a directory'}}</button>
@@ -42,7 +42,6 @@
         Add extra file<br>
         <div class="flex justify-between">
           <span class="opacity-50">Your extra file for your notes</span>
-          <span @click="settings.setfileToAppend({name: '',path: ''}); settings.setEnableAppendFile(false)">x</span>
         </div>
       </label>
       <button :title="settings.getfileToAppend.path" class="buttonFolder border h-8 cursor-pointer" @click="readFile">{{shortBaseAppededFile || 'Please select a file'}}</button>
@@ -158,6 +157,8 @@
   import { getVersion } from '@tauri-apps/api/app'
   import { snakeCase } from 'lodash';
   import { getDefaultPath } from '@/composable/getDefaultPath'
+  import { useFiles } from '@/stores/use-files'
+  import { howToFile } from '@/types/HowToFile'
 
   type Props = {
     modelValue: string
@@ -167,10 +168,10 @@
   }
 
   const props = defineProps<Props>()
+  const files = useFiles()
+  const settings = useSettings()
 
   const snakeCasePath = computed( (): string => snakeCase(props.path))
-
-  const settings = useSettings()
   const selectedAppFont = toRef(settings.getAppFont)
   const selectedEditorFont = toRef(settings.getEditorFont)
   const selectedTextColors = computed( () => settings.getFontColor)
@@ -180,6 +181,7 @@
   const enableAppendFile = toRef(settings.enableAppendFile)
   const enableAppendDir = toRef(settings.getEnableAppendDir)
   const showSelectedFolder = toRef(settings.getShowSelectedFolder)
+
 
   const shortBaseFilesDir = computed(() => {
     const url = settings.getBaseDir.split('/')

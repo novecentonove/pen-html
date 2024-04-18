@@ -58,6 +58,7 @@
   import { type FileType } from '@/types/FileType'
   import { debounce, throttle } from 'lodash'
   import { allowedExt } from '@/types/AllowedExt'
+  import { howToFile } from '@/types/HowToFile'
 
   const settings = useSettings()
   const files = useFiles()
@@ -156,6 +157,11 @@
     settings.applyTheme()
 
     window.addEventListener('keyup', handleKeyDown)
+
+    // Show default page
+    if(!settings.getBaseDir && !settings.getAppendedDir){
+      files.addAndSelectPage(howToFile)
+    }
   })
 
  </script>

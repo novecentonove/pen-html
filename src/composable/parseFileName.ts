@@ -1,4 +1,5 @@
-import { settingPage } from "@/types/SettingPage"
+import { settingFile } from "@/types/SettingFile"
+import { howToFile } from "@/types/HowToFile"
 
 export function parseFileName(name:string): string{
   let parsedName = ''
@@ -16,7 +17,7 @@ export function parseFileName(name:string): string{
       parsedName = `${start}...${end}`
     }
 
-    if(ext !== 'html' && name !== settingPage.name){
+    if(ext !== 'html' && name !== settingFile.name && name !== howToFile.name){
       parsedName =`${parsedName}.${ext}`
     }
  

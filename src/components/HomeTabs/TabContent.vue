@@ -20,20 +20,24 @@
   import { type FileType } from '@/types/FileType'
   import HtmlEditor from '@/components/Editor/HtmlEditor.vue'
   import TextEditor from '@/components/Editor/TextEditor.vue'
+  import { settingFile } from '@/types/SettingFile'
   import Settings from '@/views/Settings.vue'
+  import { howToFile } from '@/types/HowToFile'
+  import HowTo from '@/views/HowTo.vue'
   import { readTextFile } from '@tauri-apps/api/fs'
 
-  type Current = 'HtmlEditor' | 'TextEditor' | 'Settings'
+
+  type Current = 'HtmlEditor' | 'TextEditor' | 'Settings' | 'HowTo'
   const props = defineProps<FileType>()
   const files = useFiles()
   const path = toRef(props.path)
   const activeTab = computed( () => files.getActiveTab)
   const content = ref('')
-  const editorComponent:any = {HtmlEditor, TextEditor, Settings}
+  const editorComponent:any = {HtmlEditor, TextEditor, Settings, HowTo}
   const onSelectedPath = ref(0)
   const current = ref<Current>('HtmlEditor')
   const componentIsReady = ref(false)
-  import { settingPage } from '@/types/SettingPage'
+
 
   watch(activeTab, () => {
     if(path.value == activeTab.value){
@@ -45,10 +49,14 @@
     try {
       let ext = props.path.split('.').pop()
 
-      if(props.path === settingPage.path){
+      if(props.path === settingFile.path){
         ext = 'settings'
+      } else if(props.path === howToFile.path){
+        ext = 'howto'
       }
       
+      let systemFile = false
+
       let defaultIfEmpty = '<p></p>'
       switch (ext) {
         case 'html':
@@ -56,6 +64,11 @@
           break
         case 'settings':
           current.value = 'Settings'
+          systemFile = true
+          break
+        case 'howto':
+          current.value = 'HowTo'
+          systemFile = true
           break
         default:
           current.value = 'TextEditor'
@@ -63,7 +76,7 @@
           break
       }
 
-      if(props.path != settingPage.path){
+      if(!systemFile){
 
         const doExists = await exists(props.path, { dir: BaseDirectory.AppData })
 
