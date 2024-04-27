@@ -140,6 +140,7 @@ listen('single-instance', (event: {payload: []} ) => {
   })
 
   const addPagesFromDrop = throttle((file: FileType) => {
+    settings.setToDroppedFiles(file.path)
     files.addAndSelectPage(file)
   })
 

@@ -145,7 +145,6 @@
   // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
   import { getVersion } from '@tauri-apps/api/app'
-  import { snakeCase } from 'lodash';
   import { getDefaultPath } from '@/composable/getDefaultPath'
   import { useFiles } from '@/stores/use-files'
   import { howToFile } from '@/types/HowToFile'
@@ -346,6 +345,7 @@
 .border_section {
  border-left: 3px solid var(--border_color);
 }
+
 .input_section{
   margin-top: 1rem;
 }
@@ -353,7 +353,6 @@
 .settings{
   height: calc(100vh - 111px);
 }
-
 
 .buttonFolder{
   margin-top: .5rem;

@@ -16,7 +16,8 @@ export type RootState = {
   enableAppendFile: boolean,
   fileToAppend: FileType,
   showSelectedFolder: boolean,
-  editorWith: number
+  editorWith: number,
+  droppedFiles: string[]
 }
 
 export const useSettings = defineStore('settings', {
@@ -31,9 +32,10 @@ export const useSettings = defineStore('settings', {
     enableAppendDir: false,
     appendedDir: '',
     enableAppendFile: false,
-    fileToAppend: {},
+    fileToAppend: {name: '', path: ''},
     showSelectedFolder: true,
-    editorWith: 700
+    editorWith: 700,
+    droppedFiles: []
   } as RootState),
 
   persist: true,
@@ -51,7 +53,8 @@ export const useSettings = defineStore('settings', {
     getEnableAppendFile: (state) => state.enableAppendFile,
     getfileToAppend: (state) => state.fileToAppend,
     getShowSelectedFolder: (state) => state.showSelectedFolder,
-    getToggleEditorWidth: (state) => state.editorWith
+    getToggleEditorWidth: (state) => state.editorWith,
+    getDroppedFiles: (state) => state.droppedFiles
   },
 
   actions: {
@@ -90,6 +93,16 @@ export const useSettings = defineStore('settings', {
     },
     setShowSelectedFolder(val: boolean){
       this.showSelectedFolder = val
+    },
+    setToDroppedFiles(path: string){
+      const alreadyDropped = this.getDroppedFiles.filter(pth => pth == path)
+      // console.log(alreadyDropped)
+      if(alreadyDropped.length == 0){
+        this.droppedFiles.push(path)
+      }
+    },
+    unmountDropFile(path: string){
+      this.droppedFiles = this.droppedFiles.filter( pth => pth !== path )
     },
     applySettings(){
       document.documentElement.style.setProperty('--app_font', this.appFont)

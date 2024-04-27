@@ -20,6 +20,16 @@
             </li>
           </ul>
         </div>
+        <div v-if="droppedFiles.length" class="mt-6">
+          <!-- <p>Drops</p> -->
+          <p class="pb-[6px] mb-2 border-b border_color"></p>
+          <ul>
+            <li v-for="path in droppedFiles" class="file_li">
+              <FileClick :file="getFileType(path)" :title="fileToAppend.path" :is-drop="isDroppingFile(path)" />
+            </li>
+          </ul>
+          
+        </div>
       </div>
     </div>
     <div class="relative flex items-center mt-auto mb-3 pt-3 pl-3 justify-between">
@@ -61,6 +71,7 @@
   const enableAppendDir = computed( () => settings.getEnableAppendDir)
   const appendedDir = computed( () => settings.getAppendedDir)
   const showSelectedFolder = computed( () => settings.getShowSelectedFolder)
+  const droppedFiles = computed( () => settings.getDroppedFiles)
 
   onMounted( () => {
     loadAllDirs()
@@ -142,6 +153,15 @@
           }
           break
       }
+  }
+
+  const getFileType = (path: string) => {
+    const name =  path.substring(path.lastIndexOf('/')+1)
+    return {name: name, path: path}
+  }
+
+  const isDroppingFile = (path: string) => {
+    return droppedFiles.value.includes(path)
   }
 
   const _switch_folder_name = (inside: [], dir: string) => {
