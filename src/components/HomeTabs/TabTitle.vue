@@ -14,7 +14,7 @@
 
   <div class="ml-[8px] mr-[2px]" style="font-size: 0.5rem" :class="fileIsSaved ? 'opacity-0' : 'opacity-100'">&#9679</div>
     <div class="ml-1 flex justify-center items-center app_font font-semibold transition duration-200">
-      {{ file.name }}
+      {{ fileName }}
   </div>
 
   <CloseIcon  @click="files.askTocloseTab(props?.file?.path || '')" :class="{ 'inactive': activeTab != props.file.path}" class="ml-2 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
@@ -28,6 +28,7 @@
   import { type FileType } from '@/types/FileType'
   import { useFiles } from '@/stores/use-files'
   import { throttle, snakeCase} from 'lodash'
+  import { parseFileName } from '@/composable/parseFileName'
 
   type Props = {
     file: FileType
@@ -42,6 +43,8 @@
   const snakeCasePath = computed( (): string => snakeCase(props.file.path))
   const thisTab = ref(null)
   const xStartPoint = ref(0)
+
+  const fileName = parseFileName(props.file.name ?? '')
 
   const startDragging = ( e: MouseEvent) => {
     document.addEventListener('mousemove', handleDragging)
@@ -72,7 +75,7 @@
 
       if(!activeElClosest) return
 
-      // Background and color style
+      // styles
       activeElClosest.style.backgroundColor = '#000000'
 
         if(_tab_title_els){
@@ -118,7 +121,6 @@ const stopAndResetDrag = () => {
 
 
 const resetStyleTab = throttle(() => {
-  console.log('reset')
 
   const _tab_title_els = document.querySelectorAll('._tab_title_el')
 
