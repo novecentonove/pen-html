@@ -1,14 +1,5 @@
 <template>
-  <Teleport v-if="true" :to="`#${snakeCasePath}`">
-    <TitleTabAttributes
-      :unsaved="false"
-      :name="props.name"
-      :path="props.path"
-      :snake-case-path="snakeCasePath"
-      />
-  </Teleport>
-
-  <div class="settings overflow-y-scroll px-12 mt-12 ml-[2%] mr-10 text-md leading-6">
+  <div class="overflow-y-scroll px-12 mt-12 ml-[2%] mr-10 text-md leading-6 select-text">
     <p>Welcome to PEN-HTML</p>
     <br>
     <p><b>Getting started</b><br>
@@ -39,18 +30,5 @@
 </template>
 
 <script setup lang="ts">
-import { snakeCase } from 'lodash';
-import { computed } from 'vue';
-import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
 import IconSettings from '@/icons/Settings.vue'
-
-  type Props = {
-    modelValue: string
-    name: string
-    path: string
-    onSelectedPath: number
-  }
-
-  const props = defineProps<Props>()
-  const snakeCasePath = computed( (): string => snakeCase(props.path))
 </script>

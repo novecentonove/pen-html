@@ -1,6 +1,6 @@
 <template>
   <div class="file_click flex items-center w-full">
-    <div class="relative flex items-center mr-auto w-full" @click="openFile" >
+    <div class="relative flex items-center mr-auto w-full" @click="openTab" >
         <span v-if="isTabInEditor" class="absolute right-0 mt-1" style="color: var(--border_color)">
             ・
         </span>
@@ -36,7 +36,7 @@ const isOpenable = computed( () => {
   return allowedExt.includes(ext ?? '') ? true : false
 })
 
-const openFile = async () => {
+const openTab = async () => {
   if(isOpenable.value && props.file){
     files.addAndSelectPage(props.file)
   }

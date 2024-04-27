@@ -1,14 +1,5 @@
 <template>
 
-<Teleport v-if="true" :to="`#${snakeCasePath}`">
-  <TitleTabAttributes
-    :unsaved="false"
-    :name="props.name"
-    :path="props.path"
-    :snake-case-path="snakeCasePath"
-    />
-</Teleport>
-
 <div class="settings overflow-y-scroll px-12 mt-6 ml-[2%] mr-10">
 
   <div class="text-right">
@@ -151,7 +142,6 @@
   import { computed, toRef} from 'vue'
   import { useSettings } from '@/stores/use-settings'
   import { readDir } from '@tauri-apps/api/fs'
-  import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
   // @ts-ignore
   import { themeSettings } from '@/utils/themeSettings.js'
   import { getVersion } from '@tauri-apps/api/app'
@@ -160,18 +150,9 @@
   import { useFiles } from '@/stores/use-files'
   import { howToFile } from '@/types/HowToFile'
 
-  type Props = {
-    modelValue: string
-    name: string
-    path: string
-    onSelectedPath: number
-  }
-
-  const props = defineProps<Props>()
   const files = useFiles()
   const settings = useSettings()
 
-  const snakeCasePath = computed( (): string => snakeCase(props.path))
   const selectedAppFont = toRef(settings.getAppFont)
   const selectedEditorFont = toRef(settings.getEditorFont)
   const selectedTextColors = computed( () => settings.getFontColor)

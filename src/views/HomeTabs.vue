@@ -2,7 +2,7 @@
   <slot />    <!-- resize border  -->
   
   <div class="text-xs overflow-y-scroll">
-    <div class="flex">
+    <div id="_tablist" class="flex">
       <div class="w-2 border-b border_color shadow-lg"></div>
       <ul class="flex w-full list-none" :class="tabList.length ? '' : 'mt-3'">
         <template v-for="file in tabList" :key="file.path" >

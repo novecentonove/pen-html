@@ -56,7 +56,8 @@ export const useFiles = defineStore('files', {
     getCloseFilesHandler: (state) => state.closeFilesHandler,
     getTriggerFileToClose: (state) => state.triggerFileToClose,
     getNotSavedFiles: (state) => state.notSavedFiles,
-    getActiveWatchers: (state) => state.activeWatchers
+    getActiveWatchers: (state) => state.activeWatchers,
+    isThisTabSaved: (state) => (path: string) => !state.notSavedFiles.includes(path)
     // getFileDialogToTrigger: (state) => state.fileDialogToTrigger,
     // getDialogTriggerForAll: state => state.dialogTriggerForAll,
     // getDialogTriggerForAllAndKeep: state => state.dialogTriggerForAllAndKeep
@@ -92,28 +93,28 @@ export const useFiles = defineStore('files', {
     highlightTabTitle(path: string){
       const selectedTab:HTMLElement | null = document.querySelector(`#${snakeCase(path)}`)
       if(selectedTab){
-        const texttab:HTMLElement | null = selectedTab.querySelector('._filename_tab')
-        if(texttab){
-          texttab.style.filter = 'brightness(1.3)'
+          selectedTab.style.filter = 'brightness(1.3)'
           setTimeout(() => {
-            texttab.style.filter = 'brightness(1)'
+            selectedTab.style.filter = 'brightness(1)'
           }, 200)
         }
-      }
     },
 
     setTabToDrag(path: string) {
       this.tabToDrag = path
     },
     
-    reArrangeFiles(tab_path: string, toIndex: number){
+    reArrangeFiles(tab_path_to_move: string, toIndex: number){
 
-      const objectToMove =  this.getTabList.find((el) => el.path === tab_path)
+      const objectToMove =  this.getTabList.find((el) => el.path === tab_path_to_move)
 
       if (objectToMove) {
-        const rearrange = this.getTabList.filter(obj => obj.path !== tab_path)
+        const rearrange = this.getTabList.filter(obj => obj.path !== tab_path_to_move)
+        
         rearrange.splice(toIndex, 0, objectToMove)
         this.tabList = rearrange
+      } else {
+        console.log('no objectToMove')
       }
 
     },

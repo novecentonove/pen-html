@@ -1,13 +1,4 @@
 <template>
-
-<Teleport :to="`#${snakeCasePath}`">
-    <TitleTabAttributes
-      :unsaved="unsaved"
-      :name="name"
-      :path="path"
-      :snake-case-path="snakeCasePath"
-     />
-  </Teleport>
   <div v-if="openFile?.isError" class="editor_font editor_font_size px-12 mt-6">
     <p>An errror occurred</p>
     <p v-if="openFile.error">{{ openFile.error }}</p>
@@ -20,8 +11,6 @@
 <script setup lang="ts">
 import { type Ref, computed, onMounted, ref, watch } from 'vue'
 import { useFiles } from '../../stores/use-files'
-import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
-import { snakeCase} from 'lodash'
 import { writeFile } from '@tauri-apps/api/fs'
 import { useRefHistory } from '@vueuse/core'
 
@@ -38,7 +27,6 @@ const text_area:Ref<HTMLDivElement|null> = ref(null)
 const content = ref(props.modelValue)
 const unsaved = ref(false)
 const lastFileContent = ref('')
-const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.findInTabsList(props.path)
 const triggerSaveFile = computed(() => files.getTriggerSaveFile)
 

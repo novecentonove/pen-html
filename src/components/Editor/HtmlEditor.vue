@@ -1,14 +1,5 @@
 <template>
 
-  <Teleport v-if="editorIsReady" :to="`#${snakeCasePath}`">
-    <TitleTabAttributes
-      :unsaved="unsaved"
-      :name="props.name"
-      :path="props.path"
-      :snake-case-path="snakeCasePath"
-     />
-  </Teleport>
-
   <div v-if="openFile?.isError" class="editor_font editor_font_size mt-6 px-12">
       <p>An errror occurred</p>
       <p v-if="openFile.error">{{ openFile.error }}</p>
@@ -21,7 +12,7 @@
       <WidthWideIcon title="Set width to 700" v-else />
     </div>
     <div class="self-stretch overflow-y-scroll">
-      <div v-if="editor">
+      <div v-if="editorIsReady && editor">
         <editor-content
         :editor="editor"
         type="color"
@@ -30,6 +21,7 @@
         :style="`padding: 0 calc((100% - ${settings.getToggleEditorWidth}px) / 2);`"
         />
       </div>
+      <div v-else>Editor not loaded</div>
     </div>
 
     <bubble-menu
@@ -45,10 +37,8 @@
 
 <script setup lang="ts">
 import { type Ref, onBeforeUnmount, onMounted, ref, watch, computed } from 'vue'
-import { snakeCase} from 'lodash'
 import { useFiles } from '../../stores/use-files'
 import EditorButtons from './EditorButtons.vue'
-import TitleTabAttributes from '@/components/HomeTabs/TitleTabAttributes.vue'
 import { writeFile } from '@tauri-apps/api/fs'
 import StarterKit from '@tiptap/starter-kit'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/vue-3'
@@ -78,7 +68,6 @@ const emit = defineEmits(['update:modelValue'])
 const isSame = <Ref>ref(null)
 const editorIsReady = ref(false)
 const unsaved = ref(false)
-const snakeCasePath = computed( (): string => snakeCase(props.path))
 const openFile = files.findInTabsList(props.path)
 const triggerSaveFile = computed(() => files.getTriggerSaveFile)
 const settings = useSettings()
