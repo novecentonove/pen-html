@@ -27,8 +27,7 @@
   import CloseIcon from '@/icons/Close.vue'
   import { type FileType } from '@/types/FileType'
   import { useFiles } from '@/stores/use-files'
-  import { debounce, throttle, snakeCase} from 'lodash'
-
+  import { throttle, snakeCase} from 'lodash'
 
   type Props = {
     file: FileType
@@ -80,33 +79,15 @@
           _tab_title_els.forEach((tab: any)=> {
             if(tab.contains(el)){
               tab.classList.add('color_dragging')
+              if(moveToRight)tab.classList.add('right_dragging')
+              else tab.classList.add('left_dragging')
             } else {
               tab.classList.remove('color_dragging')
+              tab.classList.remove('right_dragging')
+              tab.classList.remove('left_dragging')
             }
-        })
-
-
-          // Border left and right style
-        _tab_title_els.forEach((tab: any)=> {
-
-          const isTheActive = activeElClosest?.contains(tab)
-
-          if(isTheActive) return
-
-          if(tab.contains(el)){
-            if(moveToRight){
-              tab.style.borderRight = '1px solid var(--border_color)'
-            } else {
-              tab.style.borderLeft= '1px solid var(--border_color)'
-            }
-          } else {
-              tab.style.borderLeft = 'none'
-              tab.style.borderRight = 'none'
-          }
-
         })
       }
-
 }, 100)
 
 const endDragging = (e: MouseEvent) => {
@@ -126,7 +107,6 @@ const endDragging = (e: MouseEvent) => {
     }
 
     stopAndResetDrag()
-
   }
 }
 
@@ -142,34 +122,15 @@ const resetStyleTab = throttle(() => {
 
   const _tab_title_els = document.querySelectorAll('._tab_title_el')
 
-  // Reset color and background
+  // Reset styles
   if(_tab_title_els){
     _tab_title_els.forEach((tab: any) => {
       tab.classList.remove('color_dragging')
       tab.style.backgroundColor = 'inherit'
+      tab.classList.remove('right_dragging')
+      tab.classList.remove('left_dragging')
     })
   }
-
-  // Reset borders style. NOT PERFECT
-  setTimeout(() => {
-    const activeEl = document.querySelector(`#${snakeCase(activeTab.value)}`)
-    const activeElClosest = activeEl?.closest('li')
-    
-    if(_tab_title_els){
-      _tab_title_els.forEach((tab: any) => {
-        const isTheActive = activeElClosest?.contains(tab)
-
-        if(!isTheActive) {
-            tab.style.borderRight = 'none'
-            tab.style.borderLeft = 'none'
-        } else {
-          tab.style.borderRight = '1px solid var(--border_color)'
-          tab.style.borderLeft = '1px solid var(--border_color)'
-        }
-      })
-    }
-  }, 20);
-
 
 }, 500)
 
@@ -182,6 +143,12 @@ const resetStyleTab = throttle(() => {
 }
 .color_dragging {
   color: var(--border_color);
+}
+.right_dragging {
+  border-right: 1px solid var(--border_color);
+}
+.left_dragging {
+  border-left: 1px solid var(--border_color);
 }
 .settingTab{
   background-color: color-mix(in srgb, var(--border_color) 20%, transparent);
