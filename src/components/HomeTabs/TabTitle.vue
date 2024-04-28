@@ -6,18 +6,21 @@
       'border-t border-r border-l' :activeTab === props.file.path
     }" 
     class="_tab_title_el flex shrink-0 justify-center items-center align-middle pt-[10px] py-[6px] rounded-t border_color cursor-pointer select-none"
-    @click="files.setActiveTab(props.file.path)"
-    @mousedown.prevent="startDragging" 
-    @mouseup.prevent="endDragging"
-    ref="thisTab" 
+    ref="thisTab"
+    @mousedown="startDragging" 
+    @mouseup.once="endDragging"
+    @click="setActiveTab($event, props.file.path)"
   >
+  <!-- <div class="flex"  > -->
 
-  <div class="ml-[8px] mr-[2px]" style="font-size: 0.5rem" :class="fileIsSaved ? 'opacity-0' : 'opacity-100'">&#9679</div>
-    <div class="ml-1 flex justify-center items-center app_font font-semibold transition duration-200">
-      {{ fileName }}
-  </div>
+    <div class="ml-[8px] mr-[2px]" style="font-size: 0.5rem" :class="fileIsSaved ? 'opacity-0' : 'opacity-100'">&#9679</div>
+      <div class="ml-1 flex justify-center items-center app_font font-semibold transition duration-200">
+        {{ fileName }}
+    </div>
 
-  <CloseIcon  @click="files.askTocloseTab(props?.file?.path || '')" :class="{ 'inactive': activeTab != props.file.path}" class="ml-2 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
+  <!-- </div> -->
+
+  <CloseIcon ref="closeIcon" @click="files.askTocloseTab(props?.file?.path || '')" :class="{ 'inactive': activeTab != props.file.path}" class="ml-2 mr-3 h-auto w-3 text-neutral-500 hover:text-red-700 transition ease-out duration-300" />
 </li>
 
 </template>
@@ -39,12 +42,20 @@
 
   const activeTab = computed( () => files.getActiveTab)
   const fileIsSaved = computed( () => files.isThisTabSaved(props.file.path))
+  const closeIcon = ref(null)
   
   const snakeCasePath = computed( (): string => snakeCase(props.file.path))
   const thisTab = ref(null)
   const xStartPoint = ref(0)
 
   const fileName = parseFileName(props.file.name ?? '')
+
+
+  const setActiveTab = (e: MouseEvent, path: string) => {
+    const click = e.target
+    if(click == closeIcon.value || click.closest('svg') ) return
+    files.setActiveTab(path)
+  }
 
   const startDragging = ( e: MouseEvent) => {
     document.addEventListener('mousemove', handleDragging)
@@ -70,13 +81,15 @@
 
       const moveToRight = e.clientX > xStartPoint.value ? true : false
       const _tab_title_els = document.querySelectorAll('._tab_title_el')
-      const activeEl = document.querySelector(`#${snakeCase(activeTab.value)}`)
-      const activeElClosest = activeEl?.closest('li')
+      const thisTab = document.querySelector(`#${snakeCase(props.file.path)}`)
+      // const activeElClosest = activeEl?.closest('li')
 
-      if(!activeElClosest) return
+      
+      if(!thisTab) return
 
       // styles
-      activeElClosest.style.backgroundColor = '#000000'
+      // @ts-ignore
+      thisTab.style.backgroundColor = '#000000'
 
         if(_tab_title_els){
           _tab_title_els.forEach((tab: any)=> {
@@ -110,6 +123,8 @@ const endDragging = (e: MouseEvent) => {
     }
 
     stopAndResetDrag()
+  } else {
+    console.log(' no tab found')
   }
 }
 

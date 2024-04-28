@@ -5,7 +5,7 @@
         style="color: var(--border_color)">
           ・
       </span>
-      <CircleUp v-if="props.isDrop" title="Unmount file" width="1.5em" class="absolute -right-1 icon_close pr-2 hover:text-red-700" @click="handleUnmount" />
+      <CircleUp ref="unmountTag" v-if="props.isDrop" title="Unmount file" width="1.5em" class="absolute -right-1 icon_close pr-2 hover:text-red-700" @click="handleUnmount" />
       <LongTextIcon class="mr-1 w-3" />
       <span class="file_li_inner cut_text" :style="''/*isTabInEditor ? 'filter: brightness(1.4)': ''*/" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
     </div>
@@ -17,7 +17,7 @@
 import { type FileType } from '@/types/FileType'
 import { useFiles } from '@/stores/use-files'
 import { useSettings } from '@/stores/use-settings'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { allowedExt } from '@/types/AllowedExt'
 import LongTextIcon from '@/icons/LongText.vue'
 import CircleUp from '@/icons/CircleUp.vue'
@@ -31,16 +31,20 @@ type Props = {
 const props = defineProps<Props>()
 const files = useFiles()
 const settings = useSettings()
-const fileName = parseFileName(props?.file?.name ?? '')
+const fileName = computed( () => parseFileName(props?.file?.name ?? ''))
 
 const isTabInEditor = computed( () => files.findInTabsList(props?.file?.path ?? ''))
+
+const unmountTag = ref(null)
 
 const isOpenable = computed( () => {
   const ext = props.file?.name.split('.').pop()
   return allowedExt.includes(ext ?? '') ? true : false
 })
 
-const openTab = async () => {
+const openTab = async (e: MouseEvent) => {
+  const click = e.target 
+  if(click == unmountTag.value || click.closest('svg') ) return
   if(isOpenable.value && props.file){
     files.addAndSelectPage(props.file)
   }

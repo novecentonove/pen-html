@@ -22,5 +22,6 @@ export function parseFileName(name:string): string{
     }
  
   }
+
   return parsedName
 }

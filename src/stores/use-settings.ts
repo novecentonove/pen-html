@@ -95,9 +95,9 @@ export const useSettings = defineStore('settings', {
       this.showSelectedFolder = val
     },
     setToDroppedFiles(path: string){
-      const alreadyDropped = this.getDroppedFiles.filter(pth => pth == path)
+      const alreadyDropped = this.getDroppedFiles.includes(path)
       // console.log(alreadyDropped)
-      if(alreadyDropped.length == 0){
+      if(!alreadyDropped){
         this.droppedFiles.push(path)
       }
     },
