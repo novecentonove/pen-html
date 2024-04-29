@@ -8,7 +8,7 @@
     class="_tab_title_el flex shrink-0 justify-center items-center align-middle pt-[10px] py-[6px] rounded-t border_color cursor-pointer select-none"
     ref="thisTab"
     @mousedown="startDragging" 
-    @mouseup.once="endDragging"
+    @mouseup="endDragging"
     @click="setActiveTab($event, props.file.path)"
   >
   <!-- <div class="flex"  > -->
@@ -53,6 +53,7 @@
 
   const setActiveTab = (e: MouseEvent, path: string) => {
     const click = e.target
+    // @ts-ignore
     if(click == closeIcon.value || click.closest('svg') ) return
     files.setActiveTab(path)
   }
@@ -95,8 +96,11 @@
           _tab_title_els.forEach((tab: any)=> {
             if(tab.contains(el)){
               tab.classList.add('color_dragging')
-              if(moveToRight)tab.classList.add('right_dragging')
-              else tab.classList.add('left_dragging')
+              if(moveToRight){
+                tab.classList.add('right_dragging')
+              } else {
+                tab.classList.add('left_dragging')
+              }
             } else {
               tab.classList.remove('color_dragging')
               tab.classList.remove('right_dragging')
@@ -109,6 +113,8 @@
 const endDragging = (e: MouseEvent) => {
 
   const tabToMove = files.getTabToDrag
+
+  console.log('endDragging')
 
   if(tabToMove){
     const el = document.elementFromPoint(e.clientX, e.clientY)

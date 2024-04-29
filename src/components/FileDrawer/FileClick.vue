@@ -1,13 +1,13 @@
 <template>
   <div class="file_click flex items-center w-full">
-    <div class="_click_parent relative flex items-center mr-auto w-full" @click="openTab" >
+    <div class="_click_parent relative flex items-center mr-auto w-full" >
       <span v-if="isTabInEditor" class="absolute right-0 mt-1"  :class="isDrop ? '_tab_in_editor' : ''"
         style="color: var(--border_color)">
           ・
       </span>
       <CircleUp ref="unmountTag" v-if="props.isDrop" title="Unmount file" width="1.5em" class="absolute -right-1 icon_close pr-2 hover:text-red-700" @click="handleUnmount" />
       <LongTextIcon class="mr-1 w-3" />
-      <span class="file_li_inner cut_text" :style="''/*isTabInEditor ? 'filter: brightness(1.4)': ''*/" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
+      <span class="file_li_inner cut_text w-full" @click="openTab(props.file)" :style="''/*isTabInEditor ? 'filter: brightness(1.4)': ''*/" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</span>
     </div>
     
   </div>
@@ -42,12 +42,8 @@ const isOpenable = computed( () => {
   return allowedExt.includes(ext ?? '') ? true : false
 })
 
-const openTab = async (e: MouseEvent) => {
-  const click = e.target 
-  if(click == unmountTag.value || click.closest('svg') ) return
-  if(isOpenable.value && props.file){
-    files.addAndSelectPage(props.file)
-  }
+const openTab = async (file) => {
+  files.addAndSelectPage(file)
 }
 
 const handleUnmount = async () => {
