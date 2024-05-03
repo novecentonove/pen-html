@@ -50,16 +50,13 @@ const openTab = async () => {
 }
 
 const handleUnmount = async () => {
-  await files.askTocloseTab(props?.file?.path || '')
-
-  // Check if is not 'Canceled'
-  setTimeout(() => {
-    const isStilActive = files.findInTabsList(props?.file?.path || '') ? true : false
-    if(isStilActive) return
+  const res = await files.askTocloseTab(props?.file?.path || '')
+  
+  if(res !== 'cancel'){
     settings.unmountDropFile(props?.file?.path || '')
-  }, 500);
-
+  }
 }
+
 </script>
 
 <style>

@@ -60,7 +60,7 @@ import IconClearAll from '@/icons/ClipboardMinusOutline.vue'
 import FormatUnderline from '@/icons/FormatUnderline.vue'
 import { Editor, } from '@tiptap/vue-3'
 import { ref } from 'vue'
-import { debounce } from 'lodash'
+// import { debounce } from 'lodash'
 
 type EditorVar = Editor | null
 
@@ -74,7 +74,7 @@ const size = '1.3em'
 const colors: string[] = ['#8c7c27', '#465694', '#988bd5']
 
 const showButtons = ref(false)
-const showExtraButtons = debounce( (bool: boolean) => showButtons.value = bool, 200)
+// const showExtraButtons = debounce( (bool: boolean) => showButtons.value = bool, 200)
 </script>
 
 <style scoped>

@@ -91,6 +91,10 @@ export const useFiles = defineStore('files', {
     },
 
     highlightTabTitle(path: string){
+      if(!path) {
+        console.warn('no path in hightlight')
+        return
+      }
       const selectedTab:HTMLElement | null = document.querySelector(`#${snakeCase(path)}`)
       if(selectedTab){
           selectedTab.style.filter = 'brightness(1.3)'
@@ -132,8 +136,6 @@ export const useFiles = defineStore('files', {
     selectLastTab(){
       if(this.getTabList.length){
         this.setActiveTab(this.getTabList[this.getTabList.length-1].path)
-      } else {
-        this.setActiveTab('')
       }
     },
 
@@ -190,13 +192,24 @@ export const useFiles = defineStore('files', {
         try {
           await this.resetCloseTriggers()
 
+          if(!this.findInTabsList(path)){
+            resolve(true)
+          }
+
           const isNotSaved = this.getNotSavedFiles.find(el => el === path)
           
           if(isNotSaved){
             this.addCloseFileHandler(path)
+            
             this.setActiveTab(path)
-            const res = await this.awaitCloseTab(path, closeTab)
-            resolve(res)
+            await this.awaitCloseTab(path, closeTab)
+
+            setTimeout(() => {
+              const tabToSaveIsCancelled = this.findInTabsList(path)
+              resolve(tabToSaveIsCancelled ? 'cancel' : true)
+            }, 50);
+
+
           } else {
             if(closeTab){
               this.destroyTab(path)
