@@ -9,7 +9,7 @@
         style="color: var(--border_color)">
           ・
       </div>
-      <CircleUp ref="unmountTag" v-if="props.isDrop" title="Unmount file" width="1.5em" class="absolute top-1 right-2 icon_close pr-2 hover:text-red-700" @click="handleUnmount" />
+      <CircleUp ref="unmountTag" v-if="props.isDrop" title="Unmount file" width="1.5em" class="absolute top-1 right-1 icon_close pr-2 hover:text-red-700" @click="handleUnmount" />
     </div>
   </div>
 </template>
