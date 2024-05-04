@@ -162,6 +162,7 @@ export const useFiles = defineStore('files', {
     setActiveWatchers(watcher: {watcher: Function, type: string}){
       if(watcher.watcher){
         this.activeWatchers.push(watcher)
+        console.log('aggiunto watcher ', watcher.type)
       }
     },
 
@@ -285,10 +286,13 @@ export const useFiles = defineStore('files', {
 
     async saveFilePromise(path: string){
       return new Promise(async (resolve/*, reject*/) => {
+        
         this.triggerSaveFile = path
+        this.addCloseFileHandler(path)
 
         const interval = setInterval( () => {
           const fileHandler = this.getCloseFileHandler(path)
+          console.log('SETinteRval saveFilePromise')
             if(fileHandler?.resolved){
               clearInterval(interval)
               resolve(true)

@@ -168,6 +168,7 @@ listen('single-instance', (event: {payload: []} ) => {
     if(e.pageX > 70){
       leftW.value = e.pageX
     }
+    console.log('handleDragging')
   }
   
   onMounted( () => {

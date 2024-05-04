@@ -77,6 +77,8 @@
     loadAllDirs()
     startWatchingFs('base')
     startWatchingFs('appended')
+
+    console.log('getActiveWatchers', files.getActiveWatchers)
   })
 
   // recursive get structure // TODO : use FileType to any
@@ -205,15 +207,17 @@
 
   const startWatchingFs = async (type: string) => {
 
+    console.log('startWatchingFs', type)
+    
     // stop workers
     const ws = files.getActiveWatchers
 
     ws.forEach( w => {
-      if( (w?.type === type) && w.watcher ){
-        w?.watcher()
+      console.log('w', w)
+
         files.removeWatcher(type)
-        // console.log('rimosso watcher', type)
-      }
+        console.log('rimosso watcher', type)
+      // }
     })
 
     if(type === 'base'){
