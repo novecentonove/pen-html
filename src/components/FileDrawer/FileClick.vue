@@ -4,12 +4,12 @@
     <div class="overflow-x-hidden flex items-center w-full mr-3" >
       <p class="file_li_inner cut_text w-full" @click="openTab" :class="isOpenable ? '' : 'opacity-50'">{{ fileName }}</p>
     </div>
-    <div class="relative w-12">
-      <div v-if="isTabInEditor" class="pl-2"  :class="isDrop ? '_tab_in_editor' : ''"
+    <div class="relative w-12 h-6">
+      <div v-if="isTabInEditor" class="pl-2" :class="isDrop ? '_tab_in_editor' : ''"
         style="color: var(--border_color)">
           ・
       </div>
-      <CircleUp ref="unmountTag" v-if="props.isDrop" title="Unmount file" width="1.5em" class="absolute top-1 right-1 icon_close pr-2 hover:text-red-700" @click="handleUnmount" />
+      <CircleUp ref="unmountTag" @click="handleUnmount" v-if="props.isDrop" title="Unmount file" width="1.5em" class="absolute top-1 right-1 _unoumnt hover:text-red-700" />
     </div>
   </div>
 </template>
@@ -60,11 +60,11 @@ const handleUnmount = async () => {
 </script>
 
 <style>
-.icon_close{
+._unoumnt{
   opacity: 0;
 }
 
-.file_click:hover .icon_close{
+.file_click:hover ._unoumnt{
   opacity: 0.5;
 }
 
