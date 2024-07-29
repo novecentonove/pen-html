@@ -16,7 +16,7 @@ npm install
 ### Update Cargo
 ```sh
 cd src-tauri
-cargo update
+cargo build
  ```
 
 ### Compile and Hot-Reload for Development
