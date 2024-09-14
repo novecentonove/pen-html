@@ -22,10 +22,10 @@ export const themeSettings = [
   {
     name: 'Oblò',
     colors: {
-      'left_panel': '#070f1f',
-      'view': '#000919',
-      'settings_panel': '#070f1f',
-      'border' : '#3d1212',
+      'left_panel': '#071021',
+      'view': '#0c1526',
+      'settings_panel': '#071021',
+      'border' : '#4e1c1c',
       'pre': '#0a060e'
     }
   },
