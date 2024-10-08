@@ -4,12 +4,12 @@
   <div v-if="isDropping" class="fixed h-full w-full bg-black/50 z-10"></div>
 </transition>
 
-  <div class="main main_color view_color h-screen text_color" @mouseup="endDragging">
+  <div class="h-screen w-full main_color view_color text_color" @mouseup="endDragging">
     <div class="flex">
       
       <FileDrawer id="fileD" class="fileDrawer left_panel_color flex-shrink-0 select-none" :style="`width: ${leftW}px`" />
 
-      <div id="rightV" class="relative grow view_color select-none">
+      <div id="rightV" class="relative grow shrink-2 view_color select-none">
         <div data-tauri-drag-region class="titlebar text_color">
 
           <div class="titlebar_button" @click="appWindow.minimize()">
@@ -187,7 +187,6 @@ listen('single-instance', (event: {payload: []} ) => {
 .titlebar {
   width: 100%;
   height: 30px;
-  user-select: none;
   display: flex;
   justify-content: flex-end;
 }
@@ -202,10 +201,6 @@ listen('single-instance', (event: {payload: []} ) => {
 
 .titlebar_button:hover {
   background-color: black;
-}
-
-.main{
-  height: 100vh;
 }
 
 .fileDrawer {
